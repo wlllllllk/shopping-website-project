@@ -74,6 +74,7 @@
   top: 7.5rem;
   scroll-padding-top: 2rem;
   background-color: white;
+  z-index: 1;
 }
 
 .product-details .text .price {
