@@ -20,12 +20,11 @@
 .product-list .product .photo {
   height: 6rem;
   width: 6rem;
-  background-image: -webkit-gradient(linear, left top, right top, from(#d6d6d6), color-stop(50%, #9e80b1), to(#d6d6d6));
-  background-image: linear-gradient(90deg, #d6d6d6 0%, #9e80b1 50%, #d6d6d6 100%);
-  background-position: center;
+  background-image: var(--value-default-linear-gradient);
   border-radius: var(--value-default-border-radius);
   cursor: pointer;
-  animation: photo-loading 1s infinite alternate-reverse;
+  -webkit-animation: small-photo-loading 1.25s linear infinite;
+          animation: small-photo-loading 1.25s linear infinite;
 }
 
 .product-list .product .photo img {
@@ -74,23 +73,5 @@
 .product-list .product button:hover {
   color: white;
   background-color: var(--clr-main-light);
-}
-
-@-webkit-keyframes photo-loading {
-  from {
-    background-size: 100%;
-  }
-  to {
-    background-size: 500%;
-  }
-}
-
-@keyframes photo-loading {
-  from {
-    background-size: 100%;
-  }
-  to {
-    background-size: 500%;
-  }
 }
 /*# sourceMappingURL=main.css.map */

@@ -17,9 +17,17 @@
     .photo {
       margin-top: 0.5rem;
       height: 20rem;
-      aspect-ratio: 1;
-      background-color: var(--clr-main-light);
+      width: 20rem;
+      background-image: var(--value-default-linear-gradient);
       border-radius: var(--value-default-border-radius);
+      animation: large-photo-loading 1.25s linear infinite;
+
+      img {
+        height: 100%;
+        width: 100%;
+        object-fit: cover;
+        border-radius: var(--value-default-border-radius);
+      }
     }
 
     .inventory {

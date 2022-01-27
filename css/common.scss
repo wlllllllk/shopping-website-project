@@ -13,6 +13,12 @@
 
   --value-default-border-radius: 6px;
   --value-default-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+  --value-default-linear-gradient: linear-gradient(
+    90deg,
+    rgb(230, 230, 230) 0%,
+    rgb(245, 245, 245) 60%,
+    rgb(230, 230, 230) 100%
+  );
 }
 
 body {
@@ -129,6 +135,16 @@ header {
                   width: 3.5rem;
                   background-color: var(--clr-main-light);
                   border-radius: var(--value-default-border-radius);
+                  background-image: var(--value-default-linear-gradient);
+                  border-radius: var(--value-default-border-radius);
+                  animation: extra-small-photo-loading 1.25s linear infinite;
+
+                  img {
+                    height: 100%;
+                    width: 100%;
+                    border-radius: var(--value-default-border-radius);
+                    object-fit: cover;
+                  }
                 }
 
                 .text {
@@ -322,5 +338,32 @@ footer {
   }
   to {
     opacity: 1;
+  }
+}
+
+@keyframes extra-small-photo-loading {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 3.5rem 0;
+  }
+}
+
+@keyframes small-photo-loading {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 6rem 0;
+  }
+}
+
+@keyframes large-photo-loading {
+  from {
+    background-position: 0 0;
+  }
+  to {
+    background-position: 20rem 0;
   }
 }
