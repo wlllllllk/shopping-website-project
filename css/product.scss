@@ -1,0 +1,67 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+.product-details {
+  position: relative;
+  display: flex;
+  gap: 3rem;
+
+  .left {
+    position: sticky;
+    top: 7.5rem;
+    height: fit-content;
+
+    .photo {
+      margin-top: 0.5rem;
+      height: 20rem;
+      aspect-ratio: 1;
+      background-color: var(--clr-main-light);
+      border-radius: var(--value-default-border-radius);
+    }
+
+    .inventory {
+      margin-top: 1rem;
+      font-size: 2rem;
+    }
+
+    button {
+      margin-top: 1rem;
+      height: 2.5rem;
+      width: 100%;
+      cursor: pointer;
+      font-family: "Dongle", sans-serif;
+      font-size: 1.72rem;
+      color: var(--clr-main-light);
+      background-color: white;
+      border: 1px solid var(--clr-main-light);
+      border-radius: var(--value-default-border-radius);
+      transition: 0.1s;
+
+      &:hover {
+        color: white;
+        background-color: var(--clr-main-light);
+      }
+    }
+  }
+
+  .text {
+    // line-height: 1;
+
+    .name {
+      font-size: 3rem;
+      font-weight: 400;
+    }
+
+    .price {
+      font-size: 2.5rem;
+      color: var(--clr-main-light);
+    }
+
+    .description {
+      font-size: 1.75rem;
+    }
+  }
+}
