@@ -110,8 +110,8 @@ header nav .actions .shopping-list .container {
   overflow-y: auto;
   background-color: white;
   border-radius: var(--value-default-border-radius);
-  -webkit-box-shadow: var(--value-default-box-shadow);
-          box-shadow: var(--value-default-box-shadow);
+  -webkit-box-shadow: 0 6.5rem 0 100vw rgba(0, 0, 0, 0.5);
+          box-shadow: 0 6.5rem 0 100vw rgba(0, 0, 0, 0.5);
   -webkit-animation: slide-up 0.5s forwards, fade 0.3s forwards;
           animation: slide-up 0.5s forwards, fade 0.3s forwards;
   /* Hide scrollbar for IE, Edge and Firefox */
@@ -237,7 +237,6 @@ header nav .actions .shopping-list .container .contents ul .details .text div .p
 
 header nav .actions .shopping-list .container .contents .bottom {
   padding: 1rem;
-  margin-top: 5rem;
   position: -webkit-sticky;
   position: sticky;
   bottom: 0;
@@ -262,6 +261,10 @@ header nav .actions .shopping-list .container .contents .bottom button {
 
 header nav .actions .shopping-list:hover .container {
   display: block;
+}
+
+header nav .actions .shopping-list:hover > button {
+  background-color: rgba(245, 245, 245, 0.25);
 }
 
 header nav button {
@@ -295,7 +298,7 @@ header nav button:hover {
 .contents {
   min-height: 100vh;
   width: 80%;
-  margin: auto;
+  margin: 0 auto;
 }
 
 .contents .location {
