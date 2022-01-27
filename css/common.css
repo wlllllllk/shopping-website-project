@@ -127,6 +127,7 @@ header nav .actions .shopping-list .container::-webkit-scrollbar {
 
 header nav .actions .shopping-list .container .contents {
   position: relative;
+  min-height: unset;
   height: 100%;
   width: 100%;
 }
@@ -137,19 +138,20 @@ header nav .actions .shopping-list .container .contents h3 {
   top: 0;
   padding: 0.5rem 1rem 0 1rem;
   background-color: white;
+  z-index: 1;
+  border-radius: var(--value-default-border-radius);
 }
 
 header nav .actions .shopping-list .container .contents ul {
   list-style: none;
-  margin: 0 1rem 0.5rem 1rem;
-  height: 100%;
+  margin: 0 1rem 0 1rem;
 }
 
 header nav .actions .shopping-list .container .contents ul li {
   margin-bottom: 1rem;
 }
 
-header nav .actions .shopping-list .container .contents ul a {
+header nav .actions .shopping-list .container .contents ul li a {
   text-decoration: none;
 }
 
@@ -236,10 +238,11 @@ header nav .actions .shopping-list .container .contents ul .details .text div .p
 }
 
 header nav .actions .shopping-list .container .contents .bottom {
-  padding: 1rem;
   position: -webkit-sticky;
   position: sticky;
   bottom: 0;
+  padding: 0 1rem;
+  height: 3.5rem;
   background-color: var(--clr-main-light);
   color: white;
   display: -webkit-box;
@@ -276,8 +279,8 @@ header nav button {
   color: whitesmoke;
   border-radius: var(--value-default-border-radius);
   cursor: pointer;
-  -webkit-transition: 0.1s;
-  transition: 0.1s;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
 }
 
 header nav button:hover {
@@ -286,13 +289,14 @@ header nav button:hover {
 
 .main {
   position: relative;
-  margin: 6rem 5%;
+  margin: 5rem 5%;
   font-weight: 300;
   line-height: 1;
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
   height: 100%;
+  background-color: white;
 }
 
 .contents {
@@ -302,7 +306,13 @@ header nav button:hover {
 }
 
 .contents .location {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 5rem;
+  padding-top: 1rem;
+  background-color: white;
   font-size: 1.5rem;
+  z-index: 1;
 }
 
 .contents .location a {
@@ -312,6 +322,14 @@ header nav button:hover {
 
 .contents .location a:hover {
   text-decoration: underline;
+}
+
+.contents h3 {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 7.5rem;
+  background-color: white;
+  font-size: 3rem;
 }
 
 .categories {

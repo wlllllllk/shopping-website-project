@@ -13,6 +13,7 @@
     position: sticky;
     top: 7.5rem;
     height: fit-content;
+    background-color: white;
 
     .photo {
       margin-top: 0.5rem;
@@ -61,11 +62,18 @@
     .name {
       font-size: 3rem;
       font-weight: 400;
+      position: sticky;
+      top: 7.5rem;
+      scroll-padding-top: 2rem;
+      background-color: white;
     }
 
     .price {
       font-size: 2.5rem;
       color: var(--clr-main-light);
+      position: sticky;
+      top: 10.5rem;
+      background-color: white;
     }
 
     .description {
