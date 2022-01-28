@@ -114,6 +114,7 @@ header nav .actions .shopping-list .container {
           box-shadow: 0 6.5rem 0 100vw rgba(0, 0, 0, 0.5);
   -webkit-animation: slide-up 0.5s forwards, fade 0.3s forwards;
           animation: slide-up 0.5s forwards, fade 0.3s forwards;
+  /* Hide scrollbar for Chrome, Safari and Opera */
   /* Hide scrollbar for IE, Edge and Firefox */
   -ms-overflow-style: none;
   /* IE and Edge */
@@ -127,7 +128,6 @@ header nav .actions .shopping-list .container::-webkit-scrollbar {
 
 header nav .actions .shopping-list .container .contents {
   position: relative;
-  min-height: unset;
   height: 100%;
   width: 100%;
 }
@@ -299,13 +299,13 @@ header nav button:hover {
   background-color: white;
 }
 
-.contents {
+.main .contents {
   min-height: 100vh;
   width: 80%;
   margin: 0 auto;
 }
 
-.contents .location {
+.main .contents .location {
   position: -webkit-sticky;
   position: sticky;
   top: 5rem;
@@ -315,16 +315,16 @@ header nav button:hover {
   z-index: 1;
 }
 
-.contents .location a {
+.main .contents .location a {
   text-decoration: none;
   color: black;
 }
 
-.contents .location a:hover {
+.main .contents .location a:hover {
   text-decoration: underline;
 }
 
-.contents h3 {
+.main .contents h3 {
   position: -webkit-sticky;
   position: sticky;
   top: 7.5rem;
