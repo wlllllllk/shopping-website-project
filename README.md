@@ -19,6 +19,6 @@ _Everything else are auto-generated_
 
 ## How to open the website
 
-1. Open main.html
+Simply open main.html
 
 _Last Updated: 28-01-2022_
