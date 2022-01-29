@@ -7,12 +7,11 @@
   display: grid;
   -ms-grid-columns: (minmax(6rem, 1fr))[auto-fit];
       grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr));
-  gap: 3rem 1rem;
-  margin-top: 0.5rem;
+  gap: 2rem 1rem;
 }
 
 .product-list .product {
-  height: 11rem;
+  height: 12rem;
   width: 6rem;
 }
 

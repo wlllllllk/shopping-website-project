@@ -21,4 +21,4 @@ _Everything else are auto-generated_
 
 Simply open main.html
 
-_Last Updated: 28-01-2022_
+_Last Updated: 29-01-2022_

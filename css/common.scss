@@ -280,11 +280,15 @@ header {
       }
     }
 
-    h3 {
-      position: sticky;
-      top: 7.5rem;
-      background-color: white;
-      font-size: 3rem;
+    section {
+      margin-bottom: 3rem;
+
+      h3 {
+        position: sticky;
+        top: 7.5rem;
+        background-color: white;
+        font-size: 3rem;
+      }
     }
   }
 }
