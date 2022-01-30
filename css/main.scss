@@ -1,10 +1,9 @@
 .product-list {
   height: fit-content;
-  width: 80%;
+  width: 100%;
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(6rem, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(6rem, 1fr));
   gap: 2rem 1rem;
-  // padding-top: 0.5rem;
 
   .product {
     height: 12rem;

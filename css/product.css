@@ -5,6 +5,10 @@
           box-sizing: border-box;
 }
 
+p {
+  font-size: 1.75rem;
+}
+
 .product-details {
   position: relative;
   display: -webkit-box;
@@ -16,7 +20,7 @@
 .product-details .left {
   position: -webkit-sticky;
   position: sticky;
-  top: 7.5rem;
+  top: 10.5rem;
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
@@ -71,7 +75,7 @@
   font-weight: 400;
   position: -webkit-sticky;
   position: sticky;
-  top: 7.5rem;
+  top: 10.5rem;
   scroll-padding-top: 2rem;
   background-color: white;
   z-index: 1;
@@ -82,11 +86,19 @@
   color: var(--clr-main-light);
   position: -webkit-sticky;
   position: sticky;
-  top: 10.5rem;
+  top: 13.5rem;
   background-color: white;
 }
 
 .product-details .text .description {
   font-size: 1.75rem;
+}
+
+.categories ul li:first-of-type {
+  background-color: var(--clr-main-light);
+}
+
+.categories ul li:first-of-type a {
+  color: white;
 }
 /*# sourceMappingURL=product.css.map */
