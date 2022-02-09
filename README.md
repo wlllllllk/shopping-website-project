@@ -11,7 +11,7 @@ This is the Assignment of IERG4210 Web Programming and Security (2022 Spring)
 
 ### Files
 
-- main.html (the main page of the website)
+- index.html (the main page of the website)
 - product.html (the product page)
 - README (this file)
 
@@ -19,6 +19,6 @@ _Everything else are auto-generated_
 
 ## How to open the website
 
-Simply open main.html
+Simply open index.html
 
-_Last Updated: 29-01-2022_
+_Last Updated: 10-02-2022_
