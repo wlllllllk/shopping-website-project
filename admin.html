@@ -17,13 +17,119 @@
             <h1>Admin Panel</h1>
             <div class="actions">
                 <div class="account">
-                    <button>Leave</button>
+                    <a href="./index.html">
+                        <button>Leave</button>
+                    </a>                
                 </div>
             </div>
         </nav>
     </header>
     <div class="main">
-        <h1>hello</h1>
+        <section class="left">
+            <ul>
+                <li class="title">Product Management</li>
+                <li><a href="#product-add-form">Add Product</a></li>
+                <li><a href="#product-update-form">Update Product</a></li>
+                <li><a href="#product-delete-form">Delete Product</a></li>
+                <li class="title">Category Management</li>
+                <li><a href="#category-add-form">Add Category</a></li>
+                <li><a href="#category-update-form">Update Category</a></li>
+                <li><a href="#category-delete-form">Delete Category</a></li>
+            </ul>
+        </section>
+        <section class="right">
+            <!-- <div class="form" id="form-1"> -->
+                <fieldset id="product-add-form">
+                    <legend>Product Add Form</legend>
+                    <form method="POST" action="">
+                        <label for="category-add-product">Category</label>
+                        <select name="category-add-product" id="category-add-product">
+                            <option value="cat1">Category 1</option>
+                            <option value="cat2">Category 2</option>
+                            <option value="cat3">Category 3</option>
+                        </select>
+                        <label for="name-add-product">Product Name</label>
+                        <input type="text" name="name-add-product" id="name-add-product">
+                        <label for="price-add-product">Price</label>
+                        <input type="number" name="price-add-product" id="price-add-product">
+                        <label for="description-add-product">Product Description</label>
+                        <textarea name="description-add-product" id="description-add-product" cols="30" rows="10"></textarea>
+                        <input type="button" value="Submit">
+                    </form>
+                </fieldset>
+
+                <fieldset id="product-update-form">
+                    <legend>Product Update Form</legend>
+                    <form method="POST" action="">
+                        <label for="category-update-product">Category</label>
+                        <select name="category-update-product" id="category-update-product">
+                            <option value="cat1">Category 1</option>
+                            <option value="cat2">Category 2</option>
+                            <option value="cat3">Category 3</option>
+                        </select>
+                        <label for="name-update-product">Product Name</label>
+                        <input type="text" name="name-update-product" id="name-update-product">
+                        <label for="price-update-product">Price</label>
+                        <input type="number" name="price-update-product" id="price-update-product">
+                        <label for="description-update-product">Product Description</label>
+                        <textarea name="description-update-product" id="description-update-product" cols="30" rows="10"></textarea>
+                        <input type="button" value="Submit">
+                    </form>
+                </fieldset>
+
+                <fieldset id="product-delete-form">
+                    <legend>Product Delete Form</legend>
+                    <form method="POST" action="">
+                        <label for="category-delete-product">Product to be Delete</label>
+                        <select name="category-delete-product" id="category-delete-product">
+                            <option value="cat1">Category 1</option>
+                            <option value="cat2">Category 2</option>
+                            <option value="cat3">Category 3</option>
+                        </select>
+                        <input type="button" value="Submit">
+                    </form>
+                </fieldset>
+
+                <fieldset id="category-add-form">
+                    <legend>Category Add Form</legend>
+                    <form method="POST" action="">
+                        <label for="new-category-add">New Category</label>
+                        <input type="text" name="new-category-add" id="new-category-add">
+                        <input type="button" value="Submit">
+                    </form>
+                </fieldset>
+
+                <fieldset id="category-update-form">
+                    <legend>Category Update Form</legend>
+                    <form method="POST" action="">
+                        <label for="current-category-update">Current Category</label>
+                        <select name="current-category-update" id="current-category-update">
+                            <option value="cat1">Category 1</option>
+                            <option value="cat2">Category 2</option>
+                            <option value="cat3">Category 3</option>
+                        </select>
+                        <label for="new-category-update">New Category</label>
+                        <input type="text" name="new-category-update" id="new-category-update">
+                        <input type="button" value="Submit">
+                    </form>
+                </fieldset>
+                
+                <fieldset id="category-delete-form">
+                    <legend>Category Delete Form</legend>
+                    <form method="POST" action="">
+                        <label for="current-category-delete">Current Category</label>
+                        <select name="current-category-delete" id="current-category-delete">
+                            <option value="cat1">Category 1</option>
+                            <option value="cat2">Category 2</option>
+                            <option value="cat3">Category 3</option>
+                        </select>
+                        <input type="button" value="Submit">
+                    </form>
+                </fieldset>
+            <!-- </div> -->
+        </section>
     </div>
+    <footer><span>IERG4210 Assignment (Spring 2022) | Created by 1155147592</span></footer>
+
 </body>
 </html>

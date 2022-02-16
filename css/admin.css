@@ -1,4 +1,151 @@
 header nav h1 {
   color: white;
 }
+
+.main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 2rem;
+  margin: 2rem 5% 0 5%;
+}
+
+.main .left {
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+.main .left ul {
+  list-style: none;
+}
+
+.main .left ul .title {
+  margin-top: 1.5rem;
+  font-size: 2rem;
+  font-weight: 500;
+}
+
+.main .left ul li {
+  margin: 0.5rem 0;
+}
+
+.main .left ul li:first-of-type {
+  margin-top: 0;
+}
+
+.main .left ul li:last-of-type {
+  margin-bottom: 0;
+}
+
+.main .left ul li a {
+  text-decoration: none;
+  color: black;
+  font-size: 1.75rem;
+  padding: 0 0 0 1rem;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
+}
+
+.main .left ul li a:hover {
+  color: var(--clr-main-light);
+}
+
+.main .right {
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  overflow: hidden;
+  -ms-scroll-snap-type: x mandatory;
+      scroll-snap-type: x mandatory;
+}
+
+.main .right fieldset {
+  scroll-snap-align: start;
+  min-width: 100%;
+  border: none;
+  border-radius: var(--value-default-border-radius);
+}
+
+.main .right fieldset legend {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-left: 2rem;
+}
+
+.main .right fieldset form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 0 2rem;
+}
+
+.main .right fieldset form label {
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.main .right fieldset form label:first-of-type {
+  margin-top: 0;
+}
+
+.main .right fieldset form select {
+  font-size: 1.5rem;
+  font-weight: 300;
+  padding: 0 0.5rem;
+}
+
+.main .right fieldset form select option {
+  font-size: 1rem;
+  font-weight: 300;
+}
+
+.main .right fieldset form input {
+  line-height: 1;
+  padding: 0 1rem;
+  font-size: 1.75rem;
+  font-weight: 300;
+  outline: none;
+  border-radius: var(--value-default-border-radius);
+  border: 1px solid var(--clr-main-light);
+}
+
+.main .right fieldset form textarea {
+  line-height: 1;
+  font-size: 1.75rem;
+  font-weight: 300;
+  padding: 0.5rem 1rem;
+  outline: none;
+  border-radius: var(--value-default-border-radius);
+  border: 1px solid var(--clr-main-light);
+  resize: none;
+}
+
+.main .right fieldset form input[type="button"] {
+  height: 3rem;
+  margin: 1.5rem 0;
+  background-color: var(--clr-main-light);
+  color: white;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.main .right fieldset form input[type="button"]:hover {
+  -webkit-filter: brightness(0.9);
+          filter: brightness(0.9);
+}
 /*# sourceMappingURL=admin.css.map */

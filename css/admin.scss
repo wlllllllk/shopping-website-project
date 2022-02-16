@@ -1,3 +1,140 @@
 header nav h1 {
   color: white;
 }
+
+.main {
+  display: flex;
+  gap: 2rem;
+  margin: 2rem 5% 0 5%;
+
+  .left {
+    // border: 3px solid yellow;
+    height: fit-content;
+    // position: sticky;
+    // top: 8rem;
+    flex-shrink: 0;
+
+    ul {
+      list-style: none;
+      // padding: 1rem 2rem;
+
+      .title {
+        margin-top: 1.5rem;
+        font-size: 2rem;
+        font-weight: 500;
+      }
+
+      li {
+        // border: 3px solid green;
+        margin: 0.5rem 0;
+
+        &:first-of-type {
+          margin-top: 0;
+        }
+
+        &:last-of-type {
+          margin-bottom: 0;
+        }
+
+        a {
+          text-decoration: none;
+          color: black;
+          font-size: 1.75rem;
+          padding: 0 0 0 1rem;
+          transition: 0.1s;
+
+          &:hover {
+            color: var(--clr-main-light);
+          }
+        }
+      }
+    }
+  }
+
+  .right {
+    // border: 3px solid green;
+    flex-grow: 1;
+    height: fit-content;
+    display: flex;
+    overflow: hidden;
+    scroll-snap-type: x mandatory;
+
+    fieldset {
+      scroll-snap-align: start;
+      min-width: 100%;
+      // margin: 0 1rem;
+      border: none;
+      border-radius: var(--value-default-border-radius);
+      // border: 3px solid green;
+
+      legend {
+        font-size: 2.5rem;
+        font-weight: 600;
+        margin-left: 2rem;
+      }
+
+      form {
+        display: flex;
+        flex-direction: column;
+        margin: 0 2rem;
+
+        label {
+          margin-top: 1rem;
+          font-size: 2rem;
+          font-weight: 400;
+
+          &:first-of-type {
+            margin-top: 0;
+          }
+        }
+
+        select {
+          font-size: 1.5rem;
+          font-weight: 300;
+          padding: 0 0.5rem;
+
+          option {
+            font-size: 1rem;
+            font-weight: 300;
+          }
+        }
+
+        input {
+          line-height: 1;
+
+          padding: 0 1rem;
+          font-size: 1.75rem;
+          font-weight: 300;
+          outline: none;
+          border-radius: var(--value-default-border-radius);
+          border: 1px solid var(--clr-main-light);
+        }
+
+        textarea {
+          line-height: 1;
+          font-size: 1.75rem;
+          font-weight: 300;
+          padding: 0.5rem 1rem;
+          outline: none;
+          border-radius: var(--value-default-border-radius);
+          border: 1px solid var(--clr-main-light);
+          resize: none;
+        }
+
+        input[type="button"] {
+          height: 3rem;
+          margin: 1.5rem 0;
+
+          background-color: var(--clr-main-light);
+          color: white;
+          cursor: pointer;
+
+          transition: 0.2s;
+          &:hover {
+            filter: brightness(0.9);
+          }
+        }
+      }
+    }
+  }
+}
