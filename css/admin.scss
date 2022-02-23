@@ -121,7 +121,53 @@ header nav h1 {
           resize: none;
         }
 
-        input[type="button"] {
+        .image-upload-field {
+          position: relative;
+          border-radius: 12px;
+          border: 2px dashed var(--clr-main-light);
+
+          height: 10rem;
+          width: 100%;
+          // margin-top: 1rem;
+          transition: 0.2s;
+
+          input {
+            height: 100%;
+            width: 100%;
+            // border: none;
+            opacity: 0;
+          }
+
+          &::after {
+            content: "Drag to upload image";
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 2rem;
+            color: var(--clr-main-light);
+          }
+        }
+
+        .drag-enter {
+          // border: 3px solid var(--clr-main-light);
+        }
+
+        .drag-over {
+          background-color: hsla(277, 24%, 60%, 0.3);
+
+          &::after {
+            content: "Drop the image here";
+          }
+        }
+
+        .drop {
+          &::after {
+            content: "Image added";
+          }
+        }
+
+        input[type="submit"] {
           height: 3rem;
           margin: 1.5rem 0;
 

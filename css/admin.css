@@ -134,7 +134,46 @@ header nav h1 {
   resize: none;
 }
 
-.main .right fieldset form input[type="button"] {
+.main .right fieldset form .image-upload-field {
+  position: relative;
+  border-radius: 12px;
+  border: 2px dashed var(--clr-main-light);
+  height: 10rem;
+  width: 100%;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.main .right fieldset form .image-upload-field input {
+  height: 100%;
+  width: 100%;
+  opacity: 0;
+}
+
+.main .right fieldset form .image-upload-field::after {
+  content: "Drag to upload image";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  font-size: 2rem;
+  color: var(--clr-main-light);
+}
+
+.main .right fieldset form .drag-over {
+  background-color: rgba(159, 129, 177, 0.3);
+}
+
+.main .right fieldset form .drag-over::after {
+  content: "Drop the image here";
+}
+
+.main .right fieldset form .drop::after {
+  content: "Image added";
+}
+
+.main .right fieldset form input[type="submit"] {
   height: 3rem;
   margin: 1.5rem 0;
   background-color: var(--clr-main-light);
@@ -144,7 +183,7 @@ header nav h1 {
   transition: 0.2s;
 }
 
-.main .right fieldset form input[type="button"]:hover {
+.main .right fieldset form input[type="submit"]:hover {
   -webkit-filter: brightness(0.9);
           filter: brightness(0.9);
 }
