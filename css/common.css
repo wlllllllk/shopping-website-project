@@ -437,6 +437,11 @@ header .categories .selector a:hover {
   text-decoration: underline;
 }
 
+.main .location a:last-of-type:hover {
+  text-decoration: none;
+  cursor: default;
+}
+
 .main section {
   margin-bottom: 3rem;
 }

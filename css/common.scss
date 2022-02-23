@@ -365,6 +365,11 @@ header {
       &:hover {
         text-decoration: underline;
       }
+
+      &:last-of-type:hover {
+        text-decoration: none;
+        cursor: default;
+      }
     }
   }
 

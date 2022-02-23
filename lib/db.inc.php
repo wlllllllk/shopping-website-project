@@ -28,14 +28,6 @@ function ierg4210_cat_fetchAll() {
         return $q->fetchAll();
 }
 
-function ierg4210_prod_fetchAll() {
-    global $db;
-    $db = ierg4210_DB();
-    $q = $db->prepare("SELECT * FROM PRODUCTS LIMIT 100;");
-    if ($q->execute())
-        return $q->fetchAll();
-}
-
 // Since this form will take file upload, we use the tranditional (simpler) rather than AJAX form submission.
 // Therefore, after handling the request (DB insert and file copy), this function then redirects back to admin.html
 function ierg4210_prod_insert() {
@@ -60,10 +52,10 @@ function ierg4210_prod_insert() {
     // $q = $db->prepare($sql);
 
     // Copy the uploaded file to a folder which can be publicly accessible at incl/img/[pid].jpg
-    if ($_FILES["file"]["error"] == 0
-        && $_FILES["file"]["type"] == "image/jpeg"
-        && mime_content_type($_FILES["file"]["tmp_name"]) == "image/jpeg"
-        && $_FILES["file"]["size"] < 8000000) {
+    // if ($_FILES["file"]["error"] == 0
+    //     && $_FILES["file"]["type"] == "image/jpeg"
+    //     && mime_content_type($_FILES["file"]["tmp_name"]) == "image/jpeg"
+    //     && $_FILES["file"]["size"] < 8000000) {
 
         $catid = $_POST["CATID"];
         $name = $_POST["NAME"];
@@ -81,16 +73,16 @@ function ierg4210_prod_insert() {
         header('Location: admin.php');
         exit();
         // Note: Take care of the permission of destination folder (hints: current user is apache)
-        if (move_uploaded_file($_FILES["file"]["tmp_name"], "/var/www/html/images/" . $lastId . ".jpg")) {
-            // redirect back to original page; you may comment it during debug
-            header('Location: admin.php');
-            exit();
-        }
-    }
+        // if (move_uploaded_file($_FILES["file"]["tmp_name"], "/var/www/html/images/" . $lastId . ".jpg")) {
+        //     // redirect back to original page; you may comment it during debug
+        //     header('Location: admin.php');
+        //     exit();
+        // }
+    // }
     // Only an invalid file will result in the execution below
     // To replace the content-type header which was json and output an error message
-    header('Content-Type: text/html; charset=utf-8');
-    echo 'Invalid file detected. <br/><a href="javascript:history.back();">Back to admin panel.</a>';
+    // header('Content-Type: text/html; charset=utf-8');
+    // echo 'Invalid file detected. <br/><a href="javascript:history.back();">Back to admin panel.</a>';
     exit();
 }
 
@@ -153,13 +145,62 @@ function ierg4210_cat_delete() {
 
 
 function ierg4210_prod_delete_by_catid() {
+    global $db;
+    $db = ierg4210_DB();
 
+    $sql = "DELETE FROM PRODUCTS WHERE CATID=?;";
+
+    $q = $db->prepare($sql);
+    $catid = $_POST["CATID"];
+
+    $q->bindParam(1, $catid);
+
+    $q->execute();
+    $lastId = $db->lastInsertId();
+
+    // redirect back to original page; you may comment it during debug
+    header('Location: admin.php');
+    exit();
 }
 
+function ierg4210_prod_fetchAll() {
+    global $db;
+    $db = ierg4210_DB();
+    $q = $db->prepare("SELECT * FROM PRODUCTS LIMIT 100;");
+    if ($q->execute())
+        return $q->fetchAll();
+}
 
+function ierg4210_prod_fetch_by_catid($CATID) {
+    global $db;
+    $db = ierg4210_DB();
+
+    $sql = "SELECT * FROM PRODUCTS WHERE CATID=?;";
+
+    $q = $db->prepare($sql);
+    // $pid = $_POST["PID"];
+
+    $q->bindParam(1, $CATID);
+
+    $q->execute();
+    if ($q->execute())
+        return $q->fetchAll();
+}
 
 function ierg4210_prod_fetchOne() {
+    global $db;
+    $db = ierg4210_DB();
 
+    $sql = "SELECT * FROM PRODUCTS WHERE PID=?;";
+
+    $q = $db->prepare($sql);
+    $pid = $_POST["PID"];
+
+    $q->bindParam(1, $pid);
+
+    $q->execute();
+    if ($q->execute())
+        return $q->fetchAll();
 }
 
 function ierg4210_prod_update() {

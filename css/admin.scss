@@ -136,10 +136,15 @@ header nav h1 {
             width: 100%;
             // border: none;
             opacity: 0;
+            cursor: pointer;
+          }
+
+          &:hover {
+            background-color: hsla(277, 24%, 60%, 0.3);
           }
 
           &::after {
-            content: "Drag to upload image";
+            content: "Drag a image here to upload";
             position: absolute;
             top: 50%;
             left: 50%;

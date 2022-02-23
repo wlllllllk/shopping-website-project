@@ -10,9 +10,9 @@ foreach ($categories as $value_cat) {
     $options_cat .= '<option value="'.$value_cat["CATID"].'"> '.$value_cat["NAME"].' </option>';
 }
 
-// foreach ($categories as $value_prod) {
-//     $options_prod .= '<option value="'.$value_prod["PID"].'"> '.$value_prod["NAME"]' </option>';
-// }
+foreach ($products as $value_prod) {
+    $options_prod .= '<option value="'.$value_prod["PID"].'"> '.$value_prod["NAME"].' </option>';
+}
 ?>
 
 <html lang="en">
@@ -29,11 +29,11 @@ foreach ($categories as $value_cat) {
 <body>
     <header>
         <nav>
-            <a href="index.html" id="logo"><span>IERG4210<br>Store</span></a>
+            <a href="index.php" id="logo"><span>IERG4210<br>Store</span></a>
             <h1>Admin Panel</h1>
             <div class="actions">
                 <div class="account">
-                    <a href="./index.html">
+                    <a href="./index.php">
                         <button>Leave</button>
                     </a>                
                 </div>
@@ -68,7 +68,10 @@ foreach ($categories as $value_cat) {
                         <label for="description-add-product">Product Description</label>
                         <textarea name="DESCRIPTION" id="description-add-product" cols="30" rows="10"></textarea>
                         <label for="image-add-product">Product Image</label>
-                        <input type="file" name="IMAGE" required="true" accept="image/jpeg"/>
+                        <!-- <input type="file" name="IMAGE" required="true" accept="image/jpeg"/> -->
+                        <div class="image-upload-field">
+                            <input type="file" name="image-add-product" accept="image/jpeg"/>
+                        </div>
                         <input type="submit" value="Submit">
                     </form>
                 </fieldset>
@@ -138,5 +141,6 @@ foreach ($categories as $value_cat) {
         </section>
     </div>
     <footer><span>IERG4210 Assignment (Spring 2022) | Created by 1155147592</span></footer>
+    <script src="./js/main.js"></script>
 </body>
 </html>

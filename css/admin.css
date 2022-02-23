@@ -148,10 +148,15 @@ header nav h1 {
   height: 100%;
   width: 100%;
   opacity: 0;
+  cursor: pointer;
+}
+
+.main .right fieldset form .image-upload-field:hover {
+  background-color: rgba(159, 129, 177, 0.3);
 }
 
 .main .right fieldset form .image-upload-field::after {
-  content: "Drag to upload image";
+  content: "Drag a image here to upload";
   position: absolute;
   top: 50%;
   left: 50%;
