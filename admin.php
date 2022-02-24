@@ -11,7 +11,7 @@ foreach ($categories as $value_cat) {
 }
 
 foreach ($products as $value_prod) {
-    $options_prod .= '<option value="'.$value_prod["PID"].'"> '.$value_prod["NAME"].' </option>';
+    $options_prod .= '<option value="'.$value_prod["PID"].'"> (CATID: '.$value_prod["CATID"].') '.$value_prod["NAME"].' </option>';
 }
 ?>
 
@@ -65,10 +65,11 @@ foreach ($products as $value_prod) {
                         <input type="text" name="NAME" id="name-add-product">
                         <label for="price-add-product">Price</label>
                         <input type="number" name="PRICE" id="price-add-product">
+                        <label for="inventory-add-product">Inventory</label>
+                        <input type="number" name="INVENTORY" id="inventory-add-product">
                         <label for="description-add-product">Product Description</label>
                         <textarea name="DESCRIPTION" id="description-add-product" cols="30" rows="10"></textarea>
                         <label for="image-add-product">Product Image</label>
-                        <!-- <input type="file" name="IMAGE" required="true" accept="image/jpeg"/> -->
                         <div class="image-upload-field">
                             <input type="file" name="image-add-product" accept="image/jpeg"/>
                         </div>
@@ -87,6 +88,8 @@ foreach ($products as $value_prod) {
                         <input type="text" name="NAME" id="name-update-product" pattern="^[\w\-]+$"/>
                         <label for="price-update-product">Price</label>
                         <input type="number" name="PRICE" id="price-update-product" pattern="^\d+\.?\d*$"/>
+                        <label for="inventory-update-product">Inventory</label>
+                        <input type="number" name="INVENTORY" id="inventory-update-product">
                         <label for="description-update-product">Product Description</label>
                         <textarea name="DESCRIPTION" id="description-update-product" cols="30" rows="10"></textarea>
                         <label for="image-update-product">Product Image</label>

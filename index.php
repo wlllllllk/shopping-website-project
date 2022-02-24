@@ -1,19 +1,27 @@
 <?php
 require __DIR__.'/lib/db.inc.php';
 $categories = ierg4210_cat_fetchAll();
-$products = ierg4210_prod_fetchAll();
-
 $li_cat = '';
-$li_prod = '';
-
 foreach ($categories as $value_cat) {
     $li_cat .= '<li><a href="category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
-    // <li><a href="index.html"><span>Category 2</span></a></li>
 }
 
-// foreach ($categories as $value_prod) {
-//     $options_prod .= '<option value="'.$value_prod["PID"].'"> '.$value_prod["NAME"]' </option>';
-// }
+$products = ierg4210_prod_fetchAll();
+$div_prod = '';
+foreach ($products as $value_prod) {
+    $div_prod .= '<div class="product">
+                    <a href="product.php?pid='.$value_prod["PID"].'">
+                        <div class="photo"><img src="./images/product.jpg" alt="" /></div>
+                    </a>
+                    <div class="text">
+                        <a href="product.php?pid='.$value_prod["PID"].'">
+                            <div class="name">'.$value_prod["NAME"].'</div>
+                        </a>
+                        <div class="price">$'.$value_prod["PRICE"].'</div>
+                    </div>
+                    <button>Add to Cart</button>
+                </div>';
+}
 ?>
 
 <!DOCTYPE html>
@@ -75,23 +83,6 @@ foreach ($categories as $value_cat) {
             <h3>Categories</h3>
             <ul>
                 <?php echo $li_cat; ?>
-<!-- 
-                <li id="first"><a href="index.html"><span>Category 1</span></a></li>
-                <li><a href="index.html"><span>Category 2</span></a></li>
-                <li><a href="index.html"><span>Category 3</span></a></li>
-                <li><a href="index.html"><span>Category 4</span></a></li>
-                <li><a href="index.html"><span>Category 5</span></a></li>
-                <li><a href="index.html"><span>Category 6</span></a></li>
-                <li><a href="index.html"><span>Category 7</span></a></li>
-                <li><a href="index.html"><span>Category 8</span></a></li>
-                <li><a href="index.html"><span>Category 9</span></a></li>
-                <li><a href="index.html"><span>Category 10</span></a></li>
-                <li><a href="index.html"><span>Category 11</span></a></li>
-                <li><a href="index.html"><span>Category 12</span></a></li>
-                <li><a href="index.html"><span>Category 13</span></a></li>
-                <li><a href="index.html"><span>Category 14</span></a></li>
-                <li><a href="index.html"><span>Category 15</span></a></li>
-                <li id="last"><a href="index.html"><span>Category 16</span></a></li> -->
             </ul>
             <div class="selector">
                 <a href="#first">&lt;</a>
@@ -103,337 +94,9 @@ foreach ($categories as $value_cat) {
     <div class="main">
         <div class="location"><a href="index.php">Home</a></div>
         <section>
-            <h3>Products of the Day</h3>
+            <h3>All Products</h3>
             <div class="product-list">
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 11</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-            </div>
-        </section>
-        <section>
-            <h3>More Products</h3>
-            <div class="product-list">
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 11</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
-                <div class="product">
-                    <a href="product.html">
-                        <div class="photo"></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.html">
-                            <div class="name">Product 1</div>
-                        </a>
-                        <div class="price">$123.4</div>
-                    </div>
-                    <button>Add to Cart</button>
-                </div>
+                <?php echo $div_prod; ?>
             </div>
         </section>
     </div>

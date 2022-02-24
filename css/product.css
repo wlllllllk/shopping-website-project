@@ -93,12 +93,4 @@ p {
 .product-details .text .description {
   font-size: 1.75rem;
 }
-
-.categories ul li:first-of-type {
-  background-color: var(--clr-main-light);
-}
-
-.categories ul li:first-of-type a {
-  color: white;
-}
 /*# sourceMappingURL=product.css.map */

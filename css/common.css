@@ -23,6 +23,10 @@
   );
 }
 
+html {
+  scroll-padding-top: 7rem;
+}
+
 body {
   min-height: 100vh;
   font-family: "Dongle", sans-serif;
@@ -408,6 +412,14 @@ header .categories .selector a {
 
 header .categories .selector a:hover {
   background-color: rgba(148, 148, 148, 0.25);
+}
+
+.selected {
+  background-color: var(--clr-main-light);
+}
+
+.selected a {
+  color: white !important;
 }
 
 .main {

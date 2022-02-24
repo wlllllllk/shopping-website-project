@@ -12,7 +12,6 @@
   --clr-main-lighter: #ffe9ff;
   --clr-main-contrast: #61baad;
   --clr-main-dark: #3a2a46;
-
   --value-default-border-radius: 6px;
   --value-default-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   --value-default-linear-gradient: linear-gradient(
@@ -21,6 +20,10 @@
     rgb(245, 245, 245) 60%,
     rgb(230, 230, 230) 100%
   );
+}
+
+html {
+  scroll-padding-top: 7rem;
 }
 
 body {
@@ -339,6 +342,13 @@ header {
         }
       }
     }
+  }
+}
+
+.selected {
+  background-color: var(--clr-main-light);
+  a {
+    color: white !important;
   }
 }
 

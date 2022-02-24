@@ -52,37 +52,41 @@ function ierg4210_prod_insert() {
     // $q = $db->prepare($sql);
 
     // Copy the uploaded file to a folder which can be publicly accessible at incl/img/[pid].jpg
-    // if ($_FILES["file"]["error"] == 0
-    //     && $_FILES["file"]["type"] == "image/jpeg"
-    //     && mime_content_type($_FILES["file"]["tmp_name"]) == "image/jpeg"
-    //     && $_FILES["file"]["size"] < 8000000) {
+    if ($_FILES["file"]["error"] == 0
+        && $_FILES["file"]["type"] == "image/jpeg"
+        && mime_content_type($_FILES["file"]["tmp_name"]) == "image/jpeg"
+        && $_FILES["file"]["size"] < 8000000) {
 
+        echo "GOOD";
+        
         $catid = $_POST["CATID"];
         $name = $_POST["NAME"];
         $price = $_POST["PRICE"];
         $desc = $_POST["DESCRIPTION"];
-        $sql="INSERT INTO products (CATID, NAME, PRICE, DESCRIPTION) VALUES (?, ?, ?, ?);";
+        $inventory = $_POST["INVENTORY"];
+        $sql="INSERT INTO products (CATID, NAME, PRICE, DESCRIPTION, INVENTORY) VALUES (?, ?, ?, ?, ?);";
         $q = $db->prepare($sql);
         $q->bindParam(1, $catid);
         $q->bindParam(2, $name);
         $q->bindParam(3, $price);
         $q->bindParam(4, $desc);
+        $q->bindParam(5, $inventory);
         $q->execute();
         $lastId = $db->lastInsertId();
 
-        header('Location: admin.php');
+        header('Location: admin.php#product-add-form');
         exit();
         // Note: Take care of the permission of destination folder (hints: current user is apache)
-        // if (move_uploaded_file($_FILES["file"]["tmp_name"], "/var/www/html/images/" . $lastId . ".jpg")) {
-        //     // redirect back to original page; you may comment it during debug
-        //     header('Location: admin.php');
-        //     exit();
-        // }
-    // }
+        if (move_uploaded_file($_FILES["file"]["tmp_name"], "/var/www/html/images/" . $lastId . ".jpg")) {
+            // redirect back to original page; you may comment it during debug
+            header('Location: admin.php');
+            exit();
+        }
+    }
     // Only an invalid file will result in the execution below
     // To replace the content-type header which was json and output an error message
-    // header('Content-Type: text/html; charset=utf-8');
-    // echo 'Invalid file detected. <br/><a href="javascript:history.back();">Back to admin panel.</a>';
+    header('Content-Type: text/html; charset=utf-8');
+    echo 'Invalid file detected. <br/><a href="javascript:history.back();">Back to admin panel.</a>';
     exit();
 }
 
@@ -99,7 +103,7 @@ function ierg4210_cat_insert() {
     $lastId = $db->lastInsertId();
 
     // redirect back to original page; you may comment it during debug
-    header('Location: admin.php');
+    header('Location: admin.php#category-add-form');
     exit();
 }
 
@@ -120,7 +124,7 @@ function ierg4210_cat_update() {
     $lastId = $db->lastInsertId();
 
     // redirect back to original page; you may comment it during debug
-    header('Location: admin.php');
+    header('Location: admin.php#category-update-form');
     exit();
 }
 
@@ -139,7 +143,7 @@ function ierg4210_cat_delete() {
     $lastId = $db->lastInsertId();
 
     // redirect back to original page; you may comment it during debug
-    header('Location: admin.php');
+    header('Location: admin.php#category-delete-form');
     exit();
 }
 
@@ -187,20 +191,20 @@ function ierg4210_prod_fetch_by_catid($CATID) {
         return $q->fetchAll();
 }
 
-function ierg4210_prod_fetchOne() {
+function ierg4210_prod_fetchOne($PID) {
     global $db;
     $db = ierg4210_DB();
 
     $sql = "SELECT * FROM PRODUCTS WHERE PID=?;";
 
     $q = $db->prepare($sql);
-    $pid = $_POST["PID"];
+    // $pid = $_POST["PID"];
 
-    $q->bindParam(1, $pid);
+    $q->bindParam(1, $PID);
 
     $q->execute();
     if ($q->execute())
-        return $q->fetchAll();
+        return $q->fetch();
 }
 
 function ierg4210_prod_update() {
@@ -222,6 +226,6 @@ function ierg4210_prod_delete() {
     $lastId = $db->lastInsertId();
 
     // redirect back to original page; you may comment it during debug
-    header('Location: admin.php');
+    header('Location: admin.php#product-delete-form');
     exit();
 }

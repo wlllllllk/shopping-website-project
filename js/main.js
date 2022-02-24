@@ -1,7 +1,6 @@
 const image_upload_field = document.querySelector(".image-upload-field");
-console.log(image_upload_field);
 
-image_upload_field.addEventListener('dragenter', (e) => {
+image_upload_field.addEventListener('dragenter', () => {
     // console.log("ENTER");
     // image_upload_field.classList.add("drag-enter");
 });
