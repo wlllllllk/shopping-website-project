@@ -7,8 +7,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/common.css">
-    <link rel="stylesheet" href="./css/admin.css">
+    <link rel="stylesheet" href="../css/common.css">
+    <link rel="stylesheet" href="../css/admin.css">
 </head>
 <body>
     <header>
@@ -40,30 +40,36 @@
         <section class="right">
             <!-- <div class="form" id="form-1"> -->
                 <fieldset id="product-add-form">
-                    <legend>Product Add Form</legend>
+                    <legend>Product Add Form (*  = Required)</legend>
                     <form method="POST" action="">
-                        <label for="category-add-product">Category</label>
+                        <label for="category-add-product">Category *</label>
                         <select name="category-add-product" id="category-add-product">
                             <option value="cat1">Category 1</option>
                             <option value="cat2">Category 2</option>
                             <option value="cat3">Category 3</option>
                         </select>
-                        <label for="name-add-product">Product Name</label>
+                        <label for="name-add-product">Product Name *</label>
                         <input type="text" name="name-add-product" id="name-add-product">
-                        <label for="price-add-product">Price</label>
+                        <label for="price-add-product">Price *</label>
                         <input type="number" name="price-add-product" id="price-add-product">
-                        <label for="description-add-product">Product Description</label>
+                        <label for="inventory-add-product">Inventory *</label>
+                        <input type="number" name="INVENTORY" id="inventory-add-product">
+                        <label for="description-add-product">Product Description *</label>
                         <textarea name="description-add-product" id="description-add-product" cols="30" rows="10"></textarea>
                         <label for="image-add-product">Product Image</label>
                         <div class="image-upload-field">
-                            <input type="file" name="image-add-product" accept="image/jpeg"/>
+                            <div class="image-preview">
+                                <img src="" alt="">
+                                <div></div>
+                            </div>
+                            <input type="file" name="image-add-product" accept="image/jpeg" />
                         </div>
                         <input type="submit" value="Submit">
                     </form>
                 </fieldset>
 
                 <fieldset id="product-update-form">
-                    <legend>Product Update Form</legend>
+                    <legend>Product Update Form (*  = Required)</legend>
                     <form method="POST" action="">
                         <label for="category-update-product">Category</label>
                         <select name="category-update-product" id="category-update-product">
@@ -82,7 +88,7 @@
                 </fieldset>
 
                 <fieldset id="product-delete-form">
-                    <legend>Product Delete Form</legend>
+                    <legend>Product Delete Form (*  = Required)</legend>
                     <form method="POST" action="">
                         <label for="category-delete-product">Product to be Delete</label>
                         <select name="category-delete-product" id="category-delete-product">
@@ -95,7 +101,7 @@
                 </fieldset>
 
                 <fieldset id="category-add-form">
-                    <legend>Category Add Form</legend>
+                    <legend>Category Add Form (*  = Required)</legend>
                     <form method="POST" action="">
                         <label for="new-category-add">New Category</label>
                         <input type="text" name="new-category-add" id="new-category-add">
@@ -104,7 +110,7 @@
                 </fieldset>
 
                 <fieldset id="category-update-form">
-                    <legend>Category Update Form</legend>
+                    <legend>Category Update Form (*  = Required)</legend>
                     <form method="POST" action="">
                         <label for="current-category-update">Current Category</label>
                         <select name="current-category-update" id="current-category-update">
@@ -119,7 +125,7 @@
                 </fieldset>
                 
                 <fieldset id="category-delete-form">
-                    <legend>Category Delete Form</legend>
+                    <legend>Category Delete Form (*  = Required)</legend>
                     <form method="POST" action="">
                         <label for="current-category-delete">Current Category</label>
                         <select name="current-category-delete" id="current-category-delete">
@@ -134,6 +140,6 @@
         </section>
     </div>
     <footer><span>IERG4210 Assignment (Spring 2022) | Created by 1155147592</span></footer>
-    <script src="./js/main.js"></script>
+    <script src="../js/main.js"></script>
 </body>
 </html>

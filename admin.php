@@ -55,30 +55,34 @@ foreach ($products as $value_prod) {
         </section>
         <section class="right">
                 <fieldset id="product-add-form">
-                    <legend>Product Add Form</legend>
+                    <legend>Product Add Form (*  = Required)</legend>
                     <form method="POST" action="admin-process.php?action=prod_insert" enctype="multipart/form-data">
-                        <label for="category-add-product">Category</label>
+                        <label for="category-add-product">Category *</label>
                         <select id="category-add-product" name="CATID">
                             <?php echo $options_cat; ?>
                         </select>
-                        <label for="name-add-product">Product Name</label>
+                        <label for="name-add-product">Product Name *</label>
                         <input type="text" name="NAME" id="name-add-product">
-                        <label for="price-add-product">Price</label>
+                        <label for="price-add-product">Price *</label>
                         <input type="number" name="PRICE" id="price-add-product">
-                        <label for="inventory-add-product">Inventory</label>
+                        <label for="inventory-add-product">Inventory *</label>
                         <input type="number" name="INVENTORY" id="inventory-add-product">
-                        <label for="description-add-product">Product Description</label>
+                        <label for="description-add-product">Product Description *</label>
                         <textarea name="DESCRIPTION" id="description-add-product" cols="30" rows="10"></textarea>
                         <label for="image-add-product">Product Image</label>
                         <div class="image-upload-field">
-                            <input type="file" name="image-add-product" accept="image/jpeg"/>
+                            <div class="image-preview">
+                                <img src="" alt="">
+                                <div></div>
+                            </div>
+                            <input id="image-add-product" type="file" name="IMAGE" accept="image/jpeg" />
                         </div>
                         <input type="submit" value="Submit">
                     </form>
                 </fieldset>
 
                 <fieldset id="product-update-form">
-                    <legend>Product Update Form</legend>
+                    <legend>Product Update Form (*  = Required)</legend>
                     <form method="POST" action="admin-process.php?action=prod_update" enctype="multipart/form-data">
                         <label for="category-update-product">Category</label>
                         <select id="category-update-product" name="CATID">
@@ -93,13 +97,19 @@ foreach ($products as $value_prod) {
                         <label for="description-update-product">Product Description</label>
                         <textarea name="DESCRIPTION" id="description-update-product" cols="30" rows="10"></textarea>
                         <label for="image-update-product">Product Image</label>
-                        <input type="file" name="IMAGE" required="true" accept="image/jpeg"/>
+                        <div class="image-upload-field">
+                            <div class="image-preview">
+                                <img src="" alt="">
+                                <div></div>
+                            </div>
+                            <input id="image-update-product" type="file" name="IMAGE" accept="image/jpeg" />
+                        </div>                        
                         <input type="submit" value="Submit">
                     </form>
                 </fieldset>
 
                 <fieldset id="product-delete-form">
-                    <legend>Product Delete Form</legend>
+                    <legend>Product Delete Form (*  = Required)</legend>
                     <form method="POST" action="admin-process.php?action=prod_delete" enctype="multipart/form-data">
                         <label for="delete-product">Product to be Delete</label>
                         <select name="PID" id="delete-product">
@@ -110,7 +120,7 @@ foreach ($products as $value_prod) {
                 </fieldset>
 
                 <fieldset id="category-add-form">
-                    <legend>Category Add Form</legend>
+                    <legend>Category Add Form (*  = Required)</legend>
                     <form method="POST" action="admin-process.php?action=cat_insert" enctype="multipart/form-data">
                         <label for="new-category-add">New Category</label>
                         <input type="text" name="CATEGORY" id="new-category-add">
@@ -119,7 +129,7 @@ foreach ($products as $value_prod) {
                 </fieldset>
 
                 <fieldset id="category-update-form">
-                    <legend>Category Update Form</legend>
+                    <legend>Category Update Form (*  = Required)</legend>
                     <form method="POST" action="admin-process.php?action=cat_update" enctype="multipart/form-data">
                         <label for="current-category-update">Current Category</label>
                         <select name="CATID" id="current-category-update">
@@ -132,7 +142,7 @@ foreach ($products as $value_prod) {
                 </fieldset>
                 
                 <fieldset id="category-delete-form">
-                    <legend>Category Delete Form</legend>
+                    <legend>Category Delete Form (*  = Required)</legend>
                     <form method="POST" action="admin-process.php?action=cat_delete" enctype="multipart/form-data">
                         <label for="current-category-delete">Category to be Delete</label>
                         <select name="CATID" id="current-category-delete">

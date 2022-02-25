@@ -126,17 +126,48 @@ header nav h1 {
           position: relative;
           border-radius: 12px;
           border: 2px dashed var(--clr-main-light);
-
           height: 10rem;
           width: 100%;
           transition: 0.2s;
+          z-index: 1;
 
           input {
+            position: relative;
             height: 100%;
             width: 100%;
             opacity: 0;
             cursor: pointer;
+            z-index: 3;
+          }
+
+          .image-preview {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            height: 80%;
+            width: 90%;
+            // border: 3px solid red;
             z-index: 2;
+
+            img {
+              height: 100%;
+              aspect-ratio: 1;
+              object-fit: contain;
+              flex-shrink: 0;
+            }
+
+            div {
+              // flex-grow: 1;
+              // border: 3px solid yellow;
+              padding: 0 2rem;
+              text-align: center;
+              font-size: 2rem;
+              color: var(--clr-main-light);
+            }
           }
 
           &:hover {
@@ -144,14 +175,16 @@ header nav h1 {
           }
 
           &::after {
-            content: "Drag a image here to upload";
+            content: "Click to choose or drag an image here to upload";
             position: absolute;
             top: 50%;
             left: 50%;
             transform: translate(-50%, -50%);
+            width: max-content;
             font-size: 2rem;
             color: var(--clr-main-light);
-            z-index: 1;
+            z-index: 0;
+            // border: 3px solid red;
           }
         }
 
@@ -168,8 +201,12 @@ header nav h1 {
         }
 
         .drop {
+          &:hover {
+            background-color: white !important;
+          }
+
           &::after {
-            content: "Image added";
+            content: "";
           }
         }
 

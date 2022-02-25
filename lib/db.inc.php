@@ -52,13 +52,11 @@ function ierg4210_prod_insert() {
     // $q = $db->prepare($sql);
 
     // Copy the uploaded file to a folder which can be publicly accessible at incl/img/[pid].jpg
-    if ($_FILES["file"]["error"] == 0
-        && $_FILES["file"]["type"] == "image/jpeg"
-        && mime_content_type($_FILES["file"]["tmp_name"]) == "image/jpeg"
-        && $_FILES["file"]["size"] < 8000000) {
+    if ($_FILES["IMAGE"]["error"] == 0
+        && $_FILES["IMAGE"]["type"] == "image/jpeg"
+        && mime_content_type($_FILES["IMAGE"]["tmp_name"]) == "image/jpeg"
+        && $_FILES["IMAGE"]["size"] < 10000000) {
 
-        echo "GOOD";
-        
         $catid = $_POST["CATID"];
         $name = $_POST["NAME"];
         $price = $_POST["PRICE"];
@@ -74,10 +72,10 @@ function ierg4210_prod_insert() {
         $q->execute();
         $lastId = $db->lastInsertId();
 
-        header('Location: admin.php#product-add-form');
-        exit();
+        // header('Location: admin.php#product-add-form');
+        // exit();
         // Note: Take care of the permission of destination folder (hints: current user is apache)
-        if (move_uploaded_file($_FILES["file"]["tmp_name"], "/var/www/html/images/" . $lastId . ".jpg")) {
+        if (move_uploaded_file($_FILES["IMAGE"]["tmp_name"], "/var/www/html/images/" . $lastId . ".jpg")) {
             // redirect back to original page; you may comment it during debug
             header('Location: admin.php');
             exit();
