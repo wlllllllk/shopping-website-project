@@ -85,13 +85,6 @@ foreach ($categories as $value_cat) {
     </header>
 
     <div class="main">
-        <!-- <div class="location">
-            <a href="index.html">Home</a>
-            &nbsp;>&nbsp;
-            <a href="index.html">Category 1</a>
-            &nbsp;>&nbsp;
-            <a href="product.html">Product 1</a>
-        </div> -->
         <div class="location">
             <a href="index.php">Home</a>
             &nbsp;>&nbsp;
@@ -114,12 +107,6 @@ foreach ($categories as $value_cat) {
                     </p>
                 </div>
             </div>
-        </section>
-        <section>
-            <h3>More on the product</h3>
-            <p>
-                <?php echo $current_prod["DESCRIPTION"]; ?>
-            </p>
         </section>
     </div>
 

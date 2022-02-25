@@ -56,13 +56,13 @@
                         <input type="number" name="INVENTORY" id="inventory-add-product">
                         <label for="description-add-product">Product Description *</label>
                         <textarea name="description-add-product" id="description-add-product" cols="30" rows="10"></textarea>
-                        <label for="image-add-product">Product Image</label>
+                        <label for="image-update-product">Product Image (JPG/GIF/PNG <= 10MB)</label>
                         <div class="image-upload-field">
                             <div class="image-preview">
                                 <img src="" alt="">
                                 <div></div>
                             </div>
-                            <input type="file" name="image-add-product" accept="image/jpeg" />
+                            <input id="image-add-product" type="file" name="image-add-product" accept="image/jpeg" />
                         </div>
                         <input type="submit" value="Submit">
                     </form>
@@ -78,11 +78,21 @@
                             <option value="cat3">Category 3</option>
                         </select>
                         <label for="name-update-product">Product Name</label>
-                        <input type="text" name="name-update-product" id="name-update-product">
+                        <input type="text" name="NAME" id="name-update-product" pattern="^[\w\-]+$"/>
                         <label for="price-update-product">Price</label>
-                        <input type="number" name="price-update-product" id="price-update-product">
+                        <input type="number" name="PRICE" id="price-update-product" pattern="^\d+\.?\d*$"/>
+                        <label for="inventory-update-product">Inventory</label>
+                        <input type="number" name="INVENTORY" id="inventory-update-product">
                         <label for="description-update-product">Product Description</label>
-                        <textarea name="description-update-product" id="description-update-product" cols="30" rows="10"></textarea>
+                        <textarea name="DESCRIPTION" id="description-update-product" cols="30" rows="10"></textarea>
+                        <label for="image-update-product">Product Image (JPG/GIF/PNG <= 10MB)</label>
+                        <div class="image-upload-field">
+                            <div class="image-preview">
+                                <img src="" alt="">
+                                <div></div>
+                            </div>
+                            <input id="image-update-product" type="file" name="IMAGE" accept="image/jpeg" />
+                        </div>            
                         <input type="submit" value="Submit">
                     </form>
                 </fieldset>

@@ -69,7 +69,7 @@ foreach ($products as $value_prod) {
                         <input type="number" name="INVENTORY" id="inventory-add-product">
                         <label for="description-add-product">Product Description *</label>
                         <textarea name="DESCRIPTION" id="description-add-product" cols="30" rows="10"></textarea>
-                        <label for="image-add-product">Product Image</label>
+                        <label for="image-add-product">Product Image (JPG/GIF/PNG <= 10MB)</label>
                         <div class="image-upload-field">
                             <div class="image-preview">
                                 <img src="" alt="">
@@ -84,19 +84,23 @@ foreach ($products as $value_prod) {
                 <fieldset id="product-update-form">
                     <legend>Product Update Form (*  = Required)</legend>
                     <form method="POST" action="admin-process.php?action=prod_update" enctype="multipart/form-data">
-                        <label for="category-update-product">Category</label>
+                        <label for="id-update-product">Current Product *</label>
+                        <select id="id-update-product" name="PID">
+                            <?php echo $options_prod; ?>
+                        </select>
+                        <label for="category-update-product">Updated Category *</label>
                         <select id="category-update-product" name="CATID">
                             <?php echo $options_cat; ?>
                         </select>
-                        <label for="name-update-product">Product Name</label>
-                        <input type="text" name="NAME" id="name-update-product" pattern="^[\w\-]+$"/>
-                        <label for="price-update-product">Price</label>
+                        <label for="name-update-product">Updated Product Name *</label>
+                        <input type="text" name="NAME" id="name-update-product">
+                        <label for="price-update-product">Updated Price *</label>
                         <input type="number" name="PRICE" id="price-update-product" pattern="^\d+\.?\d*$"/>
-                        <label for="inventory-update-product">Inventory</label>
+                        <label for="inventory-update-product">Updated Inventory *</label>
                         <input type="number" name="INVENTORY" id="inventory-update-product">
-                        <label for="description-update-product">Product Description</label>
+                        <label for="description-update-product">Updated Product Description *</label>
                         <textarea name="DESCRIPTION" id="description-update-product" cols="30" rows="10"></textarea>
-                        <label for="image-update-product">Product Image</label>
+                        <label for="image-update-product">Updated Product Image (JPG/GIF/PNG <= 10MB)</label>
                         <div class="image-upload-field">
                             <div class="image-preview">
                                 <img src="" alt="">

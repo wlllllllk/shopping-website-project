@@ -206,7 +206,31 @@ function ierg4210_prod_fetchOne($PID) {
 }
 
 function ierg4210_prod_update() {
+    global $db;
+    $db = ierg4210_DB();
 
+    $sql = "UPDATE PRODUCTS SET CATID=?, NAME=?, PRICE=?, DESCRIPTION=?, INVENTORY=? WHERE PID=?;";
+
+    $q = $db->prepare($sql);
+    $pid = $_POST["PID"];
+    $catid = $_POST["CATID"];
+    $name = $_POST["NAME"];
+    $price = $_POST["PRICE"];
+    $desc = $_POST["DESCRIPTION"];
+    $inventory = $_POST["INVENTORY"];
+
+    $q->bindParam(1, $catid);
+    $q->bindParam(2, $name);
+    $q->bindParam(3, $price);
+    $q->bindParam(4, $desc);
+    $q->bindParam(5, $inventory);
+    $q->bindParam(6, $pid);
+    $q->execute();
+    $lastId = $db->lastInsertId();
+
+    // redirect back to original page; you may comment it during debug
+    header('Location: admin.php#product-update-form');
+    exit();
 }
 
 function ierg4210_prod_delete() {
