@@ -75,7 +75,14 @@ function ierg4210_prod_insert() {
         // header('Location: admin.php#product-add-form');
         // exit();
         // Note: Take care of the permission of destination folder (hints: current user is apache)
+
+        $original = imagecreatefromjpeg($_FILES["IMAGE"]["tmp_name"]);
         if (move_uploaded_file($_FILES["IMAGE"]["tmp_name"], "/var/www/html/images/" . $lastId . ".jpg")) {
+            $temp_thumb = imagescale($original, 300, -1);
+            imagejpeg($temp_thumb, "/var/www/html/images/thumbnails/".$lastId."_thumbnail.jpg");
+            imagedestroy($original);
+            imagedestroy($temp_thumb);
+
             // redirect back to original page; you may comment it during debug
             header('Location: admin.php');
             exit();

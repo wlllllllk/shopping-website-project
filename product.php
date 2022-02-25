@@ -94,7 +94,7 @@ foreach ($categories as $value_cat) {
         </div>
         <section class="product-details">
             <div class="left">
-                <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                <div class="photo"><img src="<?php echo "./images/".$current_prod["PID"].".jpg"; ?>" alt="umbrella"></div>
                 <div class="inventory">Inventory: Only <?php echo $current_prod["INVENTORY"]; ?> left!</div>
                 <button>Add to Cart</button>
             </div>

@@ -11,7 +11,7 @@ $div_prod = '';
 foreach ($products as $value_prod) {
     $div_prod .= '<div class="product">
                     <a href="product.php?pid='.$value_prod["PID"].'">
-                        <div class="photo"><img src="./images/product.jpg" alt="" /></div>
+                        <div class="photo"><img src="./images/thumbnails/'.$value_prod["PID"].'_thumbnail.jpg" alt="" /></div>
                     </a>
                     <div class="text">
                         <a href="product.php?pid='.$value_prod["PID"].'">
