@@ -45,7 +45,7 @@ header nav h1 {
   text-decoration: none;
   color: var(--clr-text);
   font-size: 1.75rem;
-  padding: 0 0 0 1rem;
+  padding: 0 1rem;
   -webkit-transition: 0.1s;
   transition: 0.1s;
 }

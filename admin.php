@@ -3,8 +3,8 @@ require __DIR__.'/lib/db.inc.php';
 $categories = ierg4210_cat_fetchAll();
 $products = ierg4210_prod_fetchAll();
 
-$options_cat = '';
-$options_prod = '';
+$options_cat = '<option selected disabled>Choose Category</option>';
+$options_prod = '<option selected disabled>Choose Product</option>';
 
 foreach ($categories as $value_cat) {
     $options_cat .= '<option value="'.$value_cat["CATID"].'"> '.$value_cat["NAME"].' </option>';
