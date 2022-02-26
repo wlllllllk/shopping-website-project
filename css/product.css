@@ -40,8 +40,8 @@ p {
 .product-details .left .photo img {
   height: 100%;
   width: 100%;
-  -o-object-fit: cover;
-     object-fit: cover;
+  -o-object-fit: contain;
+     object-fit: contain;
   border-radius: var(--value-default-border-radius);
 }
 

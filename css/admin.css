@@ -138,6 +138,8 @@ header nav h1 {
   color: var(--clr-text);
   resize: none;
   height: 100%;
+  -webkit-transition: 0.1s;
+  transition: 0.1s;
 }
 
 .main .right fieldset form .image-upload-field {
@@ -229,18 +231,38 @@ header nav h1 {
   content: "";
 }
 
-.main .right fieldset form input[type="submit"] {
+.main .right fieldset form .actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
   height: 3rem;
   margin: 1.5rem 0;
-  background-color: var(--clr-main-light);
-  color: white;
+}
+
+.main .right fieldset form .actions input {
+  height: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  color: var(--clr-text);
   cursor: pointer;
   -webkit-transition: 0.2s;
   transition: 0.2s;
 }
 
-.main .right fieldset form input[type="submit"]:hover {
-  -webkit-filter: brightness(0.9);
-          filter: brightness(0.9);
+.main .right fieldset form .actions input:hover {
+  -webkit-filter: brightness(0.8);
+          filter: brightness(0.8);
+}
+
+.main .right fieldset form input[type="submit"] {
+  color: white;
+  background-color: var(--clr-main-light);
+}
+
+.invalid {
+  outline: 3px solid rgba(255, 0, 0, 0.555) !important;
+  border: 1px solid red !important;
 }
 /*# sourceMappingURL=admin.css.map */

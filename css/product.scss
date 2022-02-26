@@ -30,7 +30,7 @@ p {
       img {
         height: 100%;
         width: 100%;
-        object-fit: cover;
+        object-fit: contain;
         border-radius: var(--value-default-border-radius);
       }
     }
@@ -87,18 +87,3 @@ p {
     }
   }
 }
-
-// for demo purpose only
-// .selected {
-//   background-color: var(--clr-main-light);
-//   a {
-//     color: white;
-//   }
-// }
-
-// .categories ul li:first-of-type {
-//   background-color: var(--clr-main-light);
-//   a {
-//     color: white;
-//   }
-// }

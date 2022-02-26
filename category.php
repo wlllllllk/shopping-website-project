@@ -18,7 +18,7 @@ $div_prod = '';
 foreach ($products as $value_prod) {
     $div_prod .= '<div class="product">
                     <a href="product.php?pid='.$value_prod["PID"].'">
-                        <div class="photo"><img src="./images/thumbnails/'.$value_prod["PID"].'_thumbnail.jpg" alt="" /></div>
+                        <div class="photo"><img src="'.$value_prod["THUMBNAIL"].'" alt="" /></div>
                     </a>
                     <div class="text">
                         <a href="product.php?pid='.$value_prod["PID"].'">
@@ -59,21 +59,21 @@ foreach ($products as $value_prod) {
                             <ul>
                                 <li>
                                     <div class="details">
-                                        <a href="product.html">
-                                            <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                                        <a href="product.php?pid=7">
+                                            <div class="photo"><img src="./images/7.jpg" alt=""></div>
                                         </a>
                                         <div class="text">
-                                            <span class="name">Product 11</span>
+                                            <span class="name">Doge</span>
                                             <div>
                                                 <input type="number" value="1">
-                                                <span class="price">$123.4</span>
+                                                <span class="price">$8700</span>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
                             <div class="bottom">
-                                <span class="price">Total: $123.4</span>
+                                <span class="price">Total: $8700</span>
                                 <button>Checkout</button>
                             </div>
                         </div>

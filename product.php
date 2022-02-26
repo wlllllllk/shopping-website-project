@@ -45,21 +45,21 @@ foreach ($categories as $value_cat) {
                             <ul>
                                 <li>
                                     <div class="details">
-                                        <a href="product.html">
-                                            <div class="photo"><img src="./images/product.jpg" alt=""></div>
+                                        <a href="product.php?pid=7">
+                                            <div class="photo"><img src="./images/7.jpg" alt=""></div>
                                         </a>
                                         <div class="text">
-                                            <span class="name">Product 11</span>
+                                            <span class="name">Doge</span>
                                             <div>
                                                 <input type="number" value="1">
-                                                <span class="price">$123.4</span>
+                                                <span class="price">$8700</span>
                                             </div>
                                         </div>
                                     </div>
                                 </li>
                             </ul>
                             <div class="bottom">
-                                <span class="price">Total: $123.4</span>
+                                <span class="price">Total: $8700</span>
                                 <button>Checkout</button>
                             </div>
                         </div>
@@ -94,7 +94,7 @@ foreach ($categories as $value_cat) {
         </div>
         <section class="product-details">
             <div class="left">
-                <div class="photo"><img src="<?php echo "./images/".$current_prod["PID"].".jpg"; ?>" alt=""></div>
+                <div class="photo"><img src="<?php echo $current_prod["IMAGE"]; ?>" alt=""></div>
                 <div class="inventory">Inventory: Only <?php echo $current_prod["INVENTORY"]; ?> left!</div>
                 <button>Add to Cart</button>
             </div>
@@ -103,7 +103,7 @@ foreach ($categories as $value_cat) {
                 <div class="price">$<?php echo $current_prod["PRICE"]; ?></div>
                 <div class="description">
                     <p>
-                        <?php echo $current_prod["DESCRIPTION"]; ?>
+                        <?php echo nl2br($current_prod["DESCRIPTION"]); ?>
                     </p>
                 </div>
             </div>
