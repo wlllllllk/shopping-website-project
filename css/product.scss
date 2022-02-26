@@ -17,7 +17,7 @@ p {
     position: sticky;
     top: 10.5rem;
     height: fit-content;
-    background-color: white;
+    background-color: var(--clr-bg);
 
     .photo {
       margin-top: 0.5rem;
@@ -38,6 +38,7 @@ p {
     .inventory {
       margin-top: 1rem;
       font-size: 2rem;
+      color: var(--clr-text);
     }
 
     button {
@@ -48,7 +49,7 @@ p {
       font-family: "Dongle", sans-serif;
       font-size: 1.72rem;
       color: var(--clr-main-light);
-      background-color: white;
+      background-color: var(--clr-bg);
       border: 1px solid var(--clr-main-light);
       border-radius: var(--value-default-border-radius);
       transition: 0.1s;
@@ -61,13 +62,15 @@ p {
   }
 
   .text {
+    color: var(--clr-text);
+
     .name {
       font-size: 3rem;
       font-weight: 400;
       position: sticky;
       top: 10.5rem;
       scroll-padding-top: 2rem;
-      background-color: white;
+      background-color: var(--clr-bg);
       z-index: 1;
     }
 
@@ -76,7 +79,7 @@ p {
       color: var(--clr-main-light);
       position: sticky;
       top: 13.5rem;
-      background-color: white;
+      background-color: var(--clr-bg);
     }
 
     .description {

@@ -8,6 +8,7 @@ header nav h1 {
   display: flex;
   gap: 2rem;
   margin: 2rem 5% 0 5%;
+  color: var(--clr-text);
 }
 
 .main .left {
@@ -42,7 +43,7 @@ header nav h1 {
 
 .main .left ul li a {
   text-decoration: none;
-  color: black;
+  color: var(--clr-text);
   font-size: 1.75rem;
   padding: 0 0 0 1rem;
   -webkit-transition: 0.1s;
@@ -121,6 +122,8 @@ header nav h1 {
   outline: none;
   border-radius: var(--value-default-border-radius);
   border: 1px solid var(--clr-main-light);
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
 }
 
 .main .right fieldset form textarea {
@@ -131,6 +134,8 @@ header nav h1 {
   outline: none;
   border-radius: var(--value-default-border-radius);
   border: 1px solid var(--clr-main-light);
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
   resize: none;
   height: 100%;
 }
@@ -150,7 +155,7 @@ header nav h1 {
   position: relative;
   height: 100%;
   width: 100%;
-  opacity: 0.5;
+  opacity: 0;
   cursor: pointer;
   z-index: 3;
 }
@@ -217,7 +222,7 @@ header nav h1 {
 }
 
 .main .right fieldset form .drop:hover {
-  background-color: white !important;
+  background-color: var(--clr-bg) !important;
 }
 
 .main .right fieldset form .drop::after {

@@ -8,6 +8,8 @@
 }
 
 :root {
+  --clr-bg: #ffffff;
+  --clr-text: #000000;
   --clr-main: #7e25cb;
   --clr-main-light: #9e80b1;
   --clr-main-lighter: #ffe9ff;
@@ -23,6 +25,26 @@
   );
 }
 
+@media (prefers-color-scheme: dark) {
+  :root {
+    --clr-bg: #222222;
+    --clr-text: #ffffff;
+    --clr-main: #7e25cb;
+    --clr-main-light: #b994cf;
+    --clr-main-lighter: #ffe9ff;
+    --clr-main-contrast: #61baad;
+    --clr-main-dark: #3a2a46;
+    --value-default-border-radius: 6px;
+    --value-default-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    --value-default-linear-gradient: linear-gradient(
+      90deg,
+      rgb(100, 100, 100) 0%,
+      rgb(115, 115, 115) 60%,
+      rgb(100, 100, 100) 100%
+    );
+  }
+}
+
 html {
   scroll-padding-top: 7rem;
 }
@@ -30,6 +52,7 @@ html {
 body {
   min-height: 100vh;
   font-family: "Dongle", sans-serif;
+  background-color: var(--clr-bg);
 }
 
 header {
@@ -82,6 +105,8 @@ header nav .searchBar input {
   font-size: 1.5rem;
   font-weight: 300;
   border-radius: var(--value-default-border-radius);
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
   border: none;
   outline: none;
   padding: 0 1rem;
@@ -119,7 +144,8 @@ header nav .actions .shopping-list .container {
   height: fit-content;
   max-height: 50vh;
   overflow-y: auto;
-  background-color: white;
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
   border-radius: var(--value-default-border-radius);
   -webkit-box-shadow: 0 0 100px 5px rgba(0, 0, 0, 0.5);
           box-shadow: 0 0 100px 5px rgba(0, 0, 0, 0.5);
@@ -148,7 +174,7 @@ header nav .actions .shopping-list .container .contents h3 {
   position: sticky;
   top: 0;
   padding: 0.5rem 1rem 0 1rem;
-  background-color: white;
+  background-color: var(--clr-bg);
   z-index: 1;
   border-radius: var(--value-default-border-radius);
 }
@@ -230,6 +256,8 @@ header nav .actions .shopping-list .container .contents ul .details .text div in
   font-weight: 300;
   border-radius: var(--value-default-border-radius);
   border: 1px solid var(--clr-main-light);
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
   outline: none;
   text-align: center;
   /* Chrome, Safari, Edge, Opera */
@@ -307,7 +335,7 @@ header .categories {
           align-items: center;
   width: 100%;
   height: 3rem;
-  background-color: white;
+  background-color: var(--clr-bg);
 }
 
 header .categories h3 {
@@ -328,7 +356,7 @@ header .categories ul {
   height: 100%;
   width: 100%;
   margin: 0 1rem;
-  background-color: white;
+  background-color: var(--clr-bg);
   overflow-x: auto;
   /* Hide scrollbar for Chrome, Safari and Opera */
   /* Hide scrollbar for IE, Edge and Firefox */
@@ -427,7 +455,7 @@ header .categories .selector a:hover {
   margin: 0 5%;
   font-weight: 300;
   line-height: 1;
-  background-color: white;
+  background-color: var(--clr-bg);
 }
 
 .main .location {
@@ -435,14 +463,15 @@ header .categories .selector a:hover {
   position: sticky;
   top: 8rem;
   padding-top: 1rem;
-  background-color: white;
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
   font-size: 1.5rem;
   z-index: 1;
 }
 
 .main .location a {
   text-decoration: none;
-  color: black;
+  color: var(--clr-text);
 }
 
 .main .location a:hover {
@@ -462,8 +491,9 @@ header .categories .selector a:hover {
   position: -webkit-sticky;
   position: sticky;
   top: 10.5rem;
-  background-color: white;
+  background-color: var(--clr-bg);
   font-size: 3rem;
+  color: var(--clr-text);
 }
 
 footer {

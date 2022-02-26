@@ -35,7 +35,7 @@
 
 .product-list .product a {
   text-decoration: none;
-  color: black;
+  color: var(--clr-text);
 }
 
 .product-list .product a .name {
@@ -51,6 +51,7 @@
 
 .product-list .product .price {
   font-size: 1.6rem;
+  color: var(--clr-text);
   cursor: default;
 }
 
@@ -61,7 +62,7 @@
   font-family: "Dongle", sans-serif;
   font-size: 1.4rem;
   color: var(--clr-main-light);
-  background-color: white;
+  background-color: var(--clr-bg);
   border: 1px solid var(--clr-main-light);
   border-radius: var(--value-default-border-radius);
   -webkit-transition: 0.1s;

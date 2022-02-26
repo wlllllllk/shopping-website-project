@@ -24,7 +24,7 @@ p {
   height: -webkit-fit-content;
   height: -moz-fit-content;
   height: fit-content;
-  background-color: white;
+  background-color: var(--clr-bg);
 }
 
 .product-details .left .photo {
@@ -48,6 +48,7 @@ p {
 .product-details .left .inventory {
   margin-top: 1rem;
   font-size: 2rem;
+  color: var(--clr-text);
 }
 
 .product-details .left button {
@@ -58,7 +59,7 @@ p {
   font-family: "Dongle", sans-serif;
   font-size: 1.72rem;
   color: var(--clr-main-light);
-  background-color: white;
+  background-color: var(--clr-bg);
   border: 1px solid var(--clr-main-light);
   border-radius: var(--value-default-border-radius);
   -webkit-transition: 0.1s;
@@ -70,6 +71,10 @@ p {
   background-color: var(--clr-main-light);
 }
 
+.product-details .text {
+  color: var(--clr-text);
+}
+
 .product-details .text .name {
   font-size: 3rem;
   font-weight: 400;
@@ -77,7 +82,7 @@ p {
   position: sticky;
   top: 10.5rem;
   scroll-padding-top: 2rem;
-  background-color: white;
+  background-color: var(--clr-bg);
   z-index: 1;
 }
 
@@ -87,7 +92,7 @@ p {
   position: -webkit-sticky;
   position: sticky;
   top: 13.5rem;
-  background-color: white;
+  background-color: var(--clr-bg);
 }
 
 .product-details .text .description {
