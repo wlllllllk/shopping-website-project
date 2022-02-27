@@ -42,7 +42,7 @@
         <section class="right">
             <!-- <div class="form" id="form-1"> -->
             <fieldset id="product-add-form">
-                <legend>Product Add Form (* = Required)</legend>
+                <legend>Product Add Form &#40;&#42; &#61; Required&#41;</legend>
                 <form class="form-with-image" method="POST" action="">
                     <label for="category-add-product">Category *</label>
                     <select name="category-add-product" id="category-add-product">
@@ -77,45 +77,100 @@
             </fieldset>
 
             <fieldset id="product-update-form">
-                <legend>Product Update Form (* = Required)</legend>
-                <form class="form-with-image" method="POST" action="">
-                    <label for="id-update-product">Current Product &#42;</label>
-                    <select id="id-update-product" name="PID">
-                        <option value="cat1">Category 1</option>
-                        <option value="cat2">Category 2</option>
-                        <option value="cat3">Category 3</option>
-                    </select>
-                    <label for="category-update-product">Updated Category &#42;</label>
-                    <select id="category-update-product" name="CATID">
-                        <option value="cat1">Category 1</option>
-                        <option value="cat2">Category 2</option>
-                        <option value="cat3">Category 3</option>                    
-                    </select>
-                    <label for="name-update-product">Product Name</label>
-                    <input type="text" name="NAME" id="name-update-product" pattern="^[\w\-]+$" />
-                    <label for="price-update-product">Price</label>
-                    <input type="number" name="PRICE" id="price-update-product" pattern="^\d+\.?\d*$" />
-                    <label for="inventory-update-product">Inventory</label>
-                    <input type="number" name="INVENTORY" id="inventory-update-product">
-                    <label for="description-update-product">Product Description</label>
-                    <textarea name="DESCRIPTION" id="description-update-product" cols="30" rows="10"></textarea>
-                    <label for="image-update-product">Product Image (JPG/GIF/PNG <= 10MB)</label>
-                            <div class="image-upload-field">
-                                <div class="image-preview">
-                                    <img src="" alt="">
-                                    <div></div>
+                <legend class="no-move">Product Update Form &#40;&#42; &#61; Required&#41;</legend>
+                <div class="form-content">
+                    <div class="product-list">
+                        <h4>Product List</h4>
+                        <div class="product">
+                            <div class="product-image">
+                                <img src="../images/product.jpg" alt="">
+                            </div>
+                            <div class="product-name">Product 1</div>
+                            <div class="product-id">PID: 1</div>
+                        </div>
+                        <div class="product">
+                            <div class="product-image">
+                                <img src="../images/product.jpg" alt="">
+                            </div>
+                            <div class="product-name">Product 1</div>
+                            <div class="product-id">PID: 1</div>
+                        </div>
+                        <div class="product">
+                            <div class="product-image">
+                                <img src="../images/product.jpg" alt="">
+                            </div>
+                            <div class="product-name">Product 1</div>
+                            <div class="product-id">PID: 1</div>
+                        </div>
+                        <div class="product">
+                            <div class="product-image">
+                                <img src="../images/product.jpg" alt="">
+                            </div>
+                            <div class="product-name">Product 1</div>
+                            <div class="product-id">PID: 1</div>
+                        </div>
+                        <div class="product">
+                            <div class="product-image">
+                                <img src="../images/product.jpg" alt="">
+                            </div>
+                            <div class="product-name">Product 1</div>
+                            <div class="product-id">PID: 1</div>
+                        </div>
+                        <div class="product">
+                            <div class="product-image">
+                                <img src="../images/product.jpg" alt="">
+                            </div>
+                            <div class="product-name">Product 1</div>
+                            <div class="product-id">PID: 1</div>
+                        </div>
+                        <div class="product">
+                            <div class="product-image">
+                                <img src="../images/product.jpg" alt="">
+                            </div>
+                            <div class="product-name">Product 1</div>
+                            <div class="product-id">PID: 1</div>
+                        </div>
+                    </div>
+                    <form class="form-with-image" method="POST" action="">
+                        <label for="id-update-product">Current Product &#42;</label>
+                        <select id="id-update-product" name="PID">
+                            <option value="cat1">Category 1</option>
+                            <option value="cat2">Category 2</option>
+                            <option value="cat3">Category 3</option>
+                        </select>
+                        <label for="category-update-product">Updated Category &#42;</label>
+                        <select id="category-update-product" name="CATID">
+                            <option value="cat1">Category 1</option>
+                            <option value="cat2">Category 2</option>
+                            <option value="cat3">Category 3</option>
+                        </select>
+                        <label for="name-update-product">Product Name</label>
+                        <input type="text" name="NAME" id="name-update-product" pattern="^[\w\-]+$" />
+                        <label for="price-update-product">Price</label>
+                        <input type="number" name="PRICE" id="price-update-product" pattern="^\d+\.?\d*$" />
+                        <label for="inventory-update-product">Inventory</label>
+                        <input type="number" name="INVENTORY" id="inventory-update-product">
+                        <label for="description-update-product">Product Description</label>
+                        <textarea name="DESCRIPTION" id="description-update-product" cols="30" rows="10"></textarea>
+                        <label for="image-update-product">Product Image (JPG/GIF/PNG <= 10MB)</label>
+                                <div class="image-upload-field">
+                                    <div class="image-preview">
+                                        <img src="" alt="">
+                                        <div></div>
+                                    </div>
+                                    <input id="image-update-product" type="file" name="IMAGE" accept="image/jpeg" />
                                 </div>
-                                <input id="image-update-product" type="file" name="IMAGE" accept="image/jpeg" />
-                            </div>
-                            <div class="actions">
-                                <input type="reset" value="Reset">
-                                <input type="submit" value="Submit">
-                            </div>
-                </form>
+                                <div class="actions">
+                                    <input type="reset" value="Reset">
+                                    <input type="submit" value="Submit">
+                                </div>
+                    </form>
+                </div>
+
             </fieldset>
 
             <fieldset id="product-delete-form">
-                <legend>Product Delete Form (* = Required)</legend>
+                <legend class="no-move">Product Delete Form &#40;&#42; &#61; Required&#41;</legend>
                 <form method="POST" action="">
                     <label for="category-delete-product">Product to be Delete</label>
                     <select name="category-delete-product" id="category-delete-product">

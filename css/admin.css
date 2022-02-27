@@ -82,6 +82,65 @@ header nav h1 {
   margin-left: 2rem;
 }
 
+.main .right fieldset legend.no-move {
+  margin-left: 0.3rem;
+}
+
+.main .right fieldset .form-content {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.main .right fieldset .form-content .product-list {
+  width: 10%;
+  height: 80vh;
+  overflow-x: hidden;
+  overflow-y: scroll;
+  padding: 0 0.3rem;
+  -ms-flex-negative: 0;
+      flex-shrink: 0;
+}
+
+.main .right fieldset .form-content .product-list h4 {
+  position: -webkit-sticky;
+  position: sticky;
+  top: 0;
+  background-color: var(--clr-bg);
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+.main .right fieldset .form-content .product-list .product {
+  margin-bottom: 1rem;
+}
+
+.main .right fieldset .form-content .product-list .product .product-image {
+  width: 100%;
+  aspect-ratio: 1;
+}
+
+.main .right fieldset .form-content .product-list .product .product-image img {
+  height: 100%;
+  width: 100%;
+  -o-object-fit: cover;
+     object-fit: cover;
+  border-radius: var(--value-default-border-radius);
+}
+
+.main .right fieldset .form-content .product-list .product .product-name {
+  margin-top: 0.1rem;
+  font-size: 1.65rem;
+  font-weight: 400;
+  color: var(--clr-text);
+}
+
+.main .right fieldset .form-content .product-list .product .product-id {
+  font-size: 1.5rem;
+  line-height: 0.8;
+  color: var(--clr-text);
+}
+
 .main .right fieldset form {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -90,6 +149,9 @@ header nav h1 {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
   margin: 0 2rem;
 }
 
@@ -137,7 +199,6 @@ header nav h1 {
   background-color: var(--clr-bg);
   color: var(--clr-text);
   resize: none;
-  height: 100%;
   -webkit-transition: 0.1s;
   transition: 0.1s;
 }

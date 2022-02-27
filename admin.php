@@ -5,13 +5,22 @@ $products = ierg4210_prod_fetchAll();
 
 $options_cat = '<option selected disabled>Choose Category</option>';
 $options_prod = '<option selected disabled>Choose Product</option>';
+$divs_prod = '';
 
 foreach ($categories as $value_cat) {
     $options_cat .= '<option value="'.$value_cat["CATID"].'"> '.$value_cat["NAME"].' </option>';
 }
 
 foreach ($products as $value_prod) {
-    $options_prod .= '<option value="'.$value_prod["PID"].'"> (CATID: '.$value_prod["CATID"].') '.$value_prod["NAME"].' </option>';
+    $options_prod .= '<option value="'.$value_prod["PID"].'"> (PID: '.$value_prod["PID"].') '.$value_prod["NAME"].' </option>';
+    $divs_prod .= '<div class="product">
+                        <div class="product-image">
+                            <img src="'.$value_prod["THUMBNAIL"].'" alt="">
+                        </div>
+                        <div class="product-name">'.$value_prod["NAME"].'</div>
+                        <div class="product-id">PID: '.$value_prod["PID"].'</div>
+                        <div class="product-id">CATID: '.$value_prod["CATID"].'</div>
+                    </div>';
 }
 ?>
 
@@ -85,51 +94,63 @@ foreach ($products as $value_prod) {
                 </fieldset>
 
                 <fieldset id="product-update-form">
-                    <legend>Product Update Form &#40;&#42; &#61; Required&#41;</legend>
-                    <form class="form-with-image" method="POST" action="admin-process.php?action=prod_update" enctype="multipart/form-data">
-                        <label for="id-update-product">Current Product &#42;</label>
-                        <select id="id-update-product" name="PID">
-                            <?php echo $options_prod; ?>
-                        </select>
-                        <label for="category-update-product">Updated Category &#42;</label>
-                        <select id="category-update-product" name="CATID">
-                            <?php echo $options_cat; ?>
-                        </select>
-                        <label for="name-update-product">Updated Product Name &#42;</label>
-                        <input type="text" name="NAME" id="name-update-product" pattern="^[\w\- ]+$" required>
-                        <label for="price-update-product">Updated Price &#42;</label>
-                        <input type="number" name="PRICE" step="any" id="price-update-product" pattern="^\d+\.?\d*$" required>
-                        <label for="inventory-update-product">Updated Inventory &#42;</label>
-                        <input type="number" name="INVENTORY" id="inventory-update-product" required>
-                        <label for="description-update-product">Updated Product Description &#40;No Special Characters&#41; &#42;</label>
-                        <textarea name="DESCRIPTION" id="description-update-product" cols="30" rows="10" required></textarea>
-                        <label for="image-update-product">Updated Product Image &#40;JPG&#47;GIF&#47;PNG &lt;&#61; 10MB&#41;</label>
-                        <div class="image-upload-field">
-                            <div class="image-preview">
-                                <img src="" alt="">
-                                <div></div>
-                            </div>
-                            <input id="image-update-product" type="file" name="IMAGE" accept="image/jpeg, image/png, image/gif">
-                        </div>                        
-                        <div class="actions">
-                            <input type="reset" value="Reset">
-                            <input type="submit" value="Submit">
+                    <legend class="no-move">Product Update Form &#40;&#42; &#61; Required&#41;</legend>
+                    <div class="form-content">
+                        <div class="product-list">
+                            <h4>Product List</h4>
+                            <?php echo $divs_prod; ?>
                         </div>
-                    </form>
+                        <form class="form-with-image" method="POST" action="admin-process.php?action=prod_update" enctype="multipart/form-data">
+                            <label for="id-update-product">Current Product &#42;</label>
+                            <select id="id-update-product" name="PID">
+                                <?php echo $options_prod; ?>
+                            </select>
+                            <label for="category-update-product">Updated Category &#42;</label>
+                            <select id="category-update-product" name="CATID">
+                                <?php echo $options_cat; ?>
+                            </select>
+                            <label for="name-update-product">Updated Product Name &#42;</label>
+                            <input type="text" name="NAME" id="name-update-product" pattern="^[\w\- ]+$" required>
+                            <label for="price-update-product">Updated Price &#42;</label>
+                            <input type="number" name="PRICE" step="any" id="price-update-product" pattern="^\d+\.?\d*$" required>
+                            <label for="inventory-update-product">Updated Inventory &#42;</label>
+                            <input type="number" name="INVENTORY" id="inventory-update-product" required>
+                            <label for="description-update-product">Updated Product Description &#40;No Special Characters&#41; &#42;</label>
+                            <textarea name="DESCRIPTION" id="description-update-product" cols="30" rows="10" required></textarea>
+                            <label for="image-update-product">Updated Product Image &#40;JPG&#47;GIF&#47;PNG &lt;&#61; 10MB&#41;</label>
+                            <div class="image-upload-field">
+                                <div class="image-preview">
+                                    <img src="" alt="">
+                                    <div></div>
+                                </div>
+                                <input id="image-update-product" type="file" name="IMAGE" accept="image/jpeg, image/png, image/gif">
+                            </div>                        
+                            <div class="actions">
+                                <input type="reset" value="Reset">
+                                <input type="submit" value="Submit">
+                            </div>
+                        </form>
+                    </div>
                 </fieldset>
 
                 <fieldset id="product-delete-form">
-                    <legend>Product Delete Form &#40;&#42; &#61; Required&#41;</legend>
-                    <form method="POST" action="admin-process.php?action=prod_delete" enctype="multipart/form-data">
-                        <label for="delete-product">Product to be Deleted &#42;</label>
-                        <select name="PID" id="delete-product">
-                            <?php echo $options_prod; ?>
-                        </select>
-                        <div class="actions">
-                            <input type="reset" value="Reset">
-                            <input type="submit" value="Submit">
+                    <legend class="no-move">Product Delete Form &#40;&#42; &#61; Required&#41;</legend>
+                    <div class="form-content">
+                        <div class="product-list">
+                            <h4>Product List</h4>
+                            <?php echo $divs_prod; ?>
                         </div>
-                    </form>
+                        <form method="POST" action="admin-process.php?action=prod_delete" enctype="multipart/form-data">
+                            <label for="delete-product">Product to be Deleted &#42;</label>
+                            <select name="PID" id="delete-product">
+                                <?php echo $options_prod; ?>
+                            </select>
+                            <div class="actions">
+                                <input type="reset" value="Reset">
+                                <input type="submit" value="Submit">
+                            </div>
+                        </form>
+                    </div>
                 </fieldset>
 
                 <fieldset id="category-add-form">
