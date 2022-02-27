@@ -43,9 +43,10 @@
             <!-- <div class="form" id="form-1"> -->
             <fieldset id="product-add-form">
                 <legend>Product Add Form &#40;&#42; &#61; Required&#41;</legend>
-                <form class="form-with-image" method="POST" action="">
+                <form class="form-with-image" method="POST" action="#" onsubmit="return check_option(this);">
                     <label for="category-add-product">Category *</label>
                     <select name="category-add-product" id="category-add-product">
+                        <option selected disabled></option>
                         <option value="cat1">Category 1</option>
                         <option value="cat2">Category 2</option>
                         <option value="cat3">Category 3</option>
@@ -131,15 +132,17 @@
                             <div class="product-id">PID: 1</div>
                         </div>
                     </div>
-                    <form class="form-with-image" method="POST" action="">
+                    <form class="form-with-image" method="POST" action="" onsubmit="return check_option(this);">
                         <label for="id-update-product">Current Product &#42;</label>
                         <select id="id-update-product" name="PID">
+                            <option selected disabled></option>
                             <option value="cat1">Category 1</option>
                             <option value="cat2">Category 2</option>
                             <option value="cat3">Category 3</option>
                         </select>
                         <label for="category-update-product">Updated Category &#42;</label>
                         <select id="category-update-product" name="CATID">
+                            <option selected disabled></option>
                             <option value="cat1">Category 1</option>
                             <option value="cat2">Category 2</option>
                             <option value="cat3">Category 3</option>
@@ -171,9 +174,10 @@
 
             <fieldset id="product-delete-form">
                 <legend class="no-move">Product Delete Form &#40;&#42; &#61; Required&#41;</legend>
-                <form method="POST" action="">
+                <form method="POST" action="" onsubmit="return check_option(this);">
                     <label for="category-delete-product">Product to be Delete</label>
                     <select name="category-delete-product" id="category-delete-product">
+                        <option selected disabled></option>
                         <option value="cat1">Category 1</option>
                         <option value="cat2">Category 2</option>
                         <option value="cat3">Category 3</option>
@@ -199,9 +203,10 @@
 
             <fieldset id="category-update-form">
                 <legend>Category Update Form (* = Required)</legend>
-                <form method="POST" action="">
+                <form method="POST" action="" onsubmit="return check_option(this);">
                     <label for="current-category-update">Current Category</label>
                     <select name="current-category-update" id="current-category-update">
+                        <option selected disabled></option>
                         <option value="cat1">Category 1</option>
                         <option value="cat2">Category 2</option>
                         <option value="cat3">Category 3</option>
@@ -217,9 +222,10 @@
 
             <fieldset id="category-delete-form">
                 <legend>Category Delete Form (* = Required)</legend>
-                <form method="POST" action="">
+                <form method="POST" action="" onsubmit="return check_option(this);">
                     <label for="current-category-delete">Current Category</label>
                     <select name="current-category-delete" id="current-category-delete">
+                        <option selected disabled></option>
                         <option value="cat1">Category 1</option>
                         <option value="cat2">Category 2</option>
                         <option value="cat3">Category 3</option>

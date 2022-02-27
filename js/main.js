@@ -74,3 +74,28 @@ forms.forEach((form) => {
         };
     });
 });
+
+
+// check if any of the options is selected
+function check_option(passed_form) {
+    let ok = true;
+    let selects = [];
+
+    for (let i = 0; i < passed_form.children.length; i++) {
+        if (passed_form.children[i].localName == "select") {
+            selects.push(passed_form.children[i]);
+        }
+    }
+
+    selects.forEach((select) => {
+        if (select.selectedOptions[0].value == '' || select.selectedOptions[0].value == null) {
+            select.classList.add("invalid");
+            ok = false;
+        }
+        else {
+            select.classList.remove("invalid");
+        }
+    });
+
+    return ok;
+}

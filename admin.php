@@ -3,8 +3,8 @@ require __DIR__.'/lib/db.inc.php';
 $categories = ierg4210_cat_fetchAll();
 $products = ierg4210_prod_fetchAll();
 
-$options_cat = '<option selected disabled>Choose Category</option>';
-$options_prod = '<option selected disabled>Choose Product</option>';
+$options_cat = '<option selected disabled></option>';
+$options_prod = '<option selected disabled></option>';
 $divs_prod = '';
 
 foreach ($categories as $value_cat) {
@@ -24,6 +24,7 @@ foreach ($products as $value_prod) {
 }
 ?>
 
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -65,7 +66,7 @@ foreach ($products as $value_prod) {
         <section class="right">
                 <fieldset id="product-add-form">
                     <legend>Product Add Form &#40;&#42; &#61; Required&#41;</legend>
-                    <form class="form-with-image" method="POST" action="admin-process.php?action=prod_insert" enctype="multipart/form-data">
+                    <form class="form-with-image" method="POST" action="admin-process.php?action=prod_insert" enctype="multipart/form-data" onsubmit="return check_option(this)">
                         <label for="category-add-product">Category &#42;</label>
                         <select id="category-add-product" name="CATID">
                             <?php echo $options_cat; ?>
@@ -100,7 +101,7 @@ foreach ($products as $value_prod) {
                             <h4>Product List</h4>
                             <?php echo $divs_prod; ?>
                         </div>
-                        <form class="form-with-image" method="POST" action="admin-process.php?action=prod_update" enctype="multipart/form-data">
+                        <form class="form-with-image" method="POST" action="admin-process.php?action=prod_update" enctype="multipart/form-data" onsubmit="return check_option(this)">
                             <label for="id-update-product">Current Product &#42;</label>
                             <select id="id-update-product" name="PID">
                                 <?php echo $options_prod; ?>
@@ -140,7 +141,7 @@ foreach ($products as $value_prod) {
                             <h4>Product List</h4>
                             <?php echo $divs_prod; ?>
                         </div>
-                        <form method="POST" action="admin-process.php?action=prod_delete" enctype="multipart/form-data">
+                        <form method="POST" action="admin-process.php?action=prod_delete" enctype="multipart/form-data" onsubmit="return check_option(this)">
                             <label for="delete-product">Product to be Deleted &#42;</label>
                             <select name="PID" id="delete-product">
                                 <?php echo $options_prod; ?>
@@ -155,7 +156,7 @@ foreach ($products as $value_prod) {
 
                 <fieldset id="category-add-form">
                     <legend>Category Add Form &#40;&#42; &#61; Required&#41;</legend>
-                    <form method="POST" action="admin-process.php?action=cat_insert" enctype="multipart/form-data">
+                    <form method="POST" action="admin-process.php?action=cat_insert" enctype="multipart/form-data" onsubmit="return check_option(this)">
                         <label for="new-category-add">New Category &#42;</label>
                         <input type="text" name="CATEGORY" id="new-category-add" pattern="^[\w\- ]+$" required>
                         <div class="actions">
@@ -167,7 +168,7 @@ foreach ($products as $value_prod) {
 
                 <fieldset id="category-update-form">
                     <legend>Category Update Form &#40;&#42; &#61; Required&#41;</legend>
-                    <form method="POST" action="admin-process.php?action=cat_update" enctype="multipart/form-data">
+                    <form method="POST" action="admin-process.php?action=cat_update" enctype="multipart/form-data" onsubmit="return check_option(this)">
                         <label for="current-category-update">Current Category Name&#42;</label>
                         <select name="CATID" id="current-category-update">
                             <?php echo $options_cat; ?>
@@ -183,7 +184,7 @@ foreach ($products as $value_prod) {
                 
                 <fieldset id="category-delete-form">
                     <legend>Category Delete Form &#40;&#42; &#61; Required&#41;</legend>
-                    <form method="POST" action="admin-process.php?action=cat_delete" enctype="multipart/form-data">
+                    <form method="POST" action="admin-process.php?action=cat_delete" enctype="multipart/form-data" onsubmit="return check_option(this)">
                         <label for="current-category-delete">Category to be Deleted &#42;</label>
                         <select name="CATID" id="current-category-delete">
                             <?php echo $options_cat; ?>
