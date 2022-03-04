@@ -50,7 +50,8 @@
       cursor: default;
     }
 
-    button {
+    button,
+    input[type="submit"] {
       height: 2rem;
       width: 100%;
       cursor: pointer;

@@ -131,6 +131,7 @@ header nav .actions .shopping-list {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
+  margin-right: 2rem;
 }
 
 header nav .actions .shopping-list .container {
@@ -177,6 +178,11 @@ header nav .actions .shopping-list .container .contents h3 {
   background-color: var(--clr-bg);
   z-index: 1;
   border-radius: var(--value-default-border-radius);
+}
+
+header nav .actions .shopping-list .container .contents h4 {
+  text-align: center;
+  padding: 1.5rem 0 2rem 0;
 }
 
 header nav .actions .shopping-list .container .contents ul {
@@ -274,6 +280,18 @@ header nav .actions .shopping-list .container .contents ul .details .text div in
 
 header nav .actions .shopping-list .container .contents ul .details .text div .price {
   margin-left: 0.5rem;
+}
+
+header nav .actions .shopping-list .container .contents ul .details .delete {
+  height: 2rem;
+  width: 2rem;
+  margin-left: auto;
+  text-align: center;
+  -webkit-user-select: none;
+     -moz-user-select: none;
+      -ms-user-select: none;
+          user-select: none;
+  cursor: pointer;
 }
 
 header nav .actions .shopping-list .container .contents .bottom {

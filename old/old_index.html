@@ -10,6 +10,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/main.css">
+    <script defer src="../js/cart.js"></script>
 </head>
 
 <body>
@@ -19,15 +20,16 @@
             <div class="searchBar"><input type="text" placeholder="Type to search..."></div>
             <div class="actions">
                 <div class="shopping-list">
-                    <button>Shopping List</button>
+                    <button data-quantity="123">Shopping List</button>
                     <div class="container">
                         <div class="contents">
                             <h3>Shopping List</h3>
+                            <h4 id="nothing">There is nothing here :(</h4>
                             <ul>
-                                <li>
+                                <!-- <li>
                                     <div class="details">
                                         <a href="product.html">
-                                            <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                                         </a>
                                         <div class="text">
                                             <span class="name">Product 11</span>
@@ -41,7 +43,7 @@
                                 <li>
                                     <div class="details">
                                         <a href="product.html">
-                                            <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                                         </a>
                                         <div class="text">
                                             <span class="name">Product 1</span>
@@ -55,7 +57,7 @@
                                 <li>
                                     <div class="details">
                                         <a href="product.html">
-                                            <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                                         </a>
                                         <div class="text">
                                             <span class="name">Product 1</span>
@@ -69,7 +71,7 @@
                                 <li>
                                     <div class="details">
                                         <a href="product.html">
-                                            <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                                         </a>
                                         <div class="text">
                                             <span class="name">Product 1</span>
@@ -83,7 +85,7 @@
                                 <li>
                                     <div class="details">
                                         <a href="product.html">
-                                            <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                                         </a>
                                         <div class="text">
                                             <span class="name">Product 1</span>
@@ -97,7 +99,7 @@
                                 <li>
                                     <div class="details">
                                         <a href="product.html">
-                                            <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                                         </a>
                                         <div class="text">
                                             <span class="name">Product 1</span>
@@ -111,7 +113,7 @@
                                 <li>
                                     <div class="details">
                                         <a href="product.html">
-                                            <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                                         </a>
                                         <div class="text">
                                             <span class="name">Product 1</span>
@@ -125,7 +127,7 @@
                                 <li>
                                     <div class="details">
                                         <a href="product.html">
-                                            <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                                         </a>
                                         <div class="text">
                                             <span class="name">Product 1</span>
@@ -139,7 +141,7 @@
                                 <li>
                                     <div class="details">
                                         <a href="product.html">
-                                            <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                                         </a>
                                         <div class="text">
                                             <span class="name">Product 1</span>
@@ -163,7 +165,7 @@
                                             </div>
                                         </div>
                                     </div>
-                                </li>
+                                </li> -->
                             </ul>
                             <div class="bottom">
                                 <span class="price">Total: $678.9</span>
@@ -213,7 +215,7 @@
             <div class="product-list">
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -221,11 +223,14 @@
                         </a>
                         <div class="price">$123.4</div>
                     </div>
-                    <button>Add to Cart</button>
+                    <form action="" onsubmit="return test(this)">
+                        <button type="submit">Add to Cart</button>
+                        <input type="text" name="PID" value="0" readonly hidden>
+                    </form>
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -233,11 +238,14 @@
                         </a>
                         <div class="price">$123.4</div>
                     </div>
-                    <button>Add to Cart</button>
+                    <form action="" onsubmit="return test(this)">
+                        <button type="submit">Add to Cart</button>
+                        <input type="text" name="PID" value="1" readonly hidden>
+                    </form>
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -245,11 +253,14 @@
                         </a>
                         <div class="price">$123.4</div>
                     </div>
-                    <button>Add to Cart</button>
+                    <form action="" onsubmit="return test(this)">
+                        <button type="submit">Add to Cart</button>
+                        <input type="text" name="PID" value="2" readonly hidden>
+                    </form>
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -261,7 +272,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -273,7 +284,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -285,7 +296,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -297,7 +308,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -309,7 +320,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -338,7 +349,7 @@
             <div class="product-list">
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -350,7 +361,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -362,7 +373,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -374,7 +385,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -386,7 +397,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -398,7 +409,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -410,7 +421,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -422,7 +433,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -434,7 +445,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -446,7 +457,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -458,7 +469,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -470,7 +481,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -482,7 +493,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -494,7 +505,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -506,7 +517,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">
@@ -518,7 +529,7 @@
                 </div>
                 <div class="product">
                     <a href="product.html">
-                        <div class="photo"><img src="./images/product.jpg" alt="umbrella"></div>
+                        <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
                     </a>
                     <div class="text">
                         <a href="product.html">

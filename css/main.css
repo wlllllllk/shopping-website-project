@@ -60,7 +60,8 @@
   cursor: default;
 }
 
-.product-list .product button {
+.product-list .product button,
+.product-list .product input[type="submit"] {
   height: 2rem;
   width: 100%;
   cursor: pointer;
@@ -74,7 +75,8 @@
   transition: 0.1s;
 }
 
-.product-list .product button:hover {
+.product-list .product button:hover,
+.product-list .product input[type="submit"]:hover {
   color: white;
   background-color: var(--clr-main-light);
 }
