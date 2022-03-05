@@ -362,7 +362,7 @@ function removeProduct(pid) {
     }
 }
 
-const quantity_pattern = /^[1-9]+[0-9]+$/;
+const quantity_pattern = /^[1-9]+[0-9]*$/;
 function validateQuantity(e) {
     const input = e.target.value;
     const pid = e.target.title;
@@ -376,5 +376,3 @@ function validateQuantity(e) {
         e.target.classList.add("invalid");
     }
 }
-
-

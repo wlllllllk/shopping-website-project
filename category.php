@@ -24,7 +24,7 @@ foreach ($products as $value_prod) {
                         <a href="product.php?pid='.$value_prod["PID"].'">
                             <div class="name">'.$value_prod["NAME"].'</div>
                         </a>
-                        <div class="price">$'.$value_prod["PRICE"].'</div>
+                        <div class="price">'.$value_prod["PRICE"].'</div>
                     </div>
                     <form action="" onsubmit="return addToCart(this)">
                         <button type="submit">Add to Cart</button>
@@ -41,6 +41,7 @@ foreach ($products as $value_prod) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IERG4210 Home</title>
+    <link rel="shortcut icon" type="image/svg" href="./icon/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
@@ -56,7 +57,7 @@ foreach ($products as $value_prod) {
             <div class="searchBar"><input type="text" placeholder="Type to search..."></div>
             <div class="actions">
                 <div class="shopping-list">
-                    <button>Shopping List</button>
+                    <button>Shopping List &#40;0&#41;</button>
                     <div class="container">
                         <div class="contents">
                             <h3>Shopping List</h3>

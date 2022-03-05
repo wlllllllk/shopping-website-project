@@ -34,6 +34,7 @@ foreach ($categories as $value_cat) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IERG4210 Home</title>
+    <link rel="shortcut icon" type="image/svg" href="./icon/favicon.svg">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
@@ -41,8 +42,7 @@ foreach ($categories as $value_cat) {
     <link rel="stylesheet" href="./css/main.css">
     <script defer src="../js/cart.js"></script>
     <script defer src="../js/page.js"></script>
-    <script defer src="../js/product.js"></script>
-
+    <script defer src="../js/product-fetch.js"></script>
 </head>
 
 <body>
@@ -52,7 +52,7 @@ foreach ($categories as $value_cat) {
             <div class="searchBar"><input type="text" placeholder="Type to search..."></div>
             <div class="actions">
                 <div class="shopping-list">
-                    <button>Shopping List</button>
+                    <button>Shopping List &#40;0&#41;</button>
                     <div class="container">
                         <div class="contents">
                             <h3>Shopping List</h3>

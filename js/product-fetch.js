@@ -26,9 +26,9 @@ function fetchPage(page) {
 
                 // fill the content
                 const product = productTemplate.content.cloneNode(true);
-                product.querySelector("a").href = `product-fill.php?pid=${pid}`;
+                product.querySelector("a").href = `product.php?pid=${pid}`;
                 product.querySelector("img").src = image;
-                product.querySelector(".text a").href = `product-fill.php?pid=${pid}`;
+                product.querySelector(".text a").href = `product.php?pid=${pid}`;
                 product.querySelector(".name").innerHTML = name;
                 product.querySelector(".price").innerHTML = price;
                 product.querySelector("input").value = pid;
@@ -38,7 +38,7 @@ function fetchPage(page) {
             }
         }
     };
-    xmlhttp.open("GET", "product-fill.php?page=" + page, true);
+    xmlhttp.open("GET", "product-fetch.php?page=" + page, true);
     xmlhttp.send();
 
     let allPage = document.querySelectorAll(".pages span");
