@@ -19,6 +19,7 @@ if (!preg_match('/^\d*$/', $_GET['pid']))
     throw new Exception("invalid-pid");
 $_GET['pid'] = (int) $_GET['pid'];
 
+
 $pid = $_GET["pid"];
 
 $sql = "SELECT * FROM PRODUCTS WHERE PID=?;";
@@ -27,6 +28,7 @@ $q = $db->prepare($sql);
 $q->bindParam(1, $pid);
 $q->execute();
 
-if ($q->execute())
-    return $q->fetch();
+if ($q->execute()) 
+    echo json_encode($q->fetch());
+
 ?>

@@ -82,7 +82,49 @@
 //     return false;
 // }
 
-function test(e) {
+// // e.g to call, myLib.ajax({url:'process.php?q=hello',success:function(m){alert(m)}});
+// $.ajax = function (opt) {
+//     opt = opt || {};
+//     var xhr = new XMLHttpRequest(),
+//         async = opt.async || true,
+//         success = opt.success || null, error = opt.error || function () {/*displayErr()*/ };
+
+//     // pass three parameters, otherwise the default ones, to xhr.open()
+//     xhr.open(opt.method || 'GET', opt.url || '', async);
+//     if (opt.method == 'POST')
+//         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+
+//     // Asynchronous Call requires a callback function listening on readystatechange
+//     if (async)
+//         xhr.onreadystatechange = function () {
+//             if (xhr.readyState == 4) {
+//                 var status = xhr.status;
+//                 if ((status >= 200 && status < 300) || status == 304 || status == 1223)
+//                     success && success.call(xhr, xhr.responseText);
+//                 else if (status < 200 || status >= 400)
+//                     error.call(xhr);
+//             }
+//         };
+
+//     xhr.onerror = function () { error.call(xhr) };
+
+//     // POST parameters encoded as opt.data is passed here to xhr.send()
+//     xhr.send(opt.data || null);
+
+//     // Synchronous Call blocks UI and returns result immediately after xhr.send()
+//     !async && success && success.call(xhr, xhr.responseText);
+// };
+
+// $.submitOverAJAX = function (form, opt) {
+//     opt = opt || {};
+//     opt.url = opt.url || form.getAttribute('action');
+//     opt.method = opt.method || 'POST';
+//     opt.data = formData.toString();
+//     opt.success = opt.success || function (msg) { alert(msg) };
+//     $.ajax(opt);
+// };
+
+function addToCart(e) {
     let exist = false;
 
     // get  the product ID
@@ -109,158 +151,210 @@ function test(e) {
     // localStorage.removeItem(productID);
 
     // update the shopping list in the HTML
-    if (!exist) {
-        let currentCart = document.querySelector(".shopping-list ul");
+    updateCart("update", productID);
 
-        let li = document.createElement("li");
-        li.id = `P${productID}`
-        let div_details = document.createElement("div");
-        div_details.classList.add("details");
-        let a = document.createElement("a");
-        a.href = "product.html";
-        let div_photo = document.createElement("div");
-        div_photo.classList.add("photo");
-        let img = document.createElement("img");
-        img.src = src = "../images/product.jpg";
-        img.alt = "";
-        div_photo.appendChild(img);
-        a.appendChild(div_photo);
-
-        let div_text = document.createElement("div");
-        div_text.classList.add("text");
-        let span_name = document.createElement("span");
-        span_name.classList.add("name");
-        span_name.innerHTML = "123456";
-        let div_input = document.createElement("div");
-        let input = document.createElement("input");
-        input.type = "number";
-        input.value = 1;
-        let span_price = document.createElement("span");
-        span_price.classList.add("price");
-        span_price.innerHTML = "$8700";
-        let div_delete = document.createElement("div");
-        div_delete.classList.add("delete");
-        div_delete.innerHTML = "&#10799";
-        div_delete.setAttribute("data-pid", productID);
-        div_delete.addEventListener("click", () => { removeProduct(productID) });
-
-        div_input.appendChild(input);
-        div_input.appendChild(span_price);
-        div_text.appendChild(span_name);
-        div_text.appendChild(div_input);
-
-        div_details.appendChild(a);
-        div_details.appendChild(div_text);
-        div_details.appendChild(div_delete);
-
-        li.appendChild(div_details);
-
-        currentCart.appendChild(li);
-    }
-    else {
-        updateCart();
-    }
     return false;
 }
 
-updateCart();
+const template = document.querySelector("#cart-item-template");
 
 // load the shopping list when page is first loaded
-function updateCart() {
-    let totalPrice = 0;
-    let totalQuantity = 0;
+updateCart("load", -1);
 
+function updateCart(mode, pid) {
     let currentCart = document.querySelector(".shopping-list ul");
 
-    // for (let i = 0; i < currentCart.children.length; i++) {
-    //     currentCart.removeChild(currentCart.children[i]);
-    // }
+    let priceDisplay = document.querySelector(".shopping-list .bottom .price");
+    let quantityDisplay = document.querySelector(".shopping-list button");
 
-    currentCart.innerHTML = '';
+    // page first loaded
+    if (mode == "load") {
+        let totalPrice = 0;
+        let totalQuantity = 0;
 
-    for (let i = 0; i < localStorage.length; i++) {
-        let pid = localStorage.key(i);
+        currentCart.innerHTML = "";
 
-        let name = "";
-        let price = 0;
+        for (let i = 0; i < localStorage.length; i++) {
+            let pid = localStorage.key(i);
+            let quantity = Number(localStorage.getItem(localStorage.key(i)));
+            totalQuantity += quantity;
 
-        $.ajax({
-            type: "GET",
-            url: `cart-process.php?pid=${pid}`,
-            dataType: "html",
-            success: (data) => { console.log(data); }
-        });
+            let name = "Not Available";
+            let price = 0;
+            let image = "";
 
-        let quantity = Number(localStorage.getItem(localStorage.key(i)));
-        totalPrice += (price * quantity);
-        totalQuantity += quantity;
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    // get the name, price, and thumbnail
+                    name = JSON.parse(this.responseText).NAME;
+                    price = JSON.parse(this.responseText).PRICE;
+                    image = JSON.parse(this.responseText).THUMBNAIL;
 
-        let li = document.createElement("li");
-        li.id = `P${pid}`
-        let div_details = document.createElement("div");
-        div_details.classList.add("details");
-        let a = document.createElement("a");
-        a.href = "product.html";
-        let div_photo = document.createElement("div");
-        div_photo.classList.add("photo");
-        let img = document.createElement("img");
-        img.src = src = "../images/product.jpg";
-        img.alt = "";
-        div_photo.appendChild(img);
-        a.appendChild(div_photo);
+                    // fill the content
+                    const content = template.content.cloneNode(true);
+                    content.querySelector("li").id = `P${pid}`;
+                    content.querySelector("a").href = `product.php?pid=${pid}`;
+                    content.querySelector("img").src = image;
+                    content.querySelector(".name").innerHTML = name;
+                    content.querySelector("input").value = quantity;
+                    content.querySelector(".price").innerHTML = price;
+                    content.querySelector(".delete").setAttribute("data-pid", pid);
+                    content.querySelector(".delete").addEventListener("click", () => { removeProduct(pid) });
 
-        let div_text = document.createElement("div");
-        div_text.classList.add("text");
-        let span_name = document.createElement("span");
-        span_name.classList.add("name");
-        span_name.innerHTML = "123456";
-        let div_input = document.createElement("div");
-        let input = document.createElement("input");
-        input.type = "number";
-        input.value = quantity;
-        let span_price = document.createElement("span");
-        span_price.classList.add("price");
-        span_price.innerHTML = "$123.4";
-        let div_delete = document.createElement("div");
-        div_delete.classList.add("delete");
-        div_delete.innerHTML = "&#10799";
-        div_delete.setAttribute("data-pid", pid);
-        div_delete.addEventListener("click", () => { removeProduct(pid) });
+                    // append to current HTML
+                    currentCart.appendChild(content);
 
-        div_input.appendChild(input);
-        div_input.appendChild(span_price);
-        div_text.appendChild(span_name);
-        div_text.appendChild(div_input);
+                    // update the total price
+                    totalPrice += (price * quantity);
 
-        div_details.appendChild(a);
-        div_details.appendChild(div_text);
-        div_details.appendChild(div_delete);
+                    // show the updated total price
+                    priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
 
-        li.appendChild(div_details);
+                    // show the updated total quantity
+                    quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`;
 
-        currentCart.appendChild(li);
+                    // display cart empty message depending on total quantity
+                    if (totalQuantity > 0)
+                        document.querySelector("#nothing").style.display = "none";
+                    else
+                        document.querySelector("#nothing").style.display = "block";
+                }
+            };
+            xmlhttp.open("GET", "cart-process.php?pid=" + pid, true);
+            xmlhttp.send();
+        }
     }
 
-    // show the total price
-    let priceDisplay = document.querySelector(".shopping-list .bottom .price");
-    priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
+    // update the cart only
+    else if (mode == "update") {
+        // get the current total quantity
+        let totalQuantity = 0, totalPrice = 0;
+        let allItem = document.querySelectorAll(".shopping-list ul li .text div");
+        allItem.forEach(item => {
+            let quantity = Number(item.children[0].value);
 
-    // show the total quantity
-    let quantityDisplay = document.querySelector(".shopping-list button");
-    // quantityDisplay.setAttribute("data-quantity", totalQuantity);
-    quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`
+            totalQuantity += quantity;
+        });
 
-    if (totalQuantity > 0)
-        document.querySelector("#nothing").style.display = "none";
-    else
-        document.querySelector("#nothing").style.display = "block";
+        let cartItem = document.querySelector(`#P${pid}`);
 
+        // add new item
+        if (cartItem == null) {
+            let quantity = Number(localStorage.getItem(pid));
+
+            let name = "Not Available";
+            let price = 0;
+            let image = "";
+
+            let xmlhttp = new XMLHttpRequest();
+            xmlhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    // get the name, price, and thumbnail
+                    name = JSON.parse(this.responseText).NAME;
+                    price = JSON.parse(this.responseText).PRICE;
+                    image = JSON.parse(this.responseText).THUMBNAIL;
+
+                    // fill the content
+                    const content = template.content.cloneNode(true);
+                    content.querySelector("li").id = `P${pid}`;
+                    content.querySelector("a").href = `product.php?pid=${pid}`;
+                    content.querySelector("img").src = image;
+                    content.querySelector(".name").innerHTML = name;
+                    content.querySelector("input").value = quantity;
+                    content.querySelector(".price").innerHTML = price;
+                    content.querySelector(".delete").setAttribute("data-pid", pid);
+                    content.querySelector(".delete").addEventListener("click", () => { removeProduct(pid) });
+
+                    // append to current HTML
+                    currentCart.appendChild(content);
+
+                    // update the total price
+                    totalPrice += (price * quantity);
+
+                    // update the total quantity
+                    totalQuantity += quantity;
+
+                    // show the updated total price
+                    priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
+
+                    // show the updated total quantity
+                    quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`;
+
+                    // display cart empty message depending on total quantity
+                    if (totalQuantity > 0)
+                        document.querySelector("#nothing").style.display = "none";
+                    else
+                        document.querySelector("#nothing").style.display = "block";
+                }
+            };
+            xmlhttp.open("GET", "cart-process.php?pid=" + pid, true);
+            xmlhttp.send();
+        }
+
+        // update old item
+        else {
+            // first update the quantity
+            document.querySelector(`#P${pid} input`).value = Number(localStorage.getItem(pid));
+
+            // then calculate the new total quantity and price
+            let totalQuantity = 0, totalPrice = 0;
+            let allItem = document.querySelectorAll(".shopping-list ul li .text div");
+            allItem.forEach(item => {
+                let quantity = Number(item.children[0].value);
+                let price = Number(item.children[1].innerHTML);
+
+                totalQuantity += quantity;
+                totalPrice += (quantity * price)
+            });
+
+            // show the updated total price
+            priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
+
+            // show the updated total quantity
+            quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`;
+
+            // display cart empty message depending on total quantity
+            if (totalQuantity > 0)
+                document.querySelector("#nothing").style.display = "none";
+            else
+                document.querySelector("#nothing").style.display = "block";
+        }
+    }
+    else if (mode == "remove") {
+        // first remove the item from HTML
+        let itemRemove = document.querySelector(`#P${pid}`);
+        currentCart.removeChild(itemRemove);
+
+        // then calculate the new total quantity and price
+        let totalQuantity = 0, totalPrice = 0;
+        let allItem = document.querySelectorAll(".shopping-list ul li .text div");
+        allItem.forEach(item => {
+            let quantity = Number(item.children[0].value);
+            let price = Number(item.children[1].innerHTML);
+
+            totalQuantity += quantity;
+            totalPrice += (quantity * price)
+        });
+
+        // show the updated total price
+        priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
+
+        // show the updated total quantity
+        quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`;
+
+        // display cart empty message depending on total quantity
+        if (totalQuantity > 0)
+            document.querySelector("#nothing").style.display = "none";
+        else
+            document.querySelector("#nothing").style.display = "block";
+    }
 }
 
 function removeProduct(pid) {
     if (confirm("Are you sure you want to remove this product from cart?")) {
         localStorage.removeItem(pid);
-        updateCart();
+        updateCart("remove", pid);
     }
 }
 

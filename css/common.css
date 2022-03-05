@@ -282,6 +282,15 @@ header nav .actions .shopping-list .container .contents ul .details .text div .p
   margin-left: 0.5rem;
 }
 
+header nav .actions .shopping-list .container .contents ul .details .text div .price::before {
+  content: "$";
+}
+
+header nav .actions .shopping-list .container .contents ul .details .text div .price::after {
+  content: " @1";
+  font-weight: 100;
+}
+
 header nav .actions .shopping-list .container .contents ul .details .delete {
   height: 2rem;
   width: 2rem;

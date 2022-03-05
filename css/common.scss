@@ -162,6 +162,7 @@ header {
               z-index: 1;
               border-radius: var(--value-default-border-radius);
             }
+
             h4 {
               text-align: center;
               padding: 1.5rem 0 2rem 0;
@@ -244,6 +245,15 @@ header {
 
                     .price {
                       margin-left: 0.5rem;
+
+                      &::before {
+                        content: "$";
+                      }
+
+                      &::after {
+                        content: " @1";
+                        font-weight: 100;
+                      }
                     }
                   }
                 }

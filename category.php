@@ -26,7 +26,10 @@ foreach ($products as $value_prod) {
                         </a>
                         <div class="price">$'.$value_prod["PRICE"].'</div>
                     </div>
-                    <button>Add to Cart</button>
+                    <form action="" onsubmit="return addToCart(this)">
+                        <button type="submit">Add to Cart</button>
+                        <input type="text" name="PID" value="'.$value_prod["PID"].'" readonly hidden>
+                    </form>
                 </div>';
 }
 ?>
@@ -43,6 +46,7 @@ foreach ($products as $value_prod) {
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/main.css">
+    <script defer src="../js/cart.js"></script>
 </head>
 
 <body>
@@ -56,24 +60,28 @@ foreach ($products as $value_prod) {
                     <div class="container">
                         <div class="contents">
                             <h3>Shopping List</h3>
+                            <h4 id="nothing">There is nothing here :&#40;</h4>
                             <ul>
-                                <li>
-                                    <div class="details">
-                                        <a href="product.php?pid=7">
-                                            <div class="photo"><img src="./images/7.jpg" alt=""></div>
-                                        </a>
-                                        <div class="text">
-                                            <span class="name">Doge</span>
-                                            <div>
-                                                <input type="number" value="1">
-                                                <span class="price">$8700</span>
+                                <template id="cart-item-template">
+                                    <li>
+                                        <div class="details">
+                                            <a href="">
+                                                <div class="photo"><img src="" alt=""></div>
+                                            </a>
+                                            <div class="text">
+                                                <span class="name"></span>
+                                                <div>
+                                                    <input type="number" value="">
+                                                    <span class="price"></span>
+                                                </div>
                                             </div>
+                                            <div class="delete" data-pid="">&#10799;</div>
                                         </div>
-                                    </div>
-                                </li>
+                                    </li> 
+                                </template>
                             </ul>
                             <div class="bottom">
-                                <span class="price">Total: $8700</span>
+                                <span class="price">Total: $0</span>
                                 <button>Checkout</button>
                             </div>
                         </div>
