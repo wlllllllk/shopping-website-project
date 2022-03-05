@@ -218,7 +218,7 @@ header nav h1 {
   position: relative;
   height: 100%;
   width: 100%;
-  opacity: 0.5;
+  opacity: 0;
   cursor: pointer;
   z-index: 3;
 }
@@ -320,11 +320,5 @@ header nav h1 {
 .main .right fieldset form input[type="submit"] {
   color: white;
   background-color: var(--clr-main-light);
-}
-
-.invalid {
-  outline: 3px solid rgba(255, 0, 0, 0.555) !important;
-  border: 1px solid red !important;
-  border-radius: var(--value-default-border-radius);
 }
 /*# sourceMappingURL=admin.css.map */

@@ -48,6 +48,10 @@
       font-size: 1.6rem;
       color: var(--clr-text);
       cursor: default;
+
+      &::before {
+        content: "$";
+      }
     }
 
     button,
@@ -69,4 +73,27 @@
       }
     }
   }
+}
+
+.pages {
+  // background-color: yellow;
+  margin-top: 5rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1rem;
+
+  span {
+    // background-color: green;
+    padding: 0.5rem 0.75rem;
+    font-size: 1.5rem;
+    color: white;
+    border: 1px solid var(--clr-main-light);
+    border-radius: var(--value-default-border-radius);
+    cursor: pointer;
+  }
+}
+
+.visiting {
+  background-color: var(--clr-main-light) !important;
 }

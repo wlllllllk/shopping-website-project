@@ -198,6 +198,8 @@ function updateCart(mode, pid) {
                     content.querySelector("img").src = image;
                     content.querySelector(".name").innerHTML = name;
                     content.querySelector("input").value = quantity;
+                    content.querySelector("input").title = pid;
+                    content.querySelector("input").addEventListener("change", (e) => { validateQuantity(e); });
                     content.querySelector(".price").innerHTML = price;
                     content.querySelector(".delete").setAttribute("data-pid", pid);
                     content.querySelector(".delete").addEventListener("click", () => { removeProduct(pid) });
@@ -262,6 +264,8 @@ function updateCart(mode, pid) {
                     content.querySelector("img").src = image;
                     content.querySelector(".name").innerHTML = name;
                     content.querySelector("input").value = quantity;
+                    content.querySelector("input").title = pid;
+                    content.querySelector("input").addEventListener("change", (e) => { validateQuantity(e); })
                     content.querySelector(".price").innerHTML = price;
                     content.querySelector(".delete").setAttribute("data-pid", pid);
                     content.querySelector(".delete").addEventListener("click", () => { removeProduct(pid) });
@@ -358,5 +362,19 @@ function removeProduct(pid) {
     }
 }
 
+const quantity_pattern = /^[1-9]+[0-9]+$/;
+function validateQuantity(e) {
+    const input = e.target.value;
+    const pid = e.target.title;
+
+    if (input.match(quantity_pattern)) {
+        e.target.classList.remove("invalid");
+        localStorage.setItem(pid, input);
+        updateCart("update", pid);
+    }
+    else {
+        e.target.classList.add("invalid");
+    }
+}
 
 

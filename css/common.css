@@ -546,6 +546,12 @@ footer span {
   color: white;
 }
 
+.invalid {
+  outline: 3px solid rgba(255, 0, 0, 0.555) !important;
+  border: 1px solid red !important;
+  border-radius: var(--value-default-border-radius);
+}
+
 @-webkit-keyframes slide-up {
   from {
     -webkit-transform: translateY(10%);

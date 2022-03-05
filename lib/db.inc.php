@@ -290,6 +290,27 @@ function ierg4210_prod_fetchAll() {
         return $q->fetchAll();
 }
 
+function ierg4210_prod_fetch_by_page() {
+    if (!preg_match('/^\d*$/', $_POST["PAGE"]))
+        throw new Exception("invalid-catid");
+    $_POST["PAGE"] = (int) $_POST["PAGE"];
+
+    $page = $_POST["PAGE"];
+
+    $record_per_page = 10;
+    
+    $start_pos = ($page - 1) * $record_per_page;
+
+    global $db;
+    $db = ierg4210_DB();
+    $q = $db->prepare("SELECT * FROM PRODUCTS LIMIT ?, ?;");
+    $q->bindParam(1, $start_pos);
+    $q->bindParam(2, $record_per_page);
+
+    if ($q->execute())
+        return $q->fetchAll();
+}
+
 function ierg4210_prod_fetch_by_catid($CATID) {
     if (!preg_match('/^\d*$/', $CATID))
         throw new Exception("invalid-catid");

@@ -60,6 +60,10 @@
   cursor: default;
 }
 
+.product-list .product .price::before {
+  content: "$";
+}
+
 .product-list .product button,
 .product-list .product input[type="submit"] {
   height: 2rem;
@@ -79,5 +83,32 @@
 .product-list .product input[type="submit"]:hover {
   color: white;
   background-color: var(--clr-main-light);
+}
+
+.pages {
+  margin-top: 5rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  gap: 1rem;
+}
+
+.pages span {
+  padding: 0.5rem 0.75rem;
+  font-size: 1.5rem;
+  color: white;
+  border: 1px solid var(--clr-main-light);
+  border-radius: var(--value-default-border-radius);
+  cursor: pointer;
+}
+
+.visiting {
+  background-color: var(--clr-main-light) !important;
 }
 /*# sourceMappingURL=main.css.map */

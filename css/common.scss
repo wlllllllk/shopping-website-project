@@ -478,6 +478,12 @@ footer {
   }
 }
 
+.invalid {
+  outline: 3px solid rgba(255, 0, 0, 0.555) !important;
+  border: 1px solid red !important;
+  border-radius: var(--value-default-border-radius);
+}
+
 @keyframes slide-up {
   from {
     transform: translateY(10%);

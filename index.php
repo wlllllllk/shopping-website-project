@@ -6,25 +6,25 @@ foreach ($categories as $value_cat) {
     $li_cat .= '<li><a href="category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
 }
 
-$products = ierg4210_prod_fetchAll();
-$div_prod = '';
-foreach ($products as $value_prod) {
-    $div_prod .= '<div class="product">
-                    <a href="product.php?pid='.$value_prod["PID"].'">
-                        <div class="photo"><img src="'.$value_prod["THUMBNAIL"].'" alt="" /></div>
-                    </a>
-                    <div class="text">
-                        <a href="product.php?pid='.$value_prod["PID"].'">
-                            <div class="name">'.$value_prod["NAME"].'</div>
-                        </a>
-                        <div class="price">$'.$value_prod["PRICE"].'</div>
-                    </div>
-                    <form action="" onsubmit="return addToCart(this)">
-                        <button type="submit">Add to Cart</button>
-                        <input type="text" name="PID" value="'.$value_prod["PID"].'" readonly hidden>
-                    </form>
-                </div>';
-}
+// $products = ierg4210_prod_fetchAll();
+// $div_prod = '';
+// foreach ($products as $value_prod) {
+//     $div_prod .= '<div class="product">
+//                     <a href="product.php?pid='.$value_prod["PID"].'">
+//                         <div class="photo"><img src="'.$value_prod["THUMBNAIL"].'" alt="" /></div>
+//                     </a>
+//                     <div class="text">
+//                         <a href="product.php?pid='.$value_prod["PID"].'">
+//                             <div class="name">'.$value_prod["NAME"].'</div>
+//                         </a>
+//                         <div class="price">$'.$value_prod["PRICE"].'</div>
+//                     </div>
+//                     <form action="" onsubmit="return addToCart(this)">
+//                         <button type="submit">Add to Cart</button>
+//                         <input type="text" name="PID" value="'.$value_prod["PID"].'" readonly hidden>
+//                     </form>
+//                 </div>';
+// }
 ?>
 
 <!DOCTYPE html>
@@ -40,6 +40,9 @@ foreach ($products as $value_prod) {
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/main.css">
     <script defer src="../js/cart.js"></script>
+    <script defer src="../js/page.js"></script>
+    <script defer src="../js/product.js"></script>
+
 </head>
 
 <body>
@@ -104,9 +107,30 @@ foreach ($products as $value_prod) {
         <section>
             <h3>All Products</h3>
             <div class="product-list">
-                <?php echo $div_prod; ?>
+                <template id="product-template">
+                    <div class="product">
+                        <a href="">
+                            <div class="photo"><img src="" alt="" /></div>
+                        </a>
+                        <div class="text">
+                            <a href="">
+                                <div class="name"></div>
+                            </a>
+                            <div class="price"></div>
+                        </div>
+                        <form action="" onsubmit="return addToCart(this)">
+                            <button type="submit">Add to Cart</button>
+                            <input type="text" name="PID" value="" readonly hidden>
+                        </form>
+                    </div>
+                </template>
             </div>
         </section>
+        <div class="pages">
+            <template id="page-template">
+                <span id="1">1</span>
+            </template>
+        </div>
     </div>
 
     <footer><span>IERG4210 Assignment (Spring 2022) | Created by 1155147592</span></footer>
