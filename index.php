@@ -36,6 +36,8 @@ foreach ($products as $value_prod) {
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/main.css">
+    <script defer src="../js/cart.js"></script>
+    <script defer src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
 </head>
 
 <body>
@@ -50,7 +52,7 @@ foreach ($products as $value_prod) {
                         <div class="contents">
                             <h3>Shopping List</h3>
                             <ul>
-                                <li>
+                                <!-- <li>
                                     <div class="details">
                                         <a href="product.php?pid=7">
                                             <div class="photo"><img src="./images/7.jpg" alt=""></div>
@@ -63,10 +65,10 @@ foreach ($products as $value_prod) {
                                             </div>
                                         </div>
                                     </div>
-                                </li>
+                                </li> -->
                             </ul>
                             <div class="bottom">
-                                <span class="price">Total: $8700</span>
+                                <span class="price">Total: $0</span>
                                 <button>Checkout</button>
                             </div>
                         </div>

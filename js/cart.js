@@ -180,7 +180,17 @@ function updateCart() {
 
     for (let i = 0; i < localStorage.length; i++) {
         let pid = localStorage.key(i);
-        let price = 123.4;
+
+        let name = "";
+        let price = 0;
+
+        $.ajax({
+            type: "GET",
+            url: `cart-process.php?pid=${pid}`,
+            dataType: "html",
+            success: (data) => { console.log(data); }
+        });
+
         let quantity = Number(localStorage.getItem(localStorage.key(i)));
         totalPrice += (price * quantity);
         totalQuantity += quantity;
