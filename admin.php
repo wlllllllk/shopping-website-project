@@ -35,11 +35,12 @@ foreach ($products as $value_prod) {
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/admin.css">
+    <script defer src="./js/admin.js"></script>
 </head>
 <body>
     <header>
         <nav>
-            <a href="index.php" id="logo"><span>IERG4210<br>Store</span></a>
+            <a href="http://52.205.54.184" id="logo"><span>IERG4210<br>Store</span></a>
             <h1>Admin Panel</h1>
             <div class="actions">
                 <div class="account">
@@ -198,7 +199,6 @@ foreach ($products as $value_prod) {
                 </fieldset>
         </section>
     </div>
-    <footer><span>IERG4210 Assignment (Spring 2022) | Created by 1155147592</span></footer>
-    <script src="./js/main.js"></script>
+    <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>
 </body>
 </html>

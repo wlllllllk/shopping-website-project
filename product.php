@@ -36,14 +36,17 @@ foreach ($categories as $value_cat) {
 <body>
     <header>
         <nav>
-            <a href="index.php" id="logo"><span>IERG4210<br>Store</span></a>
+            <a href="http://52.205.54.184" id="logo"><span>IERG4210<br>Store</span></a>
             <div class="searchBar"><input type="text" placeholder="Type to search..."></div>
             <div class="actions">
                 <div class="shopping-list">
                     <button>Shopping List &#40;0&#41;</button>
                     <div class="container">
                         <div class="contents">
-                            <h3>Shopping List</h3>
+                            <div class="top">                            
+                                <h3>Shopping List</h3>
+                                <h4 id="clear">Clear ALL</h4>
+                            </div>
                             <h4 id="nothing">There is nothing here :&#40;</h4>
                             <ul>
                                 <template id="cart-item-template">
@@ -55,7 +58,7 @@ foreach ($categories as $value_cat) {
                                             <div class="text">
                                                 <span class="name"></span>
                                                 <div>
-                                                    <input type="number" value="">
+                                                    <input class="quantity" type="number" value="">
                                                     <span class="price"></span>
                                                 </div>
                                             </div>
@@ -119,7 +122,7 @@ foreach ($categories as $value_cat) {
         </section>
     </div>
 
-    <footer><span>IERG4210 Assignment (Spring 2022) | Created by 1155147592</span></footer>
+    <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>
 </body>
 
 </html>

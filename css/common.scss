@@ -154,16 +154,24 @@ header {
             height: 100%;
             width: 100%;
 
-            h3 {
+            .top {
               position: sticky;
               top: 0;
-              padding: 0.5rem 1rem 0 1rem;
+              display: flex;
+              justify-content: space-between;
+              align-items: center;
               background-color: var(--clr-bg);
-              z-index: 1;
               border-radius: var(--value-default-border-radius);
+              z-index: 1;
+              padding: 0.5rem 1rem 0 1rem;
+
+              h4 {
+                color: rgb(197, 65, 65);
+                cursor: pointer;
+              }
             }
 
-            h4 {
+            #nothing {
               text-align: center;
               padding: 1.5rem 0 2rem 0;
             }
@@ -230,18 +238,18 @@ header {
                       outline: none;
                       text-align: center;
 
-                      /* Chrome, Safari, Edge, Opera */
-                      &::-webkit-outer-spin-button,
-                      &::-webkit-inner-spin-button {
-                        -webkit-appearance: none;
-                        margin: 0;
-                      }
+                      // /* Chrome, Safari, Edge, Opera */
+                      // &::-webkit-outer-spin-button,
+                      // &::-webkit-inner-spin-button {
+                      //   -webkit-appearance: none;
+                      //   margin: 0;
+                      // }
                     }
 
-                    /* Firefox */
-                    input[type="number"] {
-                      -moz-appearance: textfield;
-                    }
+                    // /* Firefox */
+                    // input[type="number"] {
+                    //   -moz-appearance: textfield;
+                    // }
 
                     .price {
                       margin-left: 0.5rem;
@@ -482,6 +490,16 @@ footer {
   outline: 3px solid rgba(255, 0, 0, 0.555) !important;
   border: 1px solid red !important;
   border-radius: var(--value-default-border-radius);
+}
+
+.adding {
+  border: 1px solid lightgray !important;
+  color: lightgray !important;
+  cursor: default !important;
+
+  &:hover {
+    background-color: transparent !important;
+  }
 }
 
 @keyframes slide-up {

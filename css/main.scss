@@ -76,18 +76,16 @@
 }
 
 .pages {
-  // background-color: yellow;
-  margin-top: 5rem;
+  margin: 5rem 0 3rem 0;
   display: flex;
   justify-content: center;
   align-items: center;
   gap: 1rem;
 
   span {
-    // background-color: green;
     padding: 0.5rem 0.75rem;
     font-size: 1.5rem;
-    color: white;
+    color: var(--clr-text);
     border: 1px solid var(--clr-main-light);
     border-radius: var(--value-default-border-radius);
     cursor: pointer;

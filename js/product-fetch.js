@@ -1,6 +1,9 @@
-// fill in the products
+// This is used to populate the products in main page
+
+// the template
 const productTemplate = document.querySelector("#product-template");
 
+// fetch page 1 when the webpage is first loaded
 fetchPage(1);
 
 function fetchPage(page) {
@@ -10,11 +13,12 @@ function fetchPage(page) {
     let price = 0;
     let image = "";
 
-    let xmlhttp = new XMLHttpRequest();
-    xmlhttp.onreadystatechange = function () {
+    let request = new XMLHttpRequest();
+    request.onreadystatechange = function () {
         if (this.readyState == 4 && this.status == 200) {
             currentProductList.innerHTML = "";
 
+            // the number of products to be displayed
             const length = JSON.parse(this.responseText).length;
 
             for (let i = 0; i < length; i++) {
@@ -38,9 +42,10 @@ function fetchPage(page) {
             }
         }
     };
-    xmlhttp.open("GET", "product-fetch.php?page=" + page, true);
-    xmlhttp.send();
+    request.open("GET", "product-fetch.php?page=" + page, true);
+    request.send();
 
+    // indicate the page that is currently visiting
     let allPage = document.querySelectorAll(".pages span");
     allPage.forEach(span => {
         if (span.id == page) {

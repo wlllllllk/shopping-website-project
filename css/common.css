@@ -170,17 +170,31 @@ header nav .actions .shopping-list .container .contents {
   width: 100%;
 }
 
-header nav .actions .shopping-list .container .contents h3 {
+header nav .actions .shopping-list .container .contents .top {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
-  padding: 0.5rem 1rem 0 1rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
   background-color: var(--clr-bg);
-  z-index: 1;
   border-radius: var(--value-default-border-radius);
+  z-index: 1;
+  padding: 0.5rem 1rem 0 1rem;
 }
 
-header nav .actions .shopping-list .container .contents h4 {
+header nav .actions .shopping-list .container .contents .top h4 {
+  color: #c54141;
+  cursor: pointer;
+}
+
+header nav .actions .shopping-list .container .contents #nothing {
   text-align: center;
   padding: 1.5rem 0 2rem 0;
 }
@@ -251,7 +265,6 @@ header nav .actions .shopping-list .container .contents ul .details .text div {
       -ms-flex-align: center;
           align-items: center;
   height: 2rem;
-  /* Firefox */
 }
 
 header nav .actions .shopping-list .container .contents ul .details .text div input {
@@ -266,16 +279,6 @@ header nav .actions .shopping-list .container .contents ul .details .text div in
   color: var(--clr-text);
   outline: none;
   text-align: center;
-  /* Chrome, Safari, Edge, Opera */
-}
-
-header nav .actions .shopping-list .container .contents ul .details .text div input::-webkit-outer-spin-button, header nav .actions .shopping-list .container .contents ul .details .text div input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-header nav .actions .shopping-list .container .contents ul .details .text div input[type="number"] {
-  -moz-appearance: textfield;
 }
 
 header nav .actions .shopping-list .container .contents ul .details .text div .price {
@@ -550,6 +553,16 @@ footer span {
   outline: 3px solid rgba(255, 0, 0, 0.555) !important;
   border: 1px solid red !important;
   border-radius: var(--value-default-border-radius);
+}
+
+.adding {
+  border: 1px solid lightgray !important;
+  color: lightgray !important;
+  cursor: default !important;
+}
+
+.adding:hover {
+  background-color: transparent !important;
 }
 
 @-webkit-keyframes slide-up {

@@ -1,179 +1,69 @@
-// // e.g to call, myLib.ajax({url:'process.php?q=hello',success:function(m){alert(m)}});
-// myLib.ajax = function (opt) {
-//     opt = opt || {};
-//     var xhr = new XMLHttpRequest(),
-//         async = opt.async || true,
-//         success = opt.success || null, error = opt.error || function () {/*displayErr()*/ };
-//     // pass three parameters, otherwise the default ones, to xhr.open()
-//     xhr.open(opt.method || 'GET', opt.url || '', async);
-//     if (opt.method == 'POST')
-//         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
+// set up the "Clear ALL" button
+document.querySelector("#clear").addEventListener("click", () => {
+    if (window.confirm("Are you sure you want to clear ALL cart items? This action cannot be undone.")) {
+        localStorage.clear();
+        document.querySelector(".shopping-list ul").innerHTML = "";
 
-//     // Asyhronous Call requires a callback function listening on readystatechange
-//     if (async)
-//         xhr.onreadystatechange = function () {
-//             if (xhr.readyState == 4) {
-//                 var status = xhr.status;
-//                 if ((status >= 200 && status < 300) || status == 304 || status == 1223)
-//                     success && success.call(xhr, xhr.responseText);
-//                 else if (status < 200 || status >= 400)
-//                     error.call(xhr);
-//             }
-//         };
+        // show the updated total price
+        document.querySelector(".shopping-list .bottom .price").innerHTML = `Total: $0`;
 
-//     xhr.onerror = function () { error.call(xhr) };
+        // show the updated total quantity
+        document.querySelector(".shopping-list button").innerHTML = `Shopping List (0)`;
 
-//     // POST parameters encoded as opt.data is passed here to xhr.send()
-//     xhr.send(opt.data || null);
+        // display the cart empty message
+        document.querySelector("#nothing").style.display = "block";
+    }
+});
 
-//     // Synchronous Call blocks UI and returns result immediately after xhr.send()
-//     !async && success && success.call(xhr, xhr.responseText);
-// };
-
-// myLib.formData = function (form) {
-//     // private variable for storing parameters
-//     this.data = [];
-//     for (var i = 0, j = 0, name, el, els = form.elements; el = els[i]; i++) {
-//         // skip those useless elements
-//         if (el.disabled || el.name == ''
-//             || ((el.type == 'radio' || el.type == 'checkbox') && !el.checked))
-//             continue;
-//         // add those useful to the data array
-//         this.append(el.name, el.value);
-//     }
-// };
-
-// // public methods of myLib.formData
-// myLib.formData.prototype = {
-//     // output the required final POST parameters, e.g. a=1&b=2&c=3
-//     toString: function () {
-//         return this.data.join('&');
-//     },
-
-//     // encode the data with the built-in function encodeURIComponent
-//     append: function (key, val) {
-//         this.data.push(encodeURIComponent(key) + '=' + encodeURIComponent(val));
-//     }
-// };
-
-// myLib.submitOverAJAX = function (form, opt) {
-//     var formData = new myLib.formData(form);
-//     formData.append('rnd', new Date().getTime());
-//     opt = opt || {};
-//     opt.url = opt.url || form.getAttribute('action');
-//     opt.method = opt.method || 'POST';
-//     opt.data = formData.toString();
-//     opt.success = opt.success || function (msg) { alert(msg) };
-//     myLib.ajax(opt);
-// };
-
-// function el(A) { return document.getElementById(A) };
-
-// var loginForm = el('loginForm');
-// loginForm.onsubmit = function () {
-//     // submit the form over AJAX if it is properly validated
-//     myLib.validate(this) && myLib.submitOverAJAX(this, {
-//         success: function (msg) {
-//             el('result').innerHTML = 'Echo from Server: $_POST = ' + msg.escapeHTML();
-//         }
-//     });
-
-//     // always return false to cancel the default submission
-//     return false;
-// }
-
-// // e.g to call, myLib.ajax({url:'process.php?q=hello',success:function(m){alert(m)}});
-// $.ajax = function (opt) {
-//     opt = opt || {};
-//     var xhr = new XMLHttpRequest(),
-//         async = opt.async || true,
-//         success = opt.success || null, error = opt.error || function () {/*displayErr()*/ };
-
-//     // pass three parameters, otherwise the default ones, to xhr.open()
-//     xhr.open(opt.method || 'GET', opt.url || '', async);
-//     if (opt.method == 'POST')
-//         xhr.setRequestHeader("Content-Type", "application/x-www-form-urlencoded");
-
-//     // Asynchronous Call requires a callback function listening on readystatechange
-//     if (async)
-//         xhr.onreadystatechange = function () {
-//             if (xhr.readyState == 4) {
-//                 var status = xhr.status;
-//                 if ((status >= 200 && status < 300) || status == 304 || status == 1223)
-//                     success && success.call(xhr, xhr.responseText);
-//                 else if (status < 200 || status >= 400)
-//                     error.call(xhr);
-//             }
-//         };
-
-//     xhr.onerror = function () { error.call(xhr) };
-
-//     // POST parameters encoded as opt.data is passed here to xhr.send()
-//     xhr.send(opt.data || null);
-
-//     // Synchronous Call blocks UI and returns result immediately after xhr.send()
-//     !async && success && success.call(xhr, xhr.responseText);
-// };
-
-// $.submitOverAJAX = function (form, opt) {
-//     opt = opt || {};
-//     opt.url = opt.url || form.getAttribute('action');
-//     opt.method = opt.method || 'POST';
-//     opt.data = formData.toString();
-//     opt.success = opt.success || function (msg) { alert(msg) };
-//     $.ajax(opt);
-// };
-
+// event handler for when "Add to Cart" button is pressed
 function addToCart(e) {
-    let exist = false;
+
+    // temporarily disable the button to prevent multiple records in cart
+    e.children[0].disabled = true;
+    e.children[0].classList.add("adding");
 
     // get  the product ID
     let productID = e.children[1].value;
-    // console.log(productID);
-
-    // localStorage.setItem(productID, Number(0));
 
     // get its current quantity from local storage
     let currentQuantity = localStorage.getItem(productID) * 1;
-    // console.log(currentQuantity);
 
     // check if the product has been added to the cart
     // and update the quantity correspondingly
-    if (currentQuantity == null || currentQuantity == 0 || currentQuantity == "") {
+    if (currentQuantity == null || currentQuantity == 0 || currentQuantity == "")
         localStorage.setItem(productID, Number(1));
-        exist = false;
-    }
-    else {
+    else
         localStorage.setItem(productID, Number(currentQuantity + 1));
-        exist = true;
-    }
-
-    // localStorage.removeItem(productID);
 
     // update the shopping list in the HTML
-    updateCart("update", productID);
+    updateCart("update", productID, e.children[0]);
 
+    // prevent page reload
     return false;
 }
 
+
+// template of cart item
 const template = document.querySelector("#cart-item-template");
 
-// load the shopping list when page is first loaded
-updateCart("load", -1);
-
-function updateCart(mode, pid) {
+// update items in cart
+function updateCart(mode, pid, source) {
+    // list that stores all item
     let currentCart = document.querySelector(".shopping-list ul");
 
+    // display for total price and quantity
     let priceDisplay = document.querySelector(".shopping-list .bottom .price");
     let quantityDisplay = document.querySelector(".shopping-list button");
 
-    // page first loaded
+    // when page first loaded
     if (mode == "load") {
         let totalPrice = 0;
         let totalQuantity = 0;
 
+        // first empty the HTML content
         currentCart.innerHTML = "";
 
+        // then fetch the item one-by-one based on the records in local storage
         for (let i = 0; i < localStorage.length; i++) {
             let pid = localStorage.key(i);
             let quantity = Number(localStorage.getItem(localStorage.key(i)));
@@ -183,9 +73,14 @@ function updateCart(mode, pid) {
             let price = 0;
             let image = "";
 
-            let xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function () {
+            let request = new XMLHttpRequest();
+
+            // what to do after sending the request
+            request.onreadystatechange = function () {
+
+                // if the request is success
                 if (this.readyState == 4 && this.status == 200) {
+
                     // get the name, price, and thumbnail
                     name = JSON.parse(this.responseText).NAME;
                     price = JSON.parse(this.responseText).PRICE;
@@ -198,7 +93,7 @@ function updateCart(mode, pid) {
                     content.querySelector("img").src = image;
                     content.querySelector(".name").innerHTML = name;
                     content.querySelector("input").value = quantity;
-                    content.querySelector("input").title = pid;
+                    content.querySelector("input").setAttribute("data-pid", pid)
                     content.querySelector("input").addEventListener("change", (e) => { validateQuantity(e); });
                     content.querySelector(".price").innerHTML = price;
                     content.querySelector(".delete").setAttribute("data-pid", pid);
@@ -223,22 +118,27 @@ function updateCart(mode, pid) {
                         document.querySelector("#nothing").style.display = "block";
                 }
             };
-            xmlhttp.open("GET", "cart-process.php?pid=" + pid, true);
-            xmlhttp.send();
+
+            // use GET method
+            request.open("GET", "cart-process.php?pid=" + pid, true);
+
+            // send the request
+            request.send();
         }
     }
 
     // update the cart only
     else if (mode == "update") {
+
         // get the current total quantity
         let totalQuantity = 0, totalPrice = 0;
         let allItem = document.querySelectorAll(".shopping-list ul li .text div");
         allItem.forEach(item => {
             let quantity = Number(item.children[0].value);
-
             totalQuantity += quantity;
         });
 
+        // get the item that should be updated
         let cartItem = document.querySelector(`#P${pid}`);
 
         // add new item
@@ -249,8 +149,12 @@ function updateCart(mode, pid) {
             let price = 0;
             let image = "";
 
-            let xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function () {
+            let request = new XMLHttpRequest();
+
+            // what to do after sending the request
+            request.onreadystatechange = function () {
+
+                // if the request is success
                 if (this.readyState == 4 && this.status == 200) {
                     // get the name, price, and thumbnail
                     name = JSON.parse(this.responseText).NAME;
@@ -264,7 +168,7 @@ function updateCart(mode, pid) {
                     content.querySelector("img").src = image;
                     content.querySelector(".name").innerHTML = name;
                     content.querySelector("input").value = quantity;
-                    content.querySelector("input").title = pid;
+                    content.querySelector("input").setAttribute("data-pid", pid)
                     content.querySelector("input").addEventListener("change", (e) => { validateQuantity(e); })
                     content.querySelector(".price").innerHTML = price;
                     content.querySelector(".delete").setAttribute("data-pid", pid);
@@ -290,10 +194,18 @@ function updateCart(mode, pid) {
                         document.querySelector("#nothing").style.display = "none";
                     else
                         document.querySelector("#nothing").style.display = "block";
+
+                    // re-enable the button
+                    source.disabled = false;
+                    source.classList.remove("adding");
                 }
             };
-            xmlhttp.open("GET", "cart-process.php?pid=" + pid, true);
-            xmlhttp.send();
+
+            // use GET method
+            request.open("GET", "cart-process.php?pid=" + pid, true);
+
+            // send the request
+            request.send();
         }
 
         // update old item
@@ -323,9 +235,16 @@ function updateCart(mode, pid) {
                 document.querySelector("#nothing").style.display = "none";
             else
                 document.querySelector("#nothing").style.display = "block";
+
+            // re-enable the button
+            source.disabled = false;
+            source.classList.remove("adding");
         }
     }
+
+    // remove a item from cart
     else if (mode == "remove") {
+
         // first remove the item from HTML
         let itemRemove = document.querySelector(`#P${pid}`);
         currentCart.removeChild(itemRemove);
@@ -355,23 +274,51 @@ function updateCart(mode, pid) {
     }
 }
 
+// prompt user before removing an item
 function removeProduct(pid) {
-    if (confirm("Are you sure you want to remove this product from cart?")) {
+    if (window.confirm("Are you sure you want to remove this item from cart? This action cannot be undone.")) {
         localStorage.removeItem(pid);
         updateCart("remove", pid);
     }
 }
 
+// load the shopping list when page is first loaded
+updateCart("load", -1, null);
+
+// validate the quantity input
 const quantity_pattern = /^[1-9]+[0-9]*$/;
 function validateQuantity(e) {
     const input = e.target.value;
-    const pid = e.target.title;
+    const pid = e.target.dataset.pid;
 
+    // check if user want to remove the product
+    if (input <= 0) {
+
+        // if yes then remove the item
+        if (window.confirm("Are you sure you want to remove this item from cart? This action cannot be undone.")) {
+            localStorage.removeItem(pid);
+            updateCart("remove", pid);
+        }
+
+        // else reset the value to 1
+        else {
+            console.log("HI");
+            console.log(localStorage.getItem(pid));
+            e.target.value = 1;
+        }
+
+        return 0;
+    }
+
+    // check with regex
+    // if ok then update the value in local storage
     if (input.match(quantity_pattern)) {
         e.target.classList.remove("invalid");
         localStorage.setItem(pid, input);
-        updateCart("update", pid);
+        updateCart("update", pid, e.target);
     }
+
+    // else notify the user
     else {
         e.target.classList.add("invalid");
     }
