@@ -502,6 +502,20 @@ footer {
   }
 }
 
+#loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  height: 6rem;
+  width: 6rem;
+  background-color: var(--clr-bg);
+  border: 10px solid var(--clr-main);
+  border-right: 10px solid var(--clr-bg);
+  border-radius: 50%;
+  animation: spin 0.5s infinite linear;
+}
+
 @keyframes slide-up {
   from {
     transform: translateY(10%);
@@ -544,5 +558,14 @@ footer {
   }
   to {
     background-position: 20rem 0;
+  }
+}
+
+@keyframes spin {
+  from {
+    transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    transform: translate(-50%, -50%) rotate(360deg);
   }
 }

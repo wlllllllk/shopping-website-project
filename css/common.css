@@ -565,6 +565,22 @@ footer span {
   background-color: transparent !important;
 }
 
+#loading {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
+  height: 6rem;
+  width: 6rem;
+  background-color: var(--clr-bg);
+  border: 10px solid var(--clr-main);
+  border-right: 10px solid var(--clr-bg);
+  border-radius: 50%;
+  -webkit-animation: spin 0.5s infinite linear;
+          animation: spin 0.5s infinite linear;
+}
+
 @-webkit-keyframes slide-up {
   from {
     -webkit-transform: translateY(10%);
@@ -656,6 +672,28 @@ footer span {
   }
   to {
     background-position: 20rem 0;
+  }
+}
+
+@-webkit-keyframes spin {
+  from {
+    -webkit-transform: translate(-50%, -50%) rotate(0deg);
+            transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    -webkit-transform: translate(-50%, -50%) rotate(360deg);
+            transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@keyframes spin {
+  from {
+    -webkit-transform: translate(-50%, -50%) rotate(0deg);
+            transform: translate(-50%, -50%) rotate(0deg);
+  }
+  to {
+    -webkit-transform: translate(-50%, -50%) rotate(360deg);
+            transform: translate(-50%, -50%) rotate(360deg);
   }
 }
 /*# sourceMappingURL=common.css.map */

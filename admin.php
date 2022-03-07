@@ -30,14 +30,17 @@ foreach ($products as $value_prod) {
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>IERG4210 Admin</title>
+    <link rel="shortcut icon" type="image/svg" href="./icon/favicon.svg">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="./css/admin.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./css/common.css">
-    <link rel="stylesheet" href="./css/admin.css">
+    <!-- <script src="../js/common.js"></script> -->
     <script defer src="./js/admin.js"></script>
 </head>
 <body>
+    <!-- <div id="loading"></div> -->
     <header>
         <nav>
             <a href="http://52.205.54.184" id="logo"><span>IERG4210<br>Store</span></a>
