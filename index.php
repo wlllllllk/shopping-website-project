@@ -21,10 +21,6 @@ foreach ($categories as $value_cat) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
-    <!-- <script src="../js/common.js"></script> -->
-    <script defer src="../js/cart.js"></script>
-    <script defer src="../js/page.js"></script>
-    <script defer src="../js/product-fetch.js"></script>
 </head>
 
 <body>
@@ -122,6 +118,10 @@ foreach ($categories as $value_cat) {
     <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <!-- <script src="../js/common.js"></script> -->
+    <script src="../js/cart.js"></script>
+    <script src="../js/page.js"></script>
+    <script src="../js/product-fetch.js"></script>
 </body>
 
 </html>

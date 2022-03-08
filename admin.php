@@ -36,8 +36,6 @@ foreach ($products as $value_prod) {
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
-    <!-- <script src="../js/common.js"></script> -->
-    <script defer src="./js/admin.js"></script>
 </head>
 <body>
     <!-- <div id="loading"></div> -->
@@ -203,5 +201,8 @@ foreach ($products as $value_prod) {
         </section>
     </div>
     <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>
+
+    <!-- <script src="../js/common.js"></script> -->
+    <script src="./js/admin.js"></script>
 </body>
 </html>

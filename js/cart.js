@@ -1,13 +1,12 @@
 // set up the "Clear ALL" button
 document.querySelector("#clear").addEventListener("click", () => {
     if (window.confirm("Are you sure you want to clear ALL cart items? This action cannot be undone.")) {
+        // clear the local storage
         localStorage.clear();
+
+        // reset the cart
         document.querySelector(".shopping-list ul").innerHTML = "";
-
-        // show the updated total price
         document.querySelector(".shopping-list .bottom .price").innerHTML = `Total: $0`;
-
-        // show the updated total quantity
         document.querySelector(".shopping-list button").innerHTML = `Shopping List (0)`;
 
         // display the cart empty message
@@ -132,11 +131,6 @@ function updateCart(mode, pid, source) {
 
         // get the current total quantity
         let totalQuantity = 0, totalPrice = 0;
-        let allItem = document.querySelectorAll(".shopping-list ul li .text div");
-        allItem.forEach(item => {
-            let quantity = Number(item.children[0].value);
-            totalQuantity += quantity;
-        });
 
         // get the item that should be updated
         let cartItem = document.querySelector(`#P${pid}`);
@@ -154,8 +148,18 @@ function updateCart(mode, pid, source) {
             // what to do after sending the request
             request.onreadystatechange = function () {
 
-                // if the request is success
+                // only do the following if the request is done and success
                 if (this.readyState == 4 && this.status == 200) {
+                    let allItem = document.querySelectorAll(".shopping-list ul li .text div");
+                    console.log(allItem);
+                    allItem.forEach(item => {
+                        let current_quantity = Number(item.children[0].value);
+                        let current_price = Number(item.children[1].innerHTML);
+
+                        totalQuantity += current_quantity;
+                        totalPrice += (current_quantity * current_price)
+                    });
+
                     // get the name, price, and thumbnail
                     name = JSON.parse(this.responseText).NAME;
                     price = JSON.parse(this.responseText).PRICE;
@@ -214,7 +218,6 @@ function updateCart(mode, pid, source) {
             document.querySelector(`#P${pid} input`).value = Number(localStorage.getItem(pid));
 
             // then calculate the new total quantity and price
-            let totalQuantity = 0, totalPrice = 0;
             let allItem = document.querySelectorAll(".shopping-list ul li .text div");
             allItem.forEach(item => {
                 let quantity = Number(item.children[0].value);
@@ -292,7 +295,8 @@ function validateQuantity(e) {
     const pid = e.target.dataset.pid;
 
     // check if user want to remove the product
-    if (input <= 0) {
+    // applicable to number input only
+    if (input != "" && input <= 0) {
 
         // if yes then remove the item
         if (window.confirm("Are you sure you want to remove this item from cart? This action cannot be undone.")) {
@@ -302,11 +306,12 @@ function validateQuantity(e) {
 
         // else reset the value to 1
         else {
-            console.log("HI");
-            console.log(localStorage.getItem(pid));
             e.target.value = 1;
+            localStorage.setItem(pid, 1);
+            updateCart("update", pid, e.target);
         }
 
+        // need not run the codes below
         return 0;
     }
 
@@ -314,6 +319,7 @@ function validateQuantity(e) {
     // if ok then update the value in local storage
     if (input.match(quantity_pattern)) {
         e.target.classList.remove("invalid");
+
         localStorage.setItem(pid, input);
         updateCart("update", pid, e.target);
     }
