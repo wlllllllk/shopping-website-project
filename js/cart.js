@@ -1,17 +1,17 @@
 // set up the "Clear ALL" button
 document.querySelector("#clear").addEventListener("click", () => {
-    if (window.confirm("Are you sure you want to clear ALL cart items? This action cannot be undone.")) {
-        // clear the local storage
-        localStorage.clear();
+    // if (window.confirm("Are you sure you want to clear ALL cart items? This action cannot be undone.")) {
+    // clear the local storage
+    localStorage.clear();
 
-        // reset the cart
-        document.querySelector(".shopping-list ul").innerHTML = "";
-        document.querySelector(".shopping-list .bottom .price").innerHTML = `Total: $0`;
-        document.querySelector(".shopping-list button").innerHTML = `Shopping List (0)`;
+    // reset the cart
+    document.querySelector(".shopping-list ul").innerHTML = "";
+    document.querySelector(".shopping-list .bottom .price").innerHTML = `Total: $0`;
+    document.querySelector(".shopping-list button").innerHTML = `Shopping List (0)`;
 
-        // display the cart empty message
-        document.querySelector("#nothing").style.display = "block";
-    }
+    // display the cart empty message
+    document.querySelector("#nothing").style.display = "block";
+    // }
 });
 
 // event handler for when "Add to Cart" button is pressed
@@ -25,7 +25,7 @@ function addToCart(e) {
     let productID = e.children[1].value;
 
     // get its current quantity from local storage
-    let currentQuantity = localStorage.getItem(productID) * 1;
+    let currentQuantity = Number(localStorage.getItem(productID));
 
     // check if the product has been added to the cart
     // and update the quantity correspondingly
@@ -42,11 +42,13 @@ function addToCart(e) {
 }
 
 
+
 // template of cart item
 const template = document.querySelector("#cart-item-template");
 
 // update items in cart
 function updateCart(mode, pid, source) {
+
     // list that stores all item
     let currentCart = document.querySelector(".shopping-list ul");
 
@@ -77,44 +79,56 @@ function updateCart(mode, pid, source) {
             // what to do after sending the request
             request.onreadystatechange = function () {
 
-                // if the request is success
-                if (this.readyState == 4 && this.status == 200) {
+                // if the request is done
+                if (this.readyState == 4) {
 
-                    // get the name, price, and thumbnail
-                    name = JSON.parse(this.responseText).NAME;
-                    price = JSON.parse(this.responseText).PRICE;
-                    image = JSON.parse(this.responseText).THUMBNAIL;
+                    // if the request is success
+                    if (this.status == 200) {
 
-                    // fill the content
-                    const content = template.content.cloneNode(true);
-                    content.querySelector("li").id = `P${pid}`;
-                    content.querySelector("a").href = `product.php?pid=${pid}`;
-                    content.querySelector("img").src = image;
-                    content.querySelector(".name").innerHTML = name;
-                    content.querySelector("input").value = quantity;
-                    content.querySelector("input").setAttribute("data-pid", pid)
-                    content.querySelector("input").addEventListener("change", (e) => { validateQuantity(e); });
-                    content.querySelector(".price").innerHTML = price;
-                    content.querySelector(".delete").setAttribute("data-pid", pid);
-                    content.querySelector(".delete").addEventListener("click", () => { removeProduct(pid) });
+                        // get the name, price, and thumbnail
+                        name = JSON.parse(this.responseText).NAME;
+                        price = JSON.parse(this.responseText).PRICE;
+                        image = JSON.parse(this.responseText).THUMBNAIL;
 
-                    // append to current HTML
-                    currentCart.appendChild(content);
+                        // fill the content
+                        const content = template.content.cloneNode(true);
+                        content.querySelector("li").id = `P${pid}`;
+                        content.querySelector("a").href = `product.php?pid=${pid}`;
+                        content.querySelector("img").src = image;
+                        content.querySelector(".name").innerHTML = name;
+                        content.querySelector("input").value = quantity;
+                        content.querySelector("input").setAttribute("data-pid", pid)
+                        content.querySelector("input").addEventListener("change", (e) => { validateQuantity(e); });
+                        content.querySelector(".price").innerHTML = price;
+                        content.querySelector(".delete").setAttribute("data-pid", pid);
+                        content.querySelector(".delete").addEventListener("click", () => { removeProduct(pid) });
 
-                    // update the total price
-                    totalPrice += (price * quantity);
+                        // append to current HTML
+                        currentCart.appendChild(content);
 
-                    // show the updated total price
-                    priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
+                        // update the total price
+                        totalPrice += (price * quantity);
 
-                    // show the updated total quantity
-                    quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`;
+                        // show the updated total price
+                        priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
 
-                    // display cart empty message depending on total quantity
-                    if (totalQuantity > 0)
-                        document.querySelector("#nothing").style.display = "none";
-                    else
+                        // show the updated total quantity
+                        quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`;
+
+                        // display cart empty message depending on total quantity
+                        if (totalQuantity > 0)
+                            document.querySelector("#nothing").style.display = "none";
+                        else {
+                            document.querySelector("#nothing").innerHTML = "There is nothing in the cart :(";
+                            document.querySelector("#nothing").style.display = "block";
+                        }
+                    }
+
+                    // the request is failed for some reason
+                    else {
+                        document.querySelector("#nothing").innerHTML = "Error getting cart item, try refreshing the page :(";
                         document.querySelector("#nothing").style.display = "block";
+                    }
                 }
             };
 
@@ -148,56 +162,67 @@ function updateCart(mode, pid, source) {
             // what to do after sending the request
             request.onreadystatechange = function () {
 
-                // only do the following if the request is done and success
-                if (this.readyState == 4 && this.status == 200) {
-                    let allItem = document.querySelectorAll(".shopping-list ul li .text div");
-                    console.log(allItem);
-                    allItem.forEach(item => {
-                        let current_quantity = Number(item.children[0].value);
-                        let current_price = Number(item.children[1].innerHTML);
+                // if the request is done
+                if (this.readyState == 4) {
 
-                        totalQuantity += current_quantity;
-                        totalPrice += (current_quantity * current_price)
-                    });
+                    // and the request is success
+                    if (this.status == 200) {
 
-                    // get the name, price, and thumbnail
-                    name = JSON.parse(this.responseText).NAME;
-                    price = JSON.parse(this.responseText).PRICE;
-                    image = JSON.parse(this.responseText).THUMBNAIL;
+                        let allItem = document.querySelectorAll(".shopping-list ul li .text div");
+                        allItem.forEach(item => {
+                            let current_quantity = Number(item.children[0].value);
+                            let current_price = Number(item.children[1].innerHTML);
 
-                    // fill the content
-                    const content = template.content.cloneNode(true);
-                    content.querySelector("li").id = `P${pid}`;
-                    content.querySelector("a").href = `product.php?pid=${pid}`;
-                    content.querySelector("img").src = image;
-                    content.querySelector(".name").innerHTML = name;
-                    content.querySelector("input").value = quantity;
-                    content.querySelector("input").setAttribute("data-pid", pid)
-                    content.querySelector("input").addEventListener("change", (e) => { validateQuantity(e); })
-                    content.querySelector(".price").innerHTML = price;
-                    content.querySelector(".delete").setAttribute("data-pid", pid);
-                    content.querySelector(".delete").addEventListener("click", () => { removeProduct(pid) });
+                            totalQuantity += current_quantity;
+                            totalPrice += (current_quantity * current_price)
+                        });
 
-                    // append to current HTML
-                    currentCart.appendChild(content);
+                        // get the name, price, and thumbnail
+                        name = JSON.parse(this.responseText).NAME;
+                        price = JSON.parse(this.responseText).PRICE;
+                        image = JSON.parse(this.responseText).THUMBNAIL;
 
-                    // update the total price
-                    totalPrice += (price * quantity);
+                        // fill the content
+                        const content = template.content.cloneNode(true);
+                        content.querySelector("li").id = `P${pid}`;
+                        content.querySelector("a").href = `product.php?pid=${pid}`;
+                        content.querySelector("img").src = image;
+                        content.querySelector(".name").innerHTML = name;
+                        content.querySelector("input").value = quantity;
+                        content.querySelector("input").setAttribute("data-pid", pid)
+                        content.querySelector("input").addEventListener("change", (e) => { validateQuantity(e); })
+                        content.querySelector(".price").innerHTML = price;
+                        content.querySelector(".delete").setAttribute("data-pid", pid);
+                        content.querySelector(".delete").addEventListener("click", () => { removeProduct(pid) });
 
-                    // update the total quantity
-                    totalQuantity += quantity;
+                        // append to current HTML
+                        currentCart.appendChild(content);
 
-                    // show the updated total price
-                    priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
+                        // update the total price
+                        totalPrice += (price * quantity);
 
-                    // show the updated total quantity
-                    quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`;
+                        // update the total quantity
+                        totalQuantity += quantity;
 
-                    // display cart empty message depending on total quantity
-                    if (totalQuantity > 0)
-                        document.querySelector("#nothing").style.display = "none";
-                    else
-                        document.querySelector("#nothing").style.display = "block";
+                        // show the updated total price
+                        priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
+
+                        // show the updated total quantity
+                        quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`;
+
+                        // display cart empty message depending on total quantity
+                        if (totalQuantity > 0)
+                            document.querySelector("#nothing").style.display = "none";
+                        else {
+                            document.querySelector("#nothing").innerHTML = "There is nothing in the cart :(";
+                            document.querySelector("#nothing").style.display = "block";
+                        }
+                    }
+
+                    // the request is failed for some reason
+                    else {
+                        alert("Error adding item to cart, please try again later.");
+                    }
 
                     // re-enable the button
                     source.disabled = false;
@@ -272,17 +297,25 @@ function updateCart(mode, pid, source) {
         // display cart empty message depending on total quantity
         if (totalQuantity > 0)
             document.querySelector("#nothing").style.display = "none";
-        else
+        else {
+            document.querySelector("#nothing").innerHTML = "There is nothing in the cart :(";
             document.querySelector("#nothing").style.display = "block";
+        }
     }
 }
 
-// prompt user before removing an item
+
+// NOTE
+// Product deletion is executed DIRECTLY without prompt because 
+// user can easily disable browser built-it prompt and think 
+// there is something wrong with the site
+
+//// prompt user before removing an item
 function removeProduct(pid) {
-    if (window.confirm("Are you sure you want to remove this item from cart? This action cannot be undone.")) {
-        localStorage.removeItem(pid);
-        updateCart("remove", pid);
-    }
+    // if (window.confirm("Are you sure you want to remove this item from cart? This action cannot be undone.")) {
+    localStorage.removeItem(pid);
+    updateCart("remove", pid);
+    // }
 }
 
 // load the shopping list when page is first loaded
@@ -294,22 +327,22 @@ function validateQuantity(e) {
     const input = e.target.value;
     const pid = e.target.dataset.pid;
 
-    // check if user want to remove the product
+    //// check if user want to remove the product
     // applicable to number input only
     if (input != "" && input <= 0) {
 
         // if yes then remove the item
-        if (window.confirm("Are you sure you want to remove this item from cart? This action cannot be undone.")) {
-            localStorage.removeItem(pid);
-            updateCart("remove", pid);
-        }
+        // if (window.confirm("Are you sure you want to remove this item from cart? This action cannot be undone.")) {
+        localStorage.removeItem(pid);
+        updateCart("remove", pid);
+        // }
 
         // else reset the value to 1
-        else {
-            e.target.value = 1;
-            localStorage.setItem(pid, 1);
-            updateCart("update", pid, e.target);
-        }
+        // else {
+        //     e.target.value = 1;
+        //     localStorage.setItem(pid, 1);
+        //     updateCart("update", pid, e.target);
+        // }
 
         // need not run the codes below
         return 0;
@@ -324,7 +357,7 @@ function validateQuantity(e) {
         updateCart("update", pid, e.target);
     }
 
-    // else notify the user
+    // else warn the user
     else {
         e.target.classList.add("invalid");
     }

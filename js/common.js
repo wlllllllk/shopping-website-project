@@ -1,4 +1,4 @@
-// This is use to hide the webpage content before it is fully loaded
+// This is used to hide the webpage content before it is fully loaded
 document.onreadystatechange = () => {
     if (document.readyState !== "complete") {
         document.querySelector("body").style.visibility = "hidden";
