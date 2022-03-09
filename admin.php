@@ -68,7 +68,7 @@ foreach ($products as $value_prod) {
         <section class="right">
                 <fieldset id="product-add-form">
                     <legend>Product Add Form &#40;&#42; &#61; Required&#41;</legend>
-                    <form method="POST" action="admin-process.php?action=prod_insert" enctype="multipart/form-data" onsubmit="return check_option(this)">
+                    <form class="form-with-image-upload" method="POST" action="admin-process.php?action=prod_insert" enctype="multipart/form-data" onsubmit="return check_option(this)">
                         <label for="category-add-product">Category &#42;</label>
                         <select id="category-add-product" name="CATID">
                             <?php echo $options_cat; ?>
@@ -103,7 +103,7 @@ foreach ($products as $value_prod) {
                             <h4>Product List</h4>
                             <?php echo $divs_prod; ?>
                         </div>
-                        <form class="form-with-image" method="POST" action="admin-process.php?action=prod_update" enctype="multipart/form-data" onsubmit="return check_option(this)">
+                        <form class="form-with-image-upload form-with-product-list" method="POST" action="admin-process.php?action=prod_update" enctype="multipart/form-data" onsubmit="return check_option(this)">
                             <label for="id-update-product">Current Product &#42;</label>
                             <select id="id-update-product" name="PID">
                                 <?php echo $options_prod; ?>
@@ -143,7 +143,7 @@ foreach ($products as $value_prod) {
                             <h4>Product List</h4>
                             <?php echo $divs_prod; ?>
                         </div>
-                        <form class="form-with-image" method="POST" action="admin-process.php?action=prod_delete" enctype="multipart/form-data" onsubmit="return check_option(this)">
+                        <form class="form-with-product-list" method="POST" action="admin-process.php?action=prod_delete" enctype="multipart/form-data" onsubmit="return check_option(this)">
                             <label for="delete-product">Product to be Deleted &#42;</label>
                             <select name="PID" id="delete-product">
                                 <?php echo $options_prod; ?>

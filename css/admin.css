@@ -139,7 +139,7 @@ header nav h1 {
   color: var(--clr-text);
 }
 
-.main .right fieldset .form-content form.form-with-image {
+.main .right fieldset .form-content form.form-with-product-list {
   width: 100%;
   -ms-flex-negative: 1;
       flex-shrink: 1;

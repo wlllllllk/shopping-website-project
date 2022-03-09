@@ -14,7 +14,7 @@ all_textarea.forEach((textarea) => {
 
 
 // for the drag-and-drop area
-const forms = document.querySelectorAll(".form-with-image");
+const forms = document.querySelectorAll(".form-with-image-upload");
 forms.forEach((form) => {
     let image_upload_field;
     for (let i = 0; i < form.children.length; i++) {
