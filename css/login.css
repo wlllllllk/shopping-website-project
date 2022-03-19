@@ -1,0 +1,92 @@
+header nav h1 {
+  color: white;
+}
+
+.main {
+  height: 80vh;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  color: var(--clr-text);
+}
+
+fieldset {
+  border: none;
+  width: 30%;
+}
+
+fieldset legend {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-left: 1rem;
+}
+
+fieldset form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 0 1rem;
+}
+
+fieldset form label {
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+fieldset form label:first-of-type {
+  margin-top: 0;
+}
+
+fieldset form input {
+  line-height: 1;
+  padding: 0 1rem;
+  font-size: 1.75rem;
+  font-weight: 300;
+  outline: none;
+  border-radius: var(--value-default-border-radius);
+  border: 1px solid var(--clr-main-light);
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+}
+
+fieldset form .actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+  height: 3rem;
+  margin: 1.5rem 0;
+}
+
+fieldset form .actions input {
+  height: 100%;
+  -webkit-box-flex: 1;
+      -ms-flex-positive: 1;
+          flex-grow: 1;
+  color: var(--clr-text);
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+fieldset form .actions input:hover {
+  -webkit-filter: brightness(0.8);
+          filter: brightness(0.8);
+}
+
+fieldset form input[type="submit"] {
+  color: white;
+  background-color: var(--clr-main-light);
+}
+/*# sourceMappingURL=login.css.map */

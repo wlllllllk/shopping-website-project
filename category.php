@@ -2,14 +2,14 @@
 require __DIR__.'/lib/db.inc.php';
 $catid = $_REQUEST["catid"];
 $categories = ierg4210_cat_fetchAll();
-$li_cat = '';
+$li_cat = '<li><a href="./index.php"><span>All</span></a></li>';
 $current_cat = '';
 foreach ($categories as $value_cat) {
     if ($value_cat["CATID"] == $catid) {
         $li_cat .= '<li class="selected"><a href="category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
         $current_cat = $value_cat["NAME"];
     } else {
-        $li_cat .= '<li><a href="category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
+        $li_cat .= '<li><a href="./category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
     }
 }
 
@@ -17,11 +17,11 @@ $products = ierg4210_prod_fetch_by_catid($catid);
 $div_prod = '';
 foreach ($products as $value_prod) {
     $div_prod .= '<div class="product">
-                    <a href="product.php?pid='.$value_prod["PID"].'">
+                    <a href="./product.php?pid='.$value_prod["PID"].'">
                         <div class="photo"><img src="'.$value_prod["THUMBNAIL"].'" alt="" /></div>
                     </a>
                     <div class="text">
-                        <a href="product.php?pid='.$value_prod["PID"].'">
+                        <a href="./product.php?pid='.$value_prod["PID"].'">
                             <div class="name">'.$value_prod["NAME"].'</div>
                         </a>
                         <div class="price">'.$value_prod["PRICE"].'</div>
@@ -53,7 +53,7 @@ foreach ($products as $value_prod) {
     <!-- <div id="loading"></div> -->
     <header>
         <nav>
-            <a href="http://52.205.54.184" id="logo"><span>IERG4210<br>Store</span></a>
+            <a href="./index.php" id="logo"><span>IERG4210<br>Store</span></a>
             <div class="searchBar"><input type="text" placeholder="Type to search..."></div>
             <div class="actions">
                 <div class="shopping-list">
@@ -92,8 +92,8 @@ foreach ($products as $value_prod) {
                     </div>
                 </div>
                 <div class="account">
-                    <a href="./admin.php">
-                        <button>Admin</button>
+                    <a href="./login.php">
+                        <button>Login</button>
                     </a>
                 </div>
             </div>
@@ -112,7 +112,7 @@ foreach ($products as $value_prod) {
 
     <div class="main">
         <div class="location">
-            <a href="index.php">Home</a>
+            <a href="./index.php">Home</a>
             &nbsp;>&nbsp;
             <a href="#"><?php echo $current_cat; ?></a>
         </div>

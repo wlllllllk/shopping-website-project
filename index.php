@@ -1,11 +1,10 @@
 <?php
-require __DIR__.'/lib/db.inc.php';
-$categories = ierg4210_cat_fetchAll();
-$li_cat = '';
-foreach ($categories as $value_cat) {
-    $li_cat .= '<li><a href="category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
-}
-
+    require __DIR__.'/lib/db.inc.php';
+    $categories = ierg4210_cat_fetchAll();
+    $li_cat = '<li class="selected"><a href="./index.php"><span>All</span></a></li>';
+    foreach ($categories as $value_cat) {
+        $li_cat .= '<li><a href="category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
+    }
 ?>
 
 <!DOCTYPE html>
@@ -27,7 +26,7 @@ foreach ($categories as $value_cat) {
     <!-- <div id="loading"></div> -->
     <header>
         <nav>
-            <a href="http://52.205.54.184" id="logo"><span>IERG4210<br>Store</span></a>
+            <a href="./index.php" id="logo"><span>IERG4210<br>Store</span></a>
             <div class="searchBar"><input type="text" placeholder="Type to search..."></div>
             <div class="actions">
                 <div class="shopping-list">
@@ -66,8 +65,8 @@ foreach ($categories as $value_cat) {
                     </div>
                 </div>
                 <div class="account">
-                    <a href="./admin.php">
-                        <button>Admin</button>
+                    <a href="./login.php">
+                        <button>Login</button>
                     </a>
                 </div>
             </div>
@@ -85,7 +84,7 @@ foreach ($categories as $value_cat) {
     </header>
 
     <div class="main">
-        <div class="location"><a href="index.php">Home</a></div>
+        <div class="location"><a href="./index.php">Home</a></div>
         <section>
             <h3>All Products</h3>
             <div class="product-list">

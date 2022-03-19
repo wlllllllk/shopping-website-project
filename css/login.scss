@@ -1,0 +1,74 @@
+header nav h1 {
+  color: white;
+}
+
+.main {
+  height: 80vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: var(--clr-text);
+}
+
+fieldset {
+  border: none;
+  width: 30%;
+
+  legend {
+    font-size: 2.5rem;
+    font-weight: 600;
+    margin-left: 1rem;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    margin: 0 1rem;
+
+    label {
+      margin-top: 1rem;
+      font-size: 2rem;
+      font-weight: 400;
+
+      &:first-of-type {
+        margin-top: 0;
+      }
+    }
+
+    input {
+      line-height: 1;
+      padding: 0 1rem;
+      font-size: 1.75rem;
+      font-weight: 300;
+      outline: none;
+      border-radius: var(--value-default-border-radius);
+      border: 1px solid var(--clr-main-light);
+      background-color: var(--clr-bg);
+      color: var(--clr-text);
+    }
+
+    .actions {
+      display: flex;
+      gap: 1rem;
+      height: 3rem;
+      margin: 1.5rem 0;
+
+      input {
+        height: 100%;
+        flex-grow: 1;
+        color: var(--clr-text);
+        cursor: pointer;
+        transition: 0.2s;
+
+        &:hover {
+          filter: brightness(0.8);
+        }
+      }
+    }
+
+    input[type="submit"] {
+      color: white;
+      background-color: var(--clr-main-light);
+    }
+  }
+}

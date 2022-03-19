@@ -41,12 +41,12 @@ foreach ($products as $value_prod) {
     <!-- <div id="loading"></div> -->
     <header>
         <nav>
-            <a href="http://52.205.54.184" id="logo"><span>IERG4210<br>Store</span></a>
+            <a href="./index.php" id="logo"><span>IERG4210<br>Store</span></a>
             <h1>Admin Panel</h1>
             <div class="actions">
                 <div class="account">
                     <a href="./index.php">
-                        <button>Leave</button>
+                        <button>Logout</button>
                     </a>                
                 </div>
             </div>

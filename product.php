@@ -4,14 +4,15 @@ $pid = $_REQUEST["pid"];
 $current_prod = ierg4210_prod_fetchOne($pid);
 $categories = ierg4210_cat_fetchAll();
 
-$li_cat = '';
+$li_cat = '<li><a href="./index.php"><span>All</span></a></li>';
 $current_cat = '';
+
 foreach ($categories as $value_cat) {
     if ($value_cat["CATID"] == $current_prod["CATID"]) {
-        $li_cat .= '<li class="selected"><a href="category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
+        $li_cat .= '<li class="selected"><a href="./category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
         $current_cat = $value_cat["NAME"];
     } else {
-        $li_cat .= '<li><a href="category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
+        $li_cat .= '<li><a href="./category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
     }
 }
 
@@ -36,7 +37,7 @@ foreach ($categories as $value_cat) {
     <!-- <div id="loading"></div> -->
     <header>
         <nav>
-            <a href="http://52.205.54.184" id="logo"><span>IERG4210<br>Store</span></a>
+            <a href="./index.php" id="logo"><span>IERG4210<br>Store</span></a>
             <div class="searchBar"><input type="text" placeholder="Type to search..."></div>
             <div class="actions">
                 <div class="shopping-list">
@@ -75,8 +76,8 @@ foreach ($categories as $value_cat) {
                     </div>
                 </div>
                 <div class="account">
-                    <a href="./admin.php">
-                        <button>Admin</button>
+                    <a href="./login.php">
+                        <button>Login</button>
                     </a>                
                 </div>
             </div>
@@ -97,7 +98,7 @@ foreach ($categories as $value_cat) {
         <div class="location">
             <a href="index.php">Home</a>
             &nbsp;>&nbsp;
-            <?php echo '<a href="category.php?catid='.$current_prod["CATID"].'">'.$current_cat.'</a>' ?>
+            <?php echo '<a href="./category.php?catid='.$current_prod["CATID"].'">'.$current_cat.'</a>' ?>
             &nbsp;>&nbsp;
             <a href="#"><?php echo $current_prod["NAME"]; ?></a>
         </div>
