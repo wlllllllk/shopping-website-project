@@ -1,21 +1,35 @@
 <?php
-require __DIR__.'/lib/db.inc.php';
-$pid = $_REQUEST["pid"];
-$current_prod = ierg4210_prod_fetchOne($pid);
-$categories = ierg4210_cat_fetchAll();
-
-$li_cat = '<li><a href="./index.php"><span>All</span></a></li>';
-$current_cat = '';
-
-foreach ($categories as $value_cat) {
-    if ($value_cat["CATID"] == $current_prod["CATID"]) {
-        $li_cat .= '<li class="selected"><a href="./category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
-        $current_cat = $value_cat["NAME"];
+    require __DIR__.'/lib/db.inc.php';
+    session_start();
+    $customer_name = "Welcome, ";
+    if (!empty($_SESSION['s67'])) {
+        $name = substr($_SESSION['s67']['email'], 0, strrpos($_SESSION['s67']['email'],"@"));
+        $customer_name .= $name;
+        $sign_button = '<a href="auth-process.php?action=logout">
+                            <button>Logout</button>
+                        </a>';
     } else {
-        $li_cat .= '<li><a href="./category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
+        $customer_name .= "Guest";
+        $sign_button = '<a href="./login.php">
+                            <button>Login</button>
+                        </a>';
     }
-}
 
+    $pid = $_REQUEST["pid"];
+    $current_prod = ierg4210_prod_fetchOne($pid);
+    $categories = ierg4210_cat_fetchAll();
+
+    $li_cat = '<li><a href="./index.php"><span>All</span></a></li>';
+    $current_cat = '';
+
+    foreach ($categories as $value_cat) {
+        if ($value_cat["CATID"] == $current_prod["CATID"]) {
+            $li_cat .= '<li class="selected"><a href="./category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
+            $current_cat = $value_cat["NAME"];
+        } else {
+            $li_cat .= '<li><a href="./category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
+        }
+    }
 ?>
 
 <!DOCTYPE html>
@@ -39,6 +53,7 @@ foreach ($categories as $value_cat) {
         <nav>
             <a href="./index.php" id="logo"><span>IERG4210<br>Store</span></a>
             <div class="searchBar"><input type="text" placeholder="Type to search..."></div>
+            <div class="welcome"><?php echo $customer_name; ?></div>
             <div class="actions">
                 <div class="shopping-list">
                     <button>Shopping List &#40;0&#41;</button>
@@ -76,9 +91,7 @@ foreach ($categories as $value_cat) {
                     </div>
                 </div>
                 <div class="account">
-                    <a href="./login.php">
-                        <button>Login</button>
-                    </a>                
+                    <?php echo $sign_button; ?>
                 </div>
             </div>
         </nav>

@@ -1,37 +1,52 @@
 <?php
-require __DIR__.'/lib/db.inc.php';
-$catid = $_REQUEST["catid"];
-$categories = ierg4210_cat_fetchAll();
-$li_cat = '<li><a href="./index.php"><span>All</span></a></li>';
-$current_cat = '';
-foreach ($categories as $value_cat) {
-    if ($value_cat["CATID"] == $catid) {
-        $li_cat .= '<li class="selected"><a href="category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
-        $current_cat = $value_cat["NAME"];
+    require __DIR__.'/lib/db.inc.php';
+    session_start();
+    $customer_name = "Welcome, ";
+    if (!empty($_SESSION['s67'])) {
+        $name = substr($_SESSION['s67']['email'], 0, strrpos($_SESSION['s67']['email'],"@"));
+        $customer_name .= $name;
+        $sign_button = '<a href="auth-process.php?action=logout">
+                            <button>Logout</button>
+                        </a>';
     } else {
-        $li_cat .= '<li><a href="./category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
+        $customer_name .= "Guest";
+        $sign_button = '<a href="./login.php">
+                            <button>Login</button>
+                        </a>';
     }
-}
 
-$products = ierg4210_prod_fetch_by_catid($catid);
-$div_prod = '';
-foreach ($products as $value_prod) {
-    $div_prod .= '<div class="product">
-                    <a href="./product.php?pid='.$value_prod["PID"].'">
-                        <div class="photo"><img src="'.$value_prod["THUMBNAIL"].'" alt="" /></div>
-                    </a>
-                    <div class="text">
+    $catid = $_REQUEST["catid"];
+    $categories = ierg4210_cat_fetchAll();
+    $li_cat = '<li><a href="./index.php"><span>All</span></a></li>';
+    $current_cat = '';
+    foreach ($categories as $value_cat) {
+        if ($value_cat["CATID"] == $catid) {
+            $li_cat .= '<li class="selected"><a href="category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
+            $current_cat = $value_cat["NAME"];
+        } else {
+            $li_cat .= '<li><a href="./category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
+        }
+    }
+
+    $products = ierg4210_prod_fetch_by_catid($catid);
+    $div_prod = '';
+    foreach ($products as $value_prod) {
+        $div_prod .= '<div class="product">
                         <a href="./product.php?pid='.$value_prod["PID"].'">
-                            <div class="name">'.$value_prod["NAME"].'</div>
+                            <div class="photo"><img src="'.$value_prod["THUMBNAIL"].'" alt="" /></div>
                         </a>
-                        <div class="price">'.$value_prod["PRICE"].'</div>
-                    </div>
-                    <form action="" onsubmit="return addToCart(this)">
-                        <button type="submit">Add to Cart</button>
-                        <input type="text" name="PID" value="'.$value_prod["PID"].'" readonly hidden>
-                    </form>
-                </div>';
-}
+                        <div class="text">
+                            <a href="./product.php?pid='.$value_prod["PID"].'">
+                                <div class="name">'.$value_prod["NAME"].'</div>
+                            </a>
+                            <div class="price">'.$value_prod["PRICE"].'</div>
+                        </div>
+                        <form action="" onsubmit="return addToCart(this)">
+                            <button type="submit">Add to Cart</button>
+                            <input type="text" name="PID" value="'.$value_prod["PID"].'" readonly hidden>
+                        </form>
+                    </div>';
+    }
 ?>
 
 <!DOCTYPE html>
@@ -55,6 +70,7 @@ foreach ($products as $value_prod) {
         <nav>
             <a href="./index.php" id="logo"><span>IERG4210<br>Store</span></a>
             <div class="searchBar"><input type="text" placeholder="Type to search..."></div>
+            <div class="welcome"><?php echo $customer_name; ?></div>
             <div class="actions">
                 <div class="shopping-list">
                     <button>Shopping List &#40;0&#41;</button>
@@ -92,9 +108,7 @@ foreach ($products as $value_prod) {
                     </div>
                 </div>
                 <div class="account">
-                    <a href="./login.php">
-                        <button>Login</button>
-                    </a>
+                    <?php echo $sign_button; ?>
                 </div>
             </div>
         </nav>

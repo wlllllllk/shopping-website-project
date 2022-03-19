@@ -112,6 +112,11 @@ header nav .searchBar input {
   padding: 0 1rem;
 }
 
+header nav .welcome {
+  color: white;
+  font-size: 1.5rem;
+}
+
 header nav .actions {
   height: 100%;
   display: -webkit-box;

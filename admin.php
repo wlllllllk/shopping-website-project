@@ -45,7 +45,7 @@ foreach ($products as $value_prod) {
             <h1>Admin Panel</h1>
             <div class="actions">
                 <div class="account">
-                    <a href="./index.php">
+                    <a href="auth-process.php?action=logout">
                         <button>Logout</button>
                     </a>                
                 </div>

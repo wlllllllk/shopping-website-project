@@ -17,12 +17,14 @@ function check_input(passed) {
     const email = passed.children[1];
     const password = passed.children[3];
 
-    if (email.value.match(email_pattern))
+    if (email.value.match(email_pattern)) {
         email.classList.remove("invalid");
-    else
+        return true;
+    }
+    else {
         email.classList.add("invalid");
-
-    return false;
+        return false;
+    }
 }
 
 

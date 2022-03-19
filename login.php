@@ -31,14 +31,14 @@
     <div class="main">
         <fieldset id="login-form">
             <legend>Login</legend>
-            <form method="POST" action="" onsubmit="return check_input(this);">
+            <form method="POST" action="auth-process.php?action=login" onsubmit="return check_input(this);">
                 <label for="login-email">Email</label>
                 <input type="email" name="EMAIL" id="login-email" placeholder="Enter your email here">
                 <label for="PASSWORD">Password</label>
                 <input type="password" name="PASSWORD" id="login-password" placeholder="Enter your password here">
                 <div class="actions">
-                    <input type="reset" value="Reset">
-                    <input type="submit" value="Submit">
+                    <input type="submit" name="REGISTER" value="Register">
+                    <input type="submit" name="LOGIN" value="Login">
                 </div>
             </form>
         </fieldset>
