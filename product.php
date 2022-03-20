@@ -5,8 +5,9 @@
     if (!empty($_SESSION['s67'])) {
         $name = substr($_SESSION['s67']['email'], 0, strrpos($_SESSION['s67']['email'],"@"));
         $customer_name .= $name;
-        $sign_button = '<a href="auth-process.php?action=logout">
-                            <button>Logout</button>
+        // $sign_button = '<a href="auth-process.php?action=logout">
+        $sign_button = '<a href="./login.php">
+                            <button>Account</button>
                         </a>';
     } else {
         $customer_name .= "Guest";

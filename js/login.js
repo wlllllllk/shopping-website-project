@@ -27,4 +27,32 @@ function check_input(passed) {
     }
 }
 
+// show login form by default
+const all_form = document.querySelectorAll("fieldset");
+// const all_link = document.querySelectorAll(".main a");
+
+// all_form.forEach((form) => {
+//     form.style.display = "none";
+// });
+// document.querySelector("#login-form").style.display = "block";
+// document.querySelector("#login-link").style.display = "none";
+
+// // show selected form and hide others
+// function show_form(target) {
+//     const form_to_show = document.querySelector(`#${target}-form`);
+//     form_to_show.style.display = "block";
+
+//     all_form.forEach((form) => {
+//         if (form.id != `${target}-form`) {
+//             form.style.display = "none";
+//         }
+//     });
+
+//     all_link.forEach((link) => {
+//         link.style.display = "block";
+//     });
+
+//     const link_to_hide = document.querySelector(`#${target}-link`);
+//     link_to_hide.style.display = "none";
+// }
 

@@ -1,3 +1,93 @@
+<?php
+    session_start();
+    $login_form = '';
+    $register_form = '';
+    $change_password_form = '';
+    $form_links = '';
+    $logout_button = '';
+
+    if (!empty($_SESSION['s67'])) {
+        $change_password_form = '<fieldset id="password-change-form">
+                                    <legend>Change Password</legend>
+                                    <form method="POST" action="auth-process.php?action=change">
+                                        <label for="current-password">Current Password</label>
+                                        <input type="password" name="CURRENT-PASSWORD" id="current-password" placeholder="Enter your current password here">
+                                        <label for="new-password">New Password</label>
+                                        <input type="password" name="NEW-PASSWORD" id="new-password" placeholder="Enter your new password here">
+                                        <div class="actions">
+                                            <input type="reset" value="Reset">
+                                            <input type="submit" value="Submit">
+                                        </div>
+                                    </form>
+                                </fieldset>';
+
+        $logout_button = '<form method="POST" action="auth-process.php?action=logout">
+                                <input class="logout" type="submit" value="Logout">
+                            </form>';
+                
+    } else {
+        $login_form = '<fieldset id="login-form">
+                            <legend>Login</legend>
+                            <form method="POST" action="auth-process.php?action=login" onsubmit="return check_input(this);">
+                                <label for="login-email">Email</label>
+                                <input type="email" name="EMAIL" id="login-email" placeholder="Enter your email here">
+                                <label for="login-password">Password</label>
+                                <input type="password" name="PASSWORD" id="login-password" placeholder="Enter your password here">
+                                <div class="actions">
+                                    <input type="reset" value="Reset">
+                                    <input type="submit" value="Login">
+                                </div>
+                            </form>
+                        </fieldset>';
+
+        $register_form = '<fieldset id="register-form">
+                            <legend>Register</legend>
+                                <form method="POST" action="auth-process.php?action=register" onsubmit="return check_input(this);">
+                                    <label for="register-email">Email</label>
+                                    <input type="email" name="EMAIL" id="register-email" placeholder="Enter your email here">
+                                    <label for="register-password">Password</label>
+                                    <input type="password" name="PASSWORD" id="register-password" placeholder="Enter your password here">
+                                    <div class="actions">
+                                        <input type="reset" value="Reset">
+                                        <input type="submit" value="Register">
+                                    </div>
+                                </form>
+                        </fieldset>';
+
+        $form_links = '<a href="#" id="login-link" onclick="show_form(\'login\')">Login to Current Account</a>
+                    <a href="#" id="register-link" onclick="show_form(\'register\')">Create New Account</a>';
+    }
+
+
+    $message = '';
+    if (isset($_REQUEST["error"])) {
+        $error = $_REQUEST["error"];
+        if ($error == 1) {
+            $message = '<h1 class="message warning">Account Already Exist</h1>';
+        }
+        else if ($error == 2) {
+            $message = '<h1 class="message warning">Account Doesn\'t Exist</h1>';
+        }
+        else if ($error == 3) {
+            $message = '<h1 class="message warning">Wrong Credentials</h1>';
+        }
+    }
+
+    if (isset($_REQUEST["success"])) {
+        $success = $_REQUEST["success"];
+        if ($success == 1) {
+            $message = '<h1 class="message success">Accounted created successfully, you can login with your account credentials now</h1>';
+        }
+        else if ($success == 2) {
+            $message = '<h1 class="message success">Password changed successfully, please login using the new credentials</h1>';
+        }
+        else if ($success == 3) {
+            $message = '<h1 class="message success">You\'ve logout successfully</h1>';
+        }
+    }
+
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -11,7 +101,6 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
-</head>
 </head>
 
 <body>
@@ -29,19 +118,12 @@
         </nav>
     </header>
     <div class="main">
-        <fieldset id="login-form">
-            <legend>Login</legend>
-            <form method="POST" action="auth-process.php?action=login" onsubmit="return check_input(this);">
-                <label for="login-email">Email</label>
-                <input type="email" name="EMAIL" id="login-email" placeholder="Enter your email here">
-                <label for="PASSWORD">Password</label>
-                <input type="password" name="PASSWORD" id="login-password" placeholder="Enter your password here">
-                <div class="actions">
-                    <input type="submit" name="REGISTER" value="Register">
-                    <input type="submit" name="LOGIN" value="Login">
-                </div>
-            </form>
-        </fieldset>
+        <?php echo $message; ?>
+        <?php echo $login_form; ?>
+        <?php echo $register_form; ?>
+        <?php echo $change_password_form; ?>
+
+        <?php echo $logout_button; ?>
     </div>
     <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>
     <script src="../js/login.js"></script>

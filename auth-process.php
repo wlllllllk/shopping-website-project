@@ -50,73 +50,33 @@ function ierg4210_DB_user() {
 // get the salt from database
 //if (!preg_match('/^\d*$/', $_POST["PAGE"]))
 //   throw new Exception("invalid-catid");
-function ierg4210_login() {
+function ierg4210_register() {
     $db_user = ierg4210_DB_user();
 
     $email = strtolower($_POST["EMAIL"]);
     $password = $_POST["PASSWORD"];
     
-    // login to existing account
-    if (isset($_POST["LOGIN"])) {
-        echo "LOGIN";
-        
-        $sql = "SELECT * FROM USERS WHERE EMAIL=?;";
+    $sql = "SELECT * FROM USERS WHERE EMAIL=?;";
     
-        $q = $db_user->prepare($sql);
-        $q->bindParam(1, $email);
-        $q->execute();
-        
-        $matched = false;
-    
-        // account exists
-        if ($q->execute()) {
-            $fetched_account = $q->fetch();
-        
-            $salt = $fetched_account["SALT"];
-            $hashed = hash_hmac('sha256', $password, $salt);
-        
-            if ($hashed == $fetched_account["PASSWORD"]) {
-                $matched = true;
-                //echo $fetched_account["NAME"];
-                $expire = time() + 3600 * 24 * 3;
-                $token = array('email'=>$email, 'expire'=>$expire, 'key'=>hash_hmac('sha256', $expire.$hashed, $salt));
-    
-                setcookie('s67', json_encode($token), $expire, '', '', true, true);
-    
-                $_SESSION['s67'] = $token;
+    $q = $db_user->prepare($sql);
+    $q->bindParam(1, $email);
 
-                session_regenerate_id();
-                
-                if ($fetched_account["ADMIN"] == 1) {
-                    header('Location: admin.php');
-                    exit();
-                }
-                else {
-                    header('Location: index.php');
-                    exit();
-                }
-            }
-    
-            else {
-                header('Location: login.php');
-                exit();
-            }
-            
-            //echo $salt.' | '.$hashed.' | '.$fetched_account["PASSWORD"];
-           
-        }
-    }
-    
-    // register a new account
-    if(isset($_POST["REGISTER"])) {
+    $result = '';
+    if ($q->execute())
+        $result = $q->fetch();
+
+    if ($result != '') {
+        header('Location: login.php?error=1');
+        exit();
+    } else {
         $name = substr($email, 0, strrpos($email,"@"));
-    
+
         $salt = random_bytes(16);
         $hashed = hash_hmac('sha256', $password, $salt);
     
         $admin = 0;
     
-        $sql="INSERT INTO USERS (NAME, EMAIL, PASSWORD, SALT, ADMIN) VALUES (?, ?, ?, ?, ?);";
+        $sql = "INSERT INTO USERS (NAME, EMAIL, PASSWORD, SALT, ADMIN) VALUES (?, ?, ?, ?, ?);";
     
         $q = $db_user->prepare($sql);
         $q->bindParam(1, $name);
@@ -125,14 +85,59 @@ function ierg4210_login() {
         $q->bindParam(4, $salt);
         $q->bindParam(5, $admin);
         $q->execute();
-    
-        $lastId = $db_user->lastInsertId();
-    
-        //echo 'REGISTER | '.$lastId.' | '.$name.' | '.$email;
-    
-        header('Location: login.php');
+                
+        header('Location: login.php?success=1');
         exit();
+    }   
+}
+
+function ierg4210_login() {
+    $db_user = ierg4210_DB_user();
+
+    $email = strtolower($_POST["EMAIL"]);
+    $password = $_POST["PASSWORD"];
+    
+    // login to existing account
+    $sql = "SELECT * FROM USERS WHERE EMAIL=?;";
+    
+    $q = $db_user->prepare($sql);
+    $q->bindParam(1, $email);
+        
+    // account exists
+    if ($q->execute()) {
+        $fetched_account = $q->fetch();
+    
+        $salt = $fetched_account["SALT"];
+        $hashed = hash_hmac('sha256', $password, $salt);
+    
+        if ($hashed == $fetched_account["PASSWORD"]) {
+            session_regenerate_id();
+
+            $expire = time() + 3600 * 24 * 3;
+            $token = array('email'=>$email, 'expire'=>$expire, 'key'=>hash_hmac('sha256', $expire.$hashed, $salt));
+
+            setcookie('s67', json_encode($token), $expire, '', '', true, true);
+
+            $_SESSION['s67'] = $token;
+
+            if ($fetched_account["ADMIN"] == 1) {
+                header('Location: admin.php');
+                exit();
+            }
+            else {
+                header('Location: index.php');
+                exit();
+            }
+        }
+        else {
+            header('Location: login.php?error=3');
+            exit();
+        }           
     }
+    else {
+        header('Location: login.php?error=2');
+        exit();
+    } 
 }
 
 function ierg4210_logout() {
@@ -141,8 +146,54 @@ function ierg4210_logout() {
 
     session_destroy();
 
-    header('Location: login.php');
+    header('Location: login.php?success=3');
     exit();
+}
+
+function ierg4210_change() {
+    $db_user = ierg4210_DB_user();
+
+    $current_password = $_POST["CURRENT-PASSWORD"];
+    $new_password = $_POST["NEW-PASSWORD"];
+    
+    $email = $_SESSION['s67']['email'];
+
+    $sql = "SELECT * FROM USERS WHERE EMAIL=?;";
+    
+    $q = $db_user->prepare($sql);
+    $q->bindParam(1, $email);
+    
+    if ($q->execute()) {
+        $fetched_account = $q->fetch();
+    
+        $salt = $fetched_account["SALT"];
+        $hashed = hash_hmac('sha256', $current_password, $salt);
+    
+        if ($hashed == $fetched_account["PASSWORD"]) {
+            $new_salt = random_bytes(16);
+            $new_hashed = hash_hmac('sha256', $new_password, $new_salt);
+
+            $sql = "UPDATE USERS SET PASSWORD=?, SALT=? WHERE EMAIL=?;";
+
+            $q = $db_user->prepare($sql);
+            $q->bindParam(1, $new_hashed);
+            $q->bindParam(2, $new_salt);
+            $q->bindParam(3, $email);
+            if ($q->execute()) {
+                setcookie("s67", "", time() - 3600);
+                $_SESSION['s67'] = "";
+            
+                session_destroy();
+            
+                header('Location: login.php?success=2');
+                exit();
+            }
+        }
+        else {
+            header('Location: login.php?error=3');
+            exit();
+        }           
+    }
 }
 
 
