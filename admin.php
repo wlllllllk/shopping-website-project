@@ -1,27 +1,33 @@
 <?php
-require __DIR__.'/lib/db.inc.php';
-$categories = ierg4210_cat_fetchAll();
-$products = ierg4210_prod_fetchAll();
+    include_once('./auth.php');
+    if (!auth()) {
+        header('Location: login.php?error=4');
+        exit();
+    }
 
-$options_cat = '<option selected disabled></option>';
-$options_prod = '<option selected disabled></option>';
-$divs_prod = '';
+    require __DIR__.'/lib/db.inc.php';
+    $categories = ierg4210_cat_fetchAll();
+    $products = ierg4210_prod_fetchAll();
 
-foreach ($categories as $value_cat) {
-    $options_cat .= '<option value="'.$value_cat["CATID"].'"> '.$value_cat["NAME"].' </option>';
-}
+    $options_cat = '<option selected disabled></option>';
+    $options_prod = '<option selected disabled></option>';
+    $divs_prod = '';
 
-foreach ($products as $value_prod) {
-    $options_prod .= '<option value="'.$value_prod["PID"].'"> (PID: '.$value_prod["PID"].') '.$value_prod["NAME"].' </option>';
-    $divs_prod .= '<div class="product">
-                        <div class="product-image">
-                            <img src="'.$value_prod["THUMBNAIL"].'" alt="">
-                        </div>
-                        <div class="product-name">'.$value_prod["NAME"].'</div>
-                        <div class="product-id">PID: '.$value_prod["PID"].'</div>
-                        <div class="product-id">CATID: '.$value_prod["CATID"].'</div>
-                    </div>';
-}
+    foreach ($categories as $value_cat) {
+        $options_cat .= '<option value="'.$value_cat["CATID"].'"> '.$value_cat["NAME"].' </option>';
+    }
+
+    foreach ($products as $value_prod) {
+        $options_prod .= '<option value="'.$value_prod["PID"].'"> (PID: '.$value_prod["PID"].') '.$value_prod["NAME"].' </option>';
+        $divs_prod .= '<div class="product">
+                            <div class="product-image">
+                                <img src="'.$value_prod["THUMBNAIL"].'" alt="">
+                            </div>
+                            <div class="product-name">'.$value_prod["NAME"].'</div>
+                            <div class="product-id">PID: '.$value_prod["PID"].'</div>
+                            <div class="product-id">CATID: '.$value_prod["CATID"].'</div>
+                        </div>';
+    }
 ?>
 
 <!DOCTYPE html>
@@ -45,8 +51,8 @@ foreach ($products as $value_prod) {
             <h1>Admin Panel</h1>
             <div class="actions">
                 <div class="account">
-                    <a href="auth-process.php?action=logout">
-                        <button>Logout</button>
+                    <a href="./login.php">
+                        <button>Account</button>
                     </a>                
                 </div>
             </div>

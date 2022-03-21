@@ -1,5 +1,4 @@
 // client-side validation for email input
-//const email = document.querySelector("#login-email");
 const email_pattern = /^[\w._%+-]+\@{1}[\w.-]+\.[a-z]{2,4}$/;
 
 // email.addEventListener("keyup", (e) => {
@@ -14,45 +13,80 @@ const email_pattern = /^[\w._%+-]+\@{1}[\w.-]+\.[a-z]{2,4}$/;
 // });
 
 function check_input(passed) {
-    const email = passed.children[1];
-    const password = passed.children[3];
+    let valid = true;
+    console.log(passed);
 
-    if (email.value.match(email_pattern)) {
-        email.classList.remove("invalid");
-        return true;
+    let all_input = [];
+
+    for (let i = 0; i < passed.children.length; i++) {
+        if (passed.children[i].localName == "input") {
+            all_input.push(passed.children[i]);
+        }
     }
-    else {
-        email.classList.add("invalid");
-        return false;
-    }
+
+    console.log(all_input);
+
+    all_input.forEach((input) => {
+        if (input.value == "" || input.value == null) {
+            input.classList.add("invalid");
+            valid = false;
+        }
+
+        if (input.type == "email") {
+            if (input.value.match(email_pattern)) {
+                input.classList.remove("invalid");
+            }
+            else {
+                input.classList.add("invalid");
+                valid = false;
+            }
+        }
+    });
+
+    // const email = passed.children[1];
+    // const password = passed.children[3];
+
+    // if (email.value.match(email_pattern)) {
+    //     email.classList.remove("invalid");
+    //     return true;
+    // }
+    // else {
+    //     email.classList.add("invalid");
+    //     return false;
+    // }
+
+    return valid;
 }
 
 // show login form by default
 const all_form = document.querySelectorAll("fieldset");
-// const all_link = document.querySelectorAll(".main a");
+try {
+    const register_form = document.querySelector("#register-form");
+    const login_link = document.querySelector("#login-link");
+    register_form.style.display = "none";
+    login_link.style.display = "none";
+}
+catch {
+    //console.log("Form does not exist"); 
+}
 
-// all_form.forEach((form) => {
-//     form.style.display = "none";
-// });
-// document.querySelector("#login-form").style.display = "block";
-// document.querySelector("#login-link").style.display = "none";
+// show selected form and hide others
+function show_form(target) {
+    const all_link = document.querySelectorAll(".main a");
+    const form_to_show = document.querySelector(`#${target}-form`);
+    form_to_show.style.display = "block";
 
-// // show selected form and hide others
-// function show_form(target) {
-//     const form_to_show = document.querySelector(`#${target}-form`);
-//     form_to_show.style.display = "block";
+    all_form.forEach((form) => {
+        if (form.id != `${target}-form`) {
+            form.style.display = "none";
+        }
+    });
 
-//     all_form.forEach((form) => {
-//         if (form.id != `${target}-form`) {
-//             form.style.display = "none";
-//         }
-//     });
+    all_link.forEach((link) => {
+        link.style.display = "block";
+    });
 
-//     all_link.forEach((link) => {
-//         link.style.display = "block";
-//     });
-
-//     const link_to_hide = document.querySelector(`#${target}-link`);
-//     link_to_hide.style.display = "none";
-// }
+    const link_to_hide = document.querySelector(`#${target}-link`);
+    link_to_hide.style.display = "none";
+}
 

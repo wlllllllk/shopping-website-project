@@ -2,18 +2,12 @@
     require __DIR__.'/lib/db.inc.php';
     session_start();
     $customer_name = "Welcome, ";
-    if (!empty($_SESSION['s67'])) {
-        $name = substr($_SESSION['s67']['email'], 0, strrpos($_SESSION['s67']['email'],"@"));
+    if (!empty($_SESSION['auth'])) {
+        $name = substr($_SESSION['auth']['email'], 0, strrpos($_SESSION['auth']['email'],"@"));
         $customer_name .= $name;
-        // $sign_button = '<a href="auth-process.php?action=logout">
-        $sign_button = '<a href="./login.php">
-                            <button>Account</button>
-                        </a>';
-    } else {
+    } 
+    else {
         $customer_name .= "Guest";
-        $sign_button = '<a href="./login.php">
-                            <button>Login</button>
-                        </a>';
     }
 
     $categories = ierg4210_cat_fetchAll();
@@ -82,7 +76,9 @@
                     </div>
                 </div>
                 <div class="account">
-                    <?php echo $sign_button; ?>
+                    <a href="./login.php">
+                        <button>Account</button>
+                    </a>
                 </div>
             </div>
         </nav>
