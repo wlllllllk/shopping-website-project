@@ -127,7 +127,7 @@ header nav .actions {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  gap: 0.5rem;
+  gap: 2rem;
 }
 
 header nav .actions .shopping-list {
@@ -138,7 +138,6 @@ header nav .actions .shopping-list {
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
-  margin-right: 2rem;
 }
 
 header nav .actions .shopping-list .container {

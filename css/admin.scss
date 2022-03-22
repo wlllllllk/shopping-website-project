@@ -53,6 +53,7 @@ header nav h1 {
     display: flex;
     overflow: hidden;
     scroll-snap-type: x mandatory;
+    scroll-behavior: auto;
 
     fieldset {
       scroll-snap-align: start;

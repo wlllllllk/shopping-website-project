@@ -2,7 +2,7 @@
     include_once('./auth.php');
     $admin_button = '';
     if (auth()) {
-        $admin_button = '<a href="./admin.php"><button>Admin Panel</button></a>';
+        $admin_button = '<div><a href="./admin.php"><button>Admin Panel</button></a></div>';
     }
 
     $login_form = '';
@@ -117,8 +117,8 @@
             <a href="./index.php" id="logo"><span>IERG4210<br>Store</span></a>
             <h1>Account</h1>
             <div class="actions">
+                <?php echo $admin_button; ?>
                 <div class="account">
-                    <?php echo $admin_button; ?>
                     <a href="./index.php">
                         <button>Leave</button>
                     </a>

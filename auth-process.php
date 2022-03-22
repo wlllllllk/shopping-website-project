@@ -185,9 +185,6 @@ function ierg4210_logout() {
     // so that it will expire immediately
     setcookie("auth", "", time() - 3600);
 
-    // also clear the session
-    //$_SESSION['auth'] = "";
-
     // clear the session
     unset($_SESSION['auth']);
 
@@ -255,7 +252,6 @@ function ierg4210_change() {
                 // logout 
                 // clear cookie
                 setcookie("auth", "", time() - 3600);
-                //$_SESSION['auth'] = "";
                 
                 //clear session
                 unset($_SESSION['auth']);

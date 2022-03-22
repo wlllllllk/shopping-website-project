@@ -67,6 +67,7 @@ header nav h1 {
   overflow: hidden;
   -ms-scroll-snap-type: x mandatory;
       scroll-snap-type: x mandatory;
+  scroll-behavior: auto;
 }
 
 .main .right fieldset {
