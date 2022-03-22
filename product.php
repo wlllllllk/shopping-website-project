@@ -1,6 +1,8 @@
 <?php
     require __DIR__.'/lib/db.inc.php';
-    session_start();
+    if (session_id() == "")
+        session_start();
+    
     $customer_name = "Welcome, ";
     if (!empty($_SESSION['auth'])) {
         $name = substr($_SESSION['auth']['email'], 0, strrpos($_SESSION['auth']['email'],"@"));

@@ -1,9 +1,14 @@
 <?php
+    if (session_id() == "")
+        session_start();
+
     include_once('./auth.php');
     $admin_button = '';
     if (auth()) {
         $admin_button = '<div><a href="./admin.php"><button>Admin Panel</button></a></div>';
     }
+
+    include_once("./nonce.php");
 
     $login_form = '';
     $register_form = '';
@@ -14,48 +19,52 @@
     if (!empty($_SESSION['auth'])) {
         $change_password_form = '<fieldset id="password-change-form">
                                     <legend>Change Password</legend>
-                                    <form method="POST" action="auth-process.php?action=change" onsubmit="return check_input(this);">
+                                    <form method="POST" action="auth-process.php?action='.($action = "change").'" onsubmit="return check_input(this);">
                                         <label for="current-password">Current Password</label>
-                                        <input type="password" name="CURRENT-PASSWORD" id="current-password" placeholder="Enter your current password here" required>
+                                        <input type="password" name="CURRENT-PASSWORD" id="current-password" placeholder="Enter your current password here" required="true">
                                         <label for="new-password">New Password</label>
-                                        <input type="password" name="NEW-PASSWORD" id="new-password" placeholder="Enter your new password here" required>
+                                        <input type="password" name="NEW-PASSWORD" id="new-password" placeholder="Enter your new password here" required="true">
                                         <div class="actions">
                                             <input type="reset" value="Reset">
                                             <input type="submit" value="Submit">
                                         </div>
+                                        <input type="hidden" name="nonce" value="'.csrf_getNouce($action).'">
                                     </form>
                                 </fieldset>';
 
-        $logout_button = '<form method="POST" action="auth-process.php?action=logout">
+        $logout_button = '<form method="POST" action="auth-process.php?action='.($action = "logout").'">
                                 <input class="logout" type="submit" value="Logout">
+                                <input type="hidden" name="nonce" value="'.csrf_getNouce($action).'">
                             </form>';
                 
     } else {
         $login_form = '<fieldset id="login-form">
                             <legend>Login</legend>
-                            <form method="POST" action="auth-process.php?action=login" onsubmit="return check_input(this);">
+                            <form method="POST" action="auth-process.php?action='.($action = "login").'" onsubmit="return check_input(this);">
                                 <label for="login-email">Email</label>
-                                <input type="email" name="EMAIL" id="login-email" placeholder="Enter your email here" required>
+                                <input type="email" name="EMAIL" id="login-email" placeholder="Enter your email here" required="true">
                                 <label for="login-password">Password</label>
-                                <input type="password" name="PASSWORD" id="login-password" placeholder="Enter your password here" required>
+                                <input type="password" name="PASSWORD" id="login-password" placeholder="Enter your password here" required="true">
                                 <div class="actions">
                                     <input type="reset" value="Reset">
                                     <input type="submit" value="Login">
                                 </div>
+                                <input type="hidden" name="nonce" value="'.csrf_getNouce($action).'">
                             </form>
                         </fieldset>';
 
         $register_form = '<fieldset id="register-form">
                             <legend>Register</legend>
-                                <form method="POST" action="auth-process.php?action=register" onsubmit="return check_input(this);">
+                                <form method="POST" action="auth-process.php?action='.($action = "register").'" onsubmit="return check_input(this);">
                                     <label for="register-email">Email</label>
-                                    <input type="email" name="EMAIL" id="register-email" placeholder="Enter your email here" required>
+                                    <input type="email" name="EMAIL" id="register-email" placeholder="Enter your email here" required="true">
                                     <label for="register-password">Password</label>
-                                    <input type="password" name="PASSWORD" id="register-password" placeholder="Enter your password here" required>
+                                    <input type="password" name="PASSWORD" id="register-password" placeholder="Enter your password here" required="true">
                                     <div class="actions">
                                         <input type="reset" value="Reset">
                                         <input type="submit" value="Register">
                                     </div>
+                                    <input type="hidden" name="nonce" value="'.csrf_getNouce($action).'">
                                 </form>
                         </fieldset>';
 

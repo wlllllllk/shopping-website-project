@@ -1,9 +1,14 @@
 <?php
+    if (session_id() == "")
+        session_start();
+
     include_once('./auth.php');
     if (!auth()) {
         header('Location: login.php?error=4');
         exit();
     }
+
+    include_once("./nonce.php");
 
     require __DIR__.'/lib/db.inc.php';
     $categories = ierg4210_cat_fetchAll();
@@ -74,19 +79,19 @@
         <section class="right">
                 <fieldset id="product-add-form">
                     <legend>Product Add Form &#40;&#42; &#61; Required&#41;</legend>
-                    <form class="form-with-image-upload" method="POST" action="admin-process.php?action=prod_insert" enctype="multipart/form-data" onsubmit="return check_option(this)">
+                    <form class="form-with-image-upload" method="POST" action="admin-process.php?action=<?php echo ($action = 'prod_insert'); ?>" enctype="multipart/form-data" onsubmit="return check_option(this)">
                         <label for="category-add-product">Category &#42;</label>
-                        <select id="category-add-product" name="CATID">
+                        <select id="category-add-product" name="CATID" required="true">
                             <?php echo $options_cat; ?>
                         </select>
                         <label for="name-add-product">Product Name &#42;</label>
-                        <input type="text" name="NAME" id="name-add-product" pattern="^[\w\- ]+$" required>
+                        <input type="text" name="NAME" id="name-add-product" pattern="^[\w\- ]+$" required="true">
                         <label for="price-add-product">Price &#42;</label>
-                        <input type="number" name="PRICE" step="any" id="price-add-product" pattern="^[\d\.]+$" required>
+                        <input type="number" name="PRICE" step="any" id="price-add-product" pattern="^[\d\.]+$" required="true">
                         <label for="inventory-add-product">Inventory &#42;</label>
-                        <input type="number" name="INVENTORY" id="inventory-add-product" pattern="^[\d]+$" required>
+                        <input type="number" name="INVENTORY" id="inventory-add-product" pattern="^[\d]+$" required="true">
                         <label for="description-add-product">Product Description &#40;No Special Characters&#41; &#42;</label>
-                        <textarea name="DESCRIPTION" id="description-add-product" cols="30" rows="10" required></textarea>
+                        <textarea name="DESCRIPTION" id="description-add-product" cols="30" rows="10" required="true"></textarea>
                         <label for="image-add-product">Product Image &#40;JPG&#47;GIF&#47;PNG &lt;&#61; 10MB&#41;</label>
                         <div class="image-upload-field">
                             <div class="image-preview">
@@ -98,7 +103,8 @@
                         <div class="actions">
                             <input type="reset" value="Reset">
                             <input type="submit" value="Submit">
-                        </div>                    
+                        </div>              
+                        <input type="hidden" name="nonce" value="<?php echo csrf_getNouce($action); ?>">      
                     </form>
                 </fieldset>
 
@@ -109,9 +115,9 @@
                             <h4>Product List</h4>
                             <?php echo $divs_prod; ?>
                         </div>
-                        <form class="form-with-image-upload form-with-product-list" method="POST" action="admin-process.php?action=prod_update" enctype="multipart/form-data" onsubmit="return check_option(this)">
+                        <form class="form-with-image-upload form-with-product-list" method="POST" action="admin-process.php?action=<?php echo ($action = 'prod_update'); ?>" enctype="multipart/form-data" onsubmit="return check_option(this)">
                             <label for="id-update-product">Current Product &#42;</label>
-                            <select id="id-update-product" name="PID">
+                            <select id="id-update-product" name="PID" required="true">
                                 <?php echo $options_prod; ?>
                             </select>
                             <label for="category-update-product">Updated Category &#42;</label>
@@ -119,13 +125,13 @@
                                 <?php echo $options_cat; ?>
                             </select>
                             <label for="name-update-product">Updated Product Name &#42;</label>
-                            <input type="text" name="NAME" id="name-update-product" pattern="^[\w\- ]+$" required>
+                            <input type="text" name="NAME" id="name-update-product" pattern="^[\w\- ]+$" required="true">
                             <label for="price-update-product">Updated Price &#42;</label>
-                            <input type="number" name="PRICE" step="any" id="price-update-product" pattern="^\d+\.?\d*$" required>
+                            <input type="number" name="PRICE" step="any" id="price-update-product" pattern="^\d+\.?\d*$" required="true">
                             <label for="inventory-update-product">Updated Inventory &#42;</label>
-                            <input type="number" name="INVENTORY" id="inventory-update-product" required>
+                            <input type="number" name="INVENTORY" id="inventory-update-product" required="true">
                             <label for="description-update-product">Updated Product Description &#40;No Special Characters&#41; &#42;</label>
-                            <textarea name="DESCRIPTION" id="description-update-product" cols="30" rows="10" required></textarea>
+                            <textarea name="DESCRIPTION" id="description-update-product" cols="30" rows="10" required="true"></textarea>
                             <label for="image-update-product">Updated Product Image &#40;JPG&#47;GIF&#47;PNG &lt;&#61; 10MB&#41;</label>
                             <div class="image-upload-field">
                                 <div class="image-preview">
@@ -138,6 +144,7 @@
                                 <input type="reset" value="Reset">
                                 <input type="submit" value="Submit">
                             </div>
+                            <input type="hidden" name="nonce" value="<?php echo csrf_getNouce($action); ?>">
                         </form>
                     </div>
                 </fieldset>
@@ -149,52 +156,55 @@
                             <h4>Product List</h4>
                             <?php echo $divs_prod; ?>
                         </div>
-                        <form class="form-with-product-list" method="POST" action="admin-process.php?action=prod_delete" enctype="multipart/form-data" onsubmit="return check_option(this)">
+                        <form class="form-with-product-list" method="POST" action="admin-process.php?action=<?php echo ($action = 'prod_delete'); ?>" onsubmit="return check_option(this)">
                             <label for="delete-product">Product to be Deleted &#42;</label>
-                            <select name="PID" id="delete-product">
+                            <select name="PID" id="delete-product" required="true">
                                 <?php echo $options_prod; ?>
                             </select>
                             <div class="actions">
                                 <input type="reset" value="Reset">
                                 <input type="submit" value="Submit">
                             </div>
+                            <input type="hidden" name="nonce" value="<?php echo csrf_getNouce($action); ?>">
                         </form>
                     </div>
                 </fieldset>
 
                 <fieldset id="category-add-form">
                     <legend>Category Add Form &#40;&#42; &#61; Required&#41;</legend>
-                    <form method="POST" action="admin-process.php?action=cat_insert" enctype="multipart/form-data" onsubmit="return check_option(this)">
+                    <form method="POST" action="admin-process.php?action=<?php echo ($action = 'cat_insert'); ?>" onsubmit="return check_option(this)">
                         <label for="new-category-add">New Category &#42;</label>
-                        <input type="text" name="CATEGORY" id="new-category-add" pattern="^[\w\- ]+$" required>
+                        <input type="text" name="CATEGORY" id="new-category-add" pattern="^[\w\- ]+$" required="true">
                         <div class="actions">
                             <input type="reset" value="Reset">
                             <input type="submit" value="Submit">
                         </div>
+                        <input type="hidden" name="nonce" value="<?php echo csrf_getNouce($action); ?>">
                     </form>
                 </fieldset>
 
                 <fieldset id="category-update-form">
                     <legend>Category Update Form &#40;&#42; &#61; Required&#41;</legend>
-                    <form method="POST" action="admin-process.php?action=cat_update" enctype="multipart/form-data" onsubmit="return check_option(this)">
+                    <form method="POST" action="admin-process.php?action=<?php echo ($action = 'cat_update'); ?>" onsubmit="return check_option(this)">
                         <label for="current-category-update">Current Category Name&#42;</label>
-                        <select name="CATID" id="current-category-update">
+                        <select name="CATID" id="current-category-update" required="true">
                             <?php echo $options_cat; ?>
                         </select>
                         <label for="new-category-update">New Category Name&#42;</label>
-                        <input type="text" name="NEWCAT" id="new-category-update" pattern="^[\w\- ]+$" required>
+                        <input type="text" name="NEWCAT" id="new-category-update" pattern="^[\w\- ]+$" required="true">
                         <div class="actions">
                             <input type="reset" value="Reset">
                             <input type="submit" value="Submit">
                         </div>                    
+                        <input type="hidden" name="nonce" value="<?php echo csrf_getNouce($action); ?>">
                     </form>
                 </fieldset>
                 
                 <fieldset id="category-delete-form">
                     <legend>Category Delete Form &#40;&#42; &#61; Required&#41;</legend>
-                    <form method="POST" action="admin-process.php?action=cat_delete" enctype="multipart/form-data" onsubmit="return check_option(this)">
+                    <form method="POST" action="admin-process.php?action=<?php echo ($action = 'cat_delete'); ?>" onsubmit="return check_option(this)">
                         <label for="current-category-delete">Category to be Deleted &#42;</label>
-                        <select name="CATID" id="current-category-delete">
+                        <select name="CATID" id="current-category-delete" required="true">
                             <?php echo $options_cat; ?>
                         </select>
                         <label>*All products under this category will be deleted as well*</label>
@@ -202,6 +212,7 @@
                             <input type="reset" value="Reset">
                             <input type="submit" value="Submit">
                         </div>                    
+                        <input type="hidden" name="nonce" value="<?php echo csrf_getNouce($action); ?>">
                     </form>
                 </fieldset>
         </section>

@@ -1,5 +1,9 @@
 <?php
-session_start();
+if (session_id() == "")
+    session_start();
+
+include_once("./nonce.php");
+csrf_verifyNonce($_REQUEST['action'], $_POST['nonce']);
 
 header('Content-Type: application/json');
 

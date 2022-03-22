@@ -1,37 +1,23 @@
-// client-side validation for email input
-const email_pattern = /^[\w._%+-]+\@{1}[\w.-]+\.[a-z]{2,4}$/;
+// client-side validation
 
-// email.addEventListener("keyup", (e) => {
-//     const content = email.value;
-//     console.log(content);
-//     if (content != null) {
-//         if (content.match(email_pattern))
-//             e.target.classList.remove("invalid");
-//         else
-//             e.target.classList.add("invalid");
-//     }
-// });
 
+// this function checks the input of the submitted form
+const email_pattern = /^[\w._%+-]+[a-zA-Z\d]+\@{1}[\w.-]+\.[a-z]{2,8}$/;
 function check_input(passed) {
     let valid = true;
-    console.log(passed);
 
+    // get all input of the submitted form
     let all_input = [];
-
     for (let i = 0; i < passed.children.length; i++) {
         if (passed.children[i].localName == "input") {
             all_input.push(passed.children[i]);
         }
     }
 
-    console.log(all_input);
-
+    // check the value of each input
     all_input.forEach((input) => {
-        if (input.value == "" || input.value == null) {
-            input.classList.add("invalid");
-            valid = false;
-        }
 
+        // special requirements for email
         if (input.type == "email") {
             if (input.value.match(email_pattern)) {
                 input.classList.remove("invalid");
@@ -39,26 +25,46 @@ function check_input(passed) {
             else {
                 input.classList.add("invalid");
                 valid = false;
+
+                // start checking user input on keypress if user entered unacceptable input
+                input.addEventListener('keyup', (e) => {
+                    if (e.target.value.match(email_pattern)) {
+                        e.target.classList.remove("invalid");
+                    }
+                    else {
+                        e.target.classList.add("invalid");
+                    }
+                });
+            }
+        }
+
+        // no special requirements for password as long as it is not null
+        else if (input.type == "password") {
+            if (input.value == "" || input.value == null) {
+                input.classList.add("invalid");
+                valid = false;
+
+                // start checking user input on keypress if user entered unacceptable input
+                input.addEventListener('keyup', (e) => {
+                    if (e.target.value == "" || e.target.value == null) {
+                        e.target.classList.add("invalid");
+                    }
+                    else {
+                        e.target.classList.remove("invalid");
+                    }
+                });
+            }
+            else {
+                input.classList.remove("invalid");
             }
         }
     });
 
-    // const email = passed.children[1];
-    // const password = passed.children[3];
-
-    // if (email.value.match(email_pattern)) {
-    //     email.classList.remove("invalid");
-    //     return true;
-    // }
-    // else {
-    //     email.classList.add("invalid");
-    //     return false;
-    // }
-
     return valid;
 }
 
-// show login form by default
+
+// hide the register form by default
 const all_form = document.querySelectorAll("fieldset");
 try {
     const register_form = document.querySelector("#register-form");
@@ -67,10 +73,12 @@ try {
     login_link.style.display = "none";
 }
 catch {
-    //console.log("Form does not exist"); 
+    // error will be caught if user have logged in
+    // console.log("Form does not exist"); 
 }
 
-// show selected form and hide others
+
+// show the selected form and hide the others
 function show_form(target) {
     const all_link = document.querySelectorAll(".main a");
     const form_to_show = document.querySelector(`#${target}-form`);
