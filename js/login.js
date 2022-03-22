@@ -1,8 +1,8 @@
 // client-side validation
 
-
 // this function checks the input of the submitted form
 const email_pattern = /^[\w._%+-]+[a-zA-Z\d]+\@{1}[\w.-]+\.[a-z]{2,8}$/;
+const password_pattern = /^.{6,20}$/;
 function check_input(passed) {
     let valid = true;
 
@@ -33,6 +33,7 @@ function check_input(passed) {
                     }
                     else {
                         e.target.classList.add("invalid");
+                        valid = false;
                     }
                 });
             }
@@ -40,22 +41,23 @@ function check_input(passed) {
 
         // no special requirements for password as long as it is not null
         else if (input.type == "password") {
-            if (input.value == "" || input.value == null) {
-                input.classList.add("invalid");
+            if (input.value.match(password_pattern)) {
+                input.classList.remove("invalid");
+            }
+            else {
+                input.classList.remove("invalid");
                 valid = false;
 
                 // start checking user input on keypress if user entered unacceptable input
                 input.addEventListener('keyup', (e) => {
-                    if (e.target.value == "" || e.target.value == null) {
-                        e.target.classList.add("invalid");
-                    }
-                    else {
+                    if (e.target.value.match(password_pattern)) {
                         e.target.classList.remove("invalid");
                     }
+                    else {
+                        e.target.classList.add("invalid");
+                        valid = false;
+                    }
                 });
-            }
-            else {
-                input.classList.remove("invalid");
             }
         }
     });

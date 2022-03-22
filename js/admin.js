@@ -1,4 +1,6 @@
-// client-side validation for textarea (pattern attribute not available in HTML)
+// client-side validation 
+
+// for textarea (pattern attribute not available in HTML)
 const all_textarea = document.querySelectorAll("textarea");
 const textarea_pattern = /^[\w\r\n\-\.\,\'\"\(\)\?\&\%\!\:\/\*\+\; ]+$/;
 
@@ -11,6 +13,86 @@ all_textarea.forEach((textarea) => {
             e.target.classList.add("invalid");
     });
 });
+
+//checks the input of the submitted form
+const text_pattern = /^.+$/;
+function check_form(passed_form) {
+    let ok = true;
+
+    let all_input = [];
+    for (let i = 0; i < passed_form.children.length; i++) {
+        if (passed_form.children[i].localName == "input") {
+            all_input.push(passed_form.children[i]);
+        }
+    }
+
+    all_input.forEach((input) => {
+
+        // for text input
+        if (input.type == "text") {
+            if (input.value.match(text_pattern)) {
+                input.classList.remove("invalid");
+            }
+            else {
+                input.classList.add("invalid");
+                ok = false;
+
+                // start checking user input on keypress if user entered unacceptable input
+                input.addEventListener('keyup', (e) => {
+                    if (e.target.value.match(text_pattern)) {
+                        e.target.classList.remove("invalid");
+                    }
+                    else {
+                        e.target.classList.add("invalid");
+                        ok = false;
+                    }
+                });
+            }
+        }
+
+        // for number input
+        else if (input.type == "number") {
+            if (input.value >= 0) {
+                input.classList.remove("invalid");
+            }
+            else {
+                input.classList.add("invalid");
+                ok = false;
+
+                // start checking user input on keypress if user entered unacceptable input
+                input.addEventListener('keyup', (e) => {
+                    if (input.value >= 0) {
+                        e.target.classList.remove("invalid");
+                    }
+                    else {
+                        e.target.classList.add("invalid");
+                        ok = false;
+                    }
+                });
+            }
+        }
+    });
+
+    // for options
+    let selects = [];
+    for (let i = 0; i < passed_form.children.length; i++) {
+        if (passed_form.children[i].localName == "select") {
+            selects.push(passed_form.children[i]);
+        }
+    }
+
+    selects.forEach((select) => {
+        if (select.selectedOptions[0].value == '' || select.selectedOptions[0].value == null) {
+            select.classList.add("invalid");
+            ok = false;
+        }
+        else {
+            select.classList.remove("invalid");
+        }
+    });
+
+    return ok;
+}
 
 
 // for the drag-and-drop area
@@ -75,27 +157,3 @@ forms.forEach((form) => {
     });
 });
 
-
-// check if any of the options is selected
-function check_option(passed_form) {
-    let ok = true;
-    let selects = [];
-
-    for (let i = 0; i < passed_form.children.length; i++) {
-        if (passed_form.children[i].localName == "select") {
-            selects.push(passed_form.children[i]);
-        }
-    }
-
-    selects.forEach((select) => {
-        if (select.selectedOptions[0].value == '' || select.selectedOptions[0].value == null) {
-            select.classList.add("invalid");
-            ok = false;
-        }
-        else {
-            select.classList.remove("invalid");
-        }
-    });
-
-    return ok;
-}

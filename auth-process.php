@@ -51,12 +51,16 @@ function ierg4210_DB_user() {
 	return $db_user;
 }
 
-// get the salt from database
 //if (!preg_match('/^\d*$/', $_POST["PAGE"]))
 //   throw new Exception("invalid-catid");
 
 // register a new account
 function ierg4210_register() {
+    if (!preg_match('/^[\w._%+-]+[a-zA-Z\d]+\@{1}[\w.-]+\.[a-z]{2,8}$/', $_POST["EMAIL"]))
+        throw new Exception("invalid-email");
+    if (!preg_match('/^.{6,20}$/', $_POST["PASSWORD"]))
+        throw new Exception("invalid-password");
+
     $db_user = ierg4210_DB_user();
 
     $email = strtolower($_POST["EMAIL"]);
@@ -111,6 +115,11 @@ function ierg4210_register() {
 
 // login to existing account
 function ierg4210_login() {
+    if (!preg_match('/^[\w._%+-]+[a-zA-Z\d]+\@{1}[\w.-]+\.[a-z]{2,8}$/', $_POST["EMAIL"]))
+        throw new Exception("invalid-email");
+    if (!preg_match('/^.{6,20}$/', $_POST["PASSWORD"]))
+        throw new Exception("invalid-password");
+
     $db_user = ierg4210_DB_user();
 
     $email = strtolower($_POST["EMAIL"]);
@@ -199,6 +208,11 @@ function ierg4210_logout() {
 
 // change password
 function ierg4210_change() {
+    if (!preg_match('/^.{6,20}$/', $_POST["CURRENT-PASSWORD"]))
+        throw new Exception("invalid-current-password");
+    if (!preg_match('/^.{6,20}$/', $_POST["NEW-PASSWORD"]))
+        throw new Exception("invalid-new-password");
+
     $db_user = ierg4210_DB_user();
 
     // get user-entered passwords
@@ -273,6 +287,4 @@ function ierg4210_change() {
         }           
     }
 }
-
-
 ?>

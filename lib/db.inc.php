@@ -38,7 +38,7 @@ function ierg4210_prod_insert() {
     $_POST['CATID'] = (int) $_POST['CATID'];
     if (!preg_match('/^[\w\- ]+$/', $_POST['NAME']))
         throw new Exception("invalid-name");
-    if (!preg_match('/^[\d\.]+$/', $_POST['PRICE']))
+    if (!preg_match('/^\d+\.?\d*$/', $_POST['PRICE']))
         throw new Exception("invalid-price");
     if (!preg_match('/^[\d]+$/', $_POST['INVENTORY']))
         throw new Exception("invalid-inventory");
@@ -355,7 +355,7 @@ function ierg4210_prod_update() {
     $_POST['CATID'] = (int) $_POST['CATID'];
     if (!preg_match('/^[\w\- ]+$/', $_POST['NAME']))
         throw new Exception("invalid-name");
-    if (!preg_match('/^[\d\.]+$/', $_POST['PRICE']))
+    if (!preg_match('/^\d+\.?\d*$/', $_POST['PRICE']))
         throw new Exception("invalid-price");
     if (!preg_match('/^[\d]+$/', $_POST['INVENTORY']))
         throw new Exception("invalid-inventory");
