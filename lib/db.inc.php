@@ -31,20 +31,6 @@ function ierg4210_cat_fetchAll() {
 // Since this form will take file upload, we use the tranditional (simpler) rather than AJAX form submission.
 // Therefore, after handling the request (DB insert and file copy), this function then redirects back to admin.html
 function ierg4210_prod_insert() {
-
-    // input validation or sanitization
-    if (!preg_match('/^\d*$/', $_POST['CATID']))
-        throw new Exception("invalid-catid");
-    $_POST['CATID'] = (int) $_POST['CATID'];
-    if (!preg_match('/^[\w\- ]+$/', $_POST['NAME']))
-        throw new Exception("invalid-name");
-    if (!preg_match('/^\d+\.?\d*$/', $_POST['PRICE']))
-        throw new Exception("invalid-price");
-    if (!preg_match('/^[\d]+$/', $_POST['INVENTORY']))
-        throw new Exception("invalid-inventory");
-    if (!preg_match('/^[\w\r\n\-\.\,\'\"\(\)\?\&\%\!\:\/\*\+\; ]+$/', $_POST['DESCRIPTION']))    
-        throw new Exception("invalid-description"); 
-
     $catid = $_POST["CATID"];
     $name = $_POST["NAME"];
     $price = $_POST["PRICE"];
@@ -52,7 +38,27 @@ function ierg4210_prod_insert() {
     $inventory = $_POST["INVENTORY"];
     $default_image = "./images/_default.jpg";
     $default_thumbnail= "./images/thumbnails/_default_thumbnail.jpg";
+    
+    // input sanitization
+    $sanitized_catid = filter_var($catid, FILTER_SANITIZE_NUMBER_INT);
+    $sanitized_name = filter_var($name, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_AMP);
+    $sanitized_price = filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $sanitized_desc = filter_var($desc, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_AMP);
+    $sanitized_inventory = filter_var($inventory, FILTER_SANITIZE_NUMBER_INT);
 
+    // input validation
+    if (!preg_match('/^\d*$/', $sanitized_catid) || !filter_var($sanitized_catid, FILTER_VALIDATE_INT))
+        throw new Exception("invalid-catid");
+    $sanitized_catid = (int) $sanitized_catid;
+    if (!preg_match('/^[\w\- ]+$/', $sanitized_name))
+        throw new Exception("invalid-name");
+    if (!preg_match('/^\d+\.?\d*$/', $sanitized_price) || !filter_var($sanitized_price, FILTER_VALIDATE_FLOAT))
+        throw new Exception("invalid-price");
+    if (!preg_match('/^[\w\r\n\-\.\,\'\"\(\)\?\&\%\!\:\/\*\+\; ]+$/', $sanitized_desc))    
+        throw new Exception("invalid-description"); 
+    if (!preg_match('/^[\d]+$/', $sanitized_inventory) || !filter_var($sanitized_inventory, FILTER_VALIDATE_INT))
+        throw new Exception("invalid-inventory");
+        
     // DB manipulation
     global $db;
     $db = ierg4210_DB();
@@ -61,11 +67,11 @@ function ierg4210_prod_insert() {
     $sql="INSERT INTO products (CATID, NAME, PRICE, DESCRIPTION, INVENTORY, IMAGE, THUMBNAIL) VALUES (?, ?, ?, ?, ?, ?, ?);";
 
     $q = $db->prepare($sql);
-    $q->bindParam(1, $catid);
-    $q->bindParam(2, $name);
-    $q->bindParam(3, $price);
-    $q->bindParam(4, $desc);
-    $q->bindParam(5, $inventory);
+    $q->bindParam(1, $sanitized_catid);
+    $q->bindParam(2, $sanitized_name);
+    $q->bindParam(3, $sanitized_price);
+    $q->bindParam(4, $sanitized_desc);
+    $q->bindParam(5, $sanitized_inventory);
     $q->bindParam(6, $default_image);
     $q->bindParam(7, $default_thumbnail);
     $q->execute();
@@ -196,7 +202,10 @@ function ierg4210_prod_insert() {
 }
 
 function ierg4210_cat_insert() {
-    if (!preg_match('/^[\w\- ]+$/', $_POST['CATEGORY']))
+    $category = $_POST['CATEGORY'];
+    $sanitized_category = filter_var($category, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_AMP);
+
+    if (!preg_match('/^[\w\- ]+$/', $sanitized_category))
         throw new Exception("invalid-category-name");
 
     global $db;
@@ -204,10 +213,8 @@ function ierg4210_cat_insert() {
 
     $sql = "INSERT INTO CATEGORIES (NAME) VALUES (?);";
     $q = $db->prepare($sql);
-    $name = $_POST["CATEGORY"];
-    $q->bindParam(1, $name);
+    $q->bindParam(1, $sanitized_category);
     $q->execute();
-    // $lastId = $db->lastInsertId();
 
     // redirect back to original page; you may comment it during debug
     header('Location: admin.php#category-add-form');
@@ -215,11 +222,17 @@ function ierg4210_cat_insert() {
 }
 
 function ierg4210_cat_update() {
-    if (!preg_match('/^[\w\- ]+$/', $_POST['NEWCAT']))
-        throw new Exception("invalid-category-name");
-    if (!preg_match('/^\d*$/', $_POST['CATID']))
+    $new_category = $_POST['NEWCAT'];
+    $catid = $_POST['CATID'];
+
+    $sanitized_catid = filter_var($catid, FILTER_SANITIZE_NUMBER_INT);
+    $sanitized_new_category = filter_var($new_category, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_AMP);
+
+    if (!preg_match('/^\d*$/', $sanitized_catid) || !filter_var($sanitized_catid, FILTER_VALIDATE_INT))
         throw new Exception("invalid-catid");
-    $_POST['CATID'] = (int) $_POST['CATID'];
+    $sanitized_catid = (int) $sanitized_catid;
+    if (!preg_match('/^[\w\- ]+$/', $sanitized_new_category))
+        throw new Exception("invalid-category-name");
 
     global $db;
     $db = ierg4210_DB();
@@ -227,11 +240,8 @@ function ierg4210_cat_update() {
     $sql = "UPDATE CATEGORIES SET NAME=? WHERE CATID=?;";
 
     $q = $db->prepare($sql);
-    $new_cat = $_POST["NEWCAT"];
-    $catid = $_POST["CATID"];
-
-    $q->bindParam(1, $new_cat);
-    $q->bindParam(2, $catid);
+    $q->bindParam(1, $sanitized_new_category);
+    $q->bindParam(2, $sanitized_catid);
     $q->execute();
 
     // redirect back to original page; you may comment it during debug
@@ -240,14 +250,16 @@ function ierg4210_cat_update() {
 }
 
 function ierg4210_cat_delete() {
-    if (!preg_match('/^\d*$/', $_POST['CATID']))
-        throw new Exception("invalid-catid");
-    $_POST['CATID'] = (int) $_POST['CATID'];
+    $catid = $_POST['CATID'];
 
-    $catid = $_POST["CATID"];
+    $sanitized_catid = filter_var($catid, FILTER_SANITIZE_NUMBER_INT);
+
+    if (!preg_match('/^\d*$/', $sanitized_catid) || !filter_var($sanitized_catid, FILTER_VALIDATE_INT))
+        throw new Exception("invalid-catid");
+    $sanitized_catid = (int) $sanitized_catid;
 
     // first delete all products under the category
-    ierg4210_prod_delete_by_catid($catid);
+    ierg4210_prod_delete_by_catid($sanitized_catid);
 
     // then delete the category itself
     global $db;
@@ -257,7 +269,7 @@ function ierg4210_cat_delete() {
 
     $q = $db->prepare($sql);
 
-    $q->bindParam(1, $catid);
+    $q->bindParam(1, $sanitized_catid);
     $q->execute();
 
     // redirect back to original page; you may comment it during debug
@@ -267,9 +279,11 @@ function ierg4210_cat_delete() {
 
 // to be called internally only
 function ierg4210_prod_delete_by_catid($CATID) {
-    if (!preg_match('/^\d*$/', $CATID))
+    $sanitized_catid = filter_var($CATID, FILTER_SANITIZE_NUMBER_INT);
+
+    if (!preg_match('/^\d*$/', $sanitized_catid) || !filter_var($sanitized_catid, FILTER_VALIDATE_INT))
         throw new Exception("invalid-catid");
-    $CATID = (int) $CATID;
+    $sanitized_catid = (int) $sanitized_catid;
 
     global $db;
     $db = ierg4210_DB();
@@ -277,8 +291,7 @@ function ierg4210_prod_delete_by_catid($CATID) {
     $sql = "DELETE FROM PRODUCTS WHERE CATID=?;";
 
     $q = $db->prepare($sql);
-
-    $q->bindParam(1, $CATID);
+    $q->bindParam(1, $sanitized_catid);
     $q->execute();
 }
 
@@ -290,31 +303,33 @@ function ierg4210_prod_fetchAll() {
         return $q->fetchAll();
 }
 
-function ierg4210_prod_fetch_by_page() {
-    if (!preg_match('/^\d*$/', $_POST["PAGE"]))
-        throw new Exception("invalid-catid");
-    $_POST["PAGE"] = (int) $_POST["PAGE"];
+// function ierg4210_prod_fetch_by_page() {
+//     if (!preg_match('/^\d*$/', $_POST["PAGE"]))
+//         throw new Exception("invalid-catid");
+//     $_POST["PAGE"] = (int) $_POST["PAGE"];
 
-    $page = $_POST["PAGE"];
+//     $page = $_POST["PAGE"];
 
-    $record_per_page = 10;
+//     $record_per_page = 10;
     
-    $start_pos = ($page - 1) * $record_per_page;
+//     $start_pos = ($page - 1) * $record_per_page;
 
-    global $db;
-    $db = ierg4210_DB();
-    $q = $db->prepare("SELECT * FROM PRODUCTS LIMIT ?, ?;");
-    $q->bindParam(1, $start_pos);
-    $q->bindParam(2, $record_per_page);
+//     global $db;
+//     $db = ierg4210_DB();
+//     $q = $db->prepare("SELECT * FROM PRODUCTS LIMIT ?, ?;");
+//     $q->bindParam(1, $start_pos);
+//     $q->bindParam(2, $record_per_page);
 
-    if ($q->execute())
-        return $q->fetchAll();
-}
+//     if ($q->execute())
+//         return $q->fetchAll();
+// }
 
 function ierg4210_prod_fetch_by_catid($CATID) {
-    if (!preg_match('/^\d*$/', $CATID))
+    $sanitized_catid = filter_var($CATID, FILTER_SANITIZE_NUMBER_INT);
+
+    if (!preg_match('/^\d*$/', $sanitized_catid) || !filter_var($sanitized_catid, FILTER_VALIDATE_INT))
         throw new Exception("invalid-catid");
-    $CATID = (int) $CATID;
+    $sanitized_catid = (int) $sanitized_catid;
 
     global $db;
     $db = ierg4210_DB();
@@ -322,7 +337,7 @@ function ierg4210_prod_fetch_by_catid($CATID) {
     $sql = "SELECT * FROM PRODUCTS WHERE CATID=?;";
 
     $q = $db->prepare($sql);
-    $q->bindParam(1, $CATID);
+    $q->bindParam(1, $sanitized_catid);
     $q->execute();
 
     if ($q->execute())
@@ -330,9 +345,11 @@ function ierg4210_prod_fetch_by_catid($CATID) {
 }
 
 function ierg4210_prod_fetchOne($PID) {
-    if (!preg_match('/^\d*$/', $PID))
-        throw new Exception("invalid-pid");
-    $PID = (int) $PID;
+    $sanitized_pid = filter_var($PID, FILTER_SANITIZE_NUMBER_INT);
+
+    if (!preg_match('/^\d*$/', $sanitized_pid) || !filter_var($sanitized_pid, FILTER_VALIDATE_INT))
+        throw new Exception("invalid-catid");
+    $sanitized_pid = (int) $sanitized_pid;
 
     global $db;
     $db = ierg4210_DB();
@@ -340,7 +357,7 @@ function ierg4210_prod_fetchOne($PID) {
     $sql = "SELECT * FROM PRODUCTS WHERE PID=?;";
 
     $q = $db->prepare($sql);
-    $q->bindParam(1, $PID);
+    $q->bindParam(1, $sanitized_pid);
     $q->execute();
 
     if ($q->execute())
@@ -348,19 +365,36 @@ function ierg4210_prod_fetchOne($PID) {
 }
 
 function ierg4210_prod_update() {
+    $pid = $_POST["PID"];
+    $catid = $_POST["CATID"];
+    $name = $_POST["NAME"];
+    $price = $_POST["PRICE"];
+    $desc = $_POST["DESCRIPTION"];
+    $inventory = $_POST["INVENTORY"];
+    
+    // input sanitization
+    $sanitized_pid = filter_var($pid, FILTER_SANITIZE_NUMBER_INT);
+    $sanitized_catid = filter_var($catid, FILTER_SANITIZE_NUMBER_INT);
+    $sanitized_name = filter_var($name, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_AMP);
+    $sanitized_price = filter_var($price, FILTER_SANITIZE_NUMBER_FLOAT, FILTER_FLAG_ALLOW_FRACTION);
+    $sanitized_desc = filter_var($desc, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_AMP);
+    $sanitized_inventory = filter_var($inventory, FILTER_SANITIZE_NUMBER_INT);
 
-    // input validation or sanitization
-    if (!preg_match('/^\d*$/', $_POST['CATID']))
+    // input validation
+    if (!preg_match('/^\d*$/', $sanitized_pid) || !filter_var($sanitized_pid, FILTER_VALIDATE_INT))
         throw new Exception("invalid-catid");
-    $_POST['CATID'] = (int) $_POST['CATID'];
-    if (!preg_match('/^[\w\- ]+$/', $_POST['NAME']))
+    $sanitized_pid = (int) $sanitized_pid;
+    if (!preg_match('/^\d*$/', $sanitized_catid) || !filter_var($sanitized_catid, FILTER_VALIDATE_INT))
+        throw new Exception("invalid-catid");
+    $sanitized_catid = (int) $sanitized_catid;
+    if (!preg_match('/^[\w\- ]+$/', $sanitized_name))
         throw new Exception("invalid-name");
-    if (!preg_match('/^\d+\.?\d*$/', $_POST['PRICE']))
+    if (!preg_match('/^\d+\.?\d*$/', $sanitized_price) || !filter_var($sanitized_price, FILTER_VALIDATE_FLOAT))
         throw new Exception("invalid-price");
-    if (!preg_match('/^[\d]+$/', $_POST['INVENTORY']))
-        throw new Exception("invalid-inventory");
-    if (!preg_match('/^[\w\r\n\-\.\,\'\"\(\)\?\&\%\!\:\/\*\+\; ]+$/', $_POST['DESCRIPTION']))    
+    if (!preg_match('/^[\w\r\n\-\.\,\'\"\(\)\?\&\%\!\:\/\*\+\; ]+$/', $sanitized_desc))    
         throw new Exception("invalid-description"); 
+    if (!preg_match('/^[\d]+$/', $sanitized_inventory) || !filter_var($sanitized_inventory, FILTER_VALIDATE_INT))
+        throw new Exception("invalid-inventory");
 
     global $db;
     $db = ierg4210_DB();
@@ -369,19 +403,12 @@ function ierg4210_prod_update() {
     $sql = "UPDATE PRODUCTS SET CATID=?, NAME=?, PRICE=?, DESCRIPTION=?, INVENTORY=? WHERE PID=?;";
 
     $q = $db->prepare($sql);
-    $pid = $_POST["PID"];
-    $catid = $_POST["CATID"];
-    $name = $_POST["NAME"];
-    $price = $_POST["PRICE"];
-    $desc = $_POST["DESCRIPTION"];
-    $inventory = $_POST["INVENTORY"];
-
-    $q->bindParam(1, $catid);
-    $q->bindParam(2, $name);
-    $q->bindParam(3, $price);
-    $q->bindParam(4, $desc);
-    $q->bindParam(5, $inventory);
-    $q->bindParam(6, $pid);
+    $q->bindParam(1, $sanitized_catid);
+    $q->bindParam(2, $sanitized_name);
+    $q->bindParam(3, $sanitized_price);
+    $q->bindParam(4, $sanitized_desc);
+    $q->bindParam(5, $sanitized_inventory);
+    $q->bindParam(6, $sanitized_pid);
     $q->execute();
 
     // if there is a file being uploaded
@@ -401,13 +428,13 @@ function ierg4210_prod_update() {
             $temp_thumb = imagescale($original, 300, -1);
 
             //update the product thumbnail once successfully created as jpg and stored
-            if (imagejpeg($temp_thumb, "/var/www/html/images/thumbnails/" . $pid . "_thumbnail.jpg")) {
-                $new_thumbnail = "./images/thumbnails/" . $pid . "_thumbnail.jpg";
+            if (imagejpeg($temp_thumb, "/var/www/html/images/thumbnails/" . $sanitized_pid . "_thumbnail.jpg")) {
+                $new_thumbnail = "./images/thumbnails/" . $sanitized_pid . "_thumbnail.jpg";
 
                 $sql = "UPDATE PRODUCTS SET THUMBNAIL=? WHERE PID=?;";
                 $q = $db->prepare($sql);
                 $q->bindParam(1, $new_thumbnail);
-                $q->bindParam(2, $pid);
+                $q->bindParam(2, $sanitized_pid);
                 $q->execute();
 
                 // destroy the temporary thumbnail
@@ -426,13 +453,13 @@ function ierg4210_prod_update() {
             $temp_thumb = imagescale($original, 300, -1);
 
             //update the product thumbnail once successfully created as jpg and stored
-            if (imagepng($temp_thumb, "/var/www/html/images/thumbnails/" . $pid . "_thumbnail.png")) {
-                $new_thumbnail = "./images/thumbnails/" . $pid . "_thumbnail.png";
+            if (imagepng($temp_thumb, "/var/www/html/images/thumbnails/" . $sanitized_pid . "_thumbnail.png")) {
+                $new_thumbnail = "./images/thumbnails/" . $sanitized_pid . "_thumbnail.png";
 
                 $sql = "UPDATE PRODUCTS SET THUMBNAIL=? WHERE PID=?;";
                 $q = $db->prepare($sql);
                 $q->bindParam(1, $new_thumbnail);
-                $q->bindParam(2, $pid);
+                $q->bindParam(2, $sanitized_pid);
                 $q->execute();
 
                 // destroy the temporary thumbnail
@@ -451,13 +478,13 @@ function ierg4210_prod_update() {
             $temp_thumb = imagescale($original, 300, -1);
 
             //update the product thumbnail once successfully created as jpg and stored
-            if (imagegif($temp_thumb, "/var/www/html/images/thumbnails/" . $pid . "_thumbnail.gif")) {
-                $new_thumbnail = "./images/thumbnails/" . $pid . "_thumbnail.gif";
+            if (imagegif($temp_thumb, "/var/www/html/images/thumbnails/" . $sanitized_pid . "_thumbnail.gif")) {
+                $new_thumbnail = "./images/thumbnails/" . $sanitized_pid . "_thumbnail.gif";
 
                 $sql = "UPDATE PRODUCTS SET THUMBNAIL=? WHERE PID=?;";
                 $q = $db->prepare($sql);
                 $q->bindParam(1, $new_thumbnail);
-                $q->bindParam(2, $pid);
+                $q->bindParam(2, $sanitized_pid);
                 $q->execute();
 
                 // destroy the temporary thumbnail
@@ -470,12 +497,12 @@ function ierg4210_prod_update() {
         }
 
         // update the product image once successfully uploaded and stored
-        if (move_uploaded_file($_FILES["IMAGE"]["tmp_name"], "/var/www/html/images/" . $pid . $extension)) {
-            $new_image = "./images/" . $pid . $extension;
+        if (move_uploaded_file($_FILES["IMAGE"]["tmp_name"], "/var/www/html/images/" . $sanitized_pid . $extension)) {
+            $new_image = "./images/" . $sanitized_pid . $extension;
             $sql = "UPDATE PRODUCTS SET IMAGE=? WHERE PID=?;";
             $q = $db->prepare($sql);
             $q->bindParam(1, $new_image);
-            $q->bindParam(2, $pid);
+            $q->bindParam(2, $sanitized_pid);
             $q->execute();
         } 
 
@@ -508,9 +535,13 @@ function ierg4210_prod_update() {
 }
 
 function ierg4210_prod_delete() {
-    if (!preg_match('/^\d*$/', $_POST['PID']))
-        throw new Exception("invalid-pid");
-    $_POST['PID'] = (int) $_POST['PID'];
+    $pid = $_POST["PID"];
+
+    $sanitized_pid = filter_var($pid, FILTER_SANITIZE_NUMBER_INT);
+
+    if (!preg_match('/^\d*$/', $sanitized_pid) || !filter_var($sanitized_pid, FILTER_VALIDATE_INT))
+        throw new Exception("invalid-catid");
+    $sanitized_pid = (int) $sanitized_pid;
 
     global $db;
     $db = ierg4210_DB();
@@ -518,9 +549,7 @@ function ierg4210_prod_delete() {
     $sql = "DELETE FROM PRODUCTS WHERE PID=?;";
 
     $q = $db->prepare($sql);
-    $pid = $_POST["PID"];
-
-    $q->bindParam(1, $pid);
+    $q->bindParam(1, $sanitized_pid);
     $q->execute();
 
     // redirect back to original page; you may comment it during debug

@@ -51,25 +51,25 @@ function ierg4210_DB_user() {
 	return $db_user;
 }
 
-//if (!preg_match('/^\d*$/', $_POST["PAGE"]))
-//   throw new Exception("invalid-catid");
 
 // register a new account
 function ierg4210_register() {
-    if (!preg_match('/^[\w._%+-]+[a-zA-Z\d]+\@{1}[\w.-]+\.[a-z]{2,8}$/', $_POST["EMAIL"]))
+    $email = strtolower($_POST["EMAIL"]);
+    $sanitized_email = filter_var($email, FILTER_SANITIZE_EMAIL);
+
+    if (!preg_match('/^[\w._%+-]+[a-zA-Z\d]+\@{1}[\w.-]+\.[a-z]{2,8}$/', $sanitized_email) || !filter_var($sanitized_email, FILTER_VALIDATE_EMAIL))
         throw new Exception("invalid-email");
     if (!preg_match('/^.{6,20}$/', $_POST["PASSWORD"]))
         throw new Exception("invalid-password");
 
     $db_user = ierg4210_DB_user();
 
-    $email = strtolower($_POST["EMAIL"]);
     $password = $_POST["PASSWORD"];
     
     $sql = "SELECT * FROM USERS WHERE EMAIL=?;";
     
     $q = $db_user->prepare($sql);
-    $q->bindParam(1, $email);
+    $q->bindParam(1, $sanitized_email);
 
     $result = '';
     if ($q->execute())
@@ -84,7 +84,7 @@ function ierg4210_register() {
     // create a new account
     else {
         // use the part before "@" from the email address as name
-        $name = substr($email, 0, strrpos($email,"@"));
+        $name = substr($sanitized_email, 0, strrpos($sanitized_email,"@"));
 
         // prepare the salt
         $salt = random_bytes(16);
@@ -101,7 +101,7 @@ function ierg4210_register() {
     
         $q = $db_user->prepare($sql);
         $q->bindParam(1, $name);
-        $q->bindParam(2, $email);
+        $q->bindParam(2, $sanitized_email);
         $q->bindParam(3, $hashed);
         $q->bindParam(4, $salt);
         $q->bindParam(5, $admin);
@@ -115,21 +115,25 @@ function ierg4210_register() {
 
 // login to existing account
 function ierg4210_login() {
-    if (!preg_match('/^[\w._%+-]+[a-zA-Z\d]+\@{1}[\w.-]+\.[a-z]{2,8}$/', $_POST["EMAIL"]))
+    $email = strtolower($_POST["EMAIL"]);
+    $sanitized_email = filter_var($email, FILTER_SANITIZE_EMAIL);
+
+    if (!preg_match('/^[\w._%+-]+[a-zA-Z\d]+\@{1}[\w.-]+\.[a-z]{2,8}$/', $sanitized_email) || !filter_var($sanitized_email, FILTER_VALIDATE_EMAIL))
         throw new Exception("invalid-email");
     if (!preg_match('/^.{6,20}$/', $_POST["PASSWORD"]))
         throw new Exception("invalid-password");
 
+    //$sanitized_password = htmlspecialchars($_POST["PASSWORD"]);
+
     $db_user = ierg4210_DB_user();
 
-    $email = strtolower($_POST["EMAIL"]);
     $password = $_POST["PASSWORD"];
     
     // try to fetch the account from database using user-entered email
     $sql = "SELECT * FROM USERS WHERE EMAIL=?;";
     
     $q = $db_user->prepare($sql);
-    $q->bindParam(1, $email);
+    $q->bindParam(1, $sanitized_email);
         
     if ($q->execute()) {
         $fetched_account = $q->fetch();
@@ -138,7 +142,7 @@ function ierg4210_login() {
         if ($fetched_account['UID'] == '') {
 
             // redirect to login page
-            header('Location: login.php?error=2');
+            header('Location: login.php?error=3');
             exit();
         }
     

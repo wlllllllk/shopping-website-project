@@ -1,22 +1,27 @@
 <?php
 include_once('lib/db.inc.php');
 
-if (!preg_match('/^\d*$/', $_GET["page"]))
-    throw new Exception("invalid-pageno");
-$_GET["page"] = (int) $_GET["page"];
+$page = $_GET['page'];
+$record_per_page = $_GET['num'];
 
-$page = $_GET["page"];
+$sanitized_page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
+$sanitized_record_per_page = filter_var($record_per_page, FILTER_SANITIZE_NUMBER_INT);
 
-$record_per_page = 12;
+if (!preg_match('/^\d*$/', $sanitized_page) || !filter_var($sanitized_page, FILTER_VALIDATE_INT))
+    throw new Exception("invalid-page-num");
+$sanitized_page = (int) $sanitized_page;
+if (!preg_match('/^\d*$/', $sanitized_record_per_page) || !filter_var($sanitized_record_per_page, FILTER_VALIDATE_INT))
+    throw new Exception("invalid-record-num");
+$sanitized_record_per_page = (int) $sanitized_record_per_page;
 
-$start_pos = ($page - 1) * $record_per_page;
+$start_pos = ($sanitized_page - 1) * $sanitized_record_per_page;
 
 global $db;
 $db = ierg4210_DB();
 
 $q = $db->prepare("SELECT * FROM PRODUCTS LIMIT ?, ?;");
 $q->bindParam(1, $start_pos);
-$q->bindParam(2, $record_per_page);
+$q->bindParam(2, $sanitized_record_per_page);
 
 if ($q->execute()) 
     echo json_encode($q->fetchAll());

@@ -8,7 +8,7 @@ fetchPage(1);
 
 function fetchPage(page) {
     let currentProductList = document.querySelector(".product-list");
-
+    let numPerPage = 12;
     let name = "Not Available";
     let price = 0;
     let image = "";
@@ -53,7 +53,7 @@ function fetchPage(page) {
             }
         }
     };
-    request.open("GET", "product-fetch.php?page=" + page, true);
+    request.open("GET", "product-fetch.php?page=" + page + "&num=" + numPerPage, true);
     request.send();
 
     // indicate the page that is currently visiting

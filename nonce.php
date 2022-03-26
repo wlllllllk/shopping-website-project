@@ -22,7 +22,7 @@ function csrf_verifyNonce($action, $receivedNonce) {
     if (isset($receivedNonce) && $_SESSION['csrf_nonce'][$action] == $receivedNonce) {
 
         // IDK
-        if ($_SESSION['authtoken'] == null)
+        if ($_SESSION['auth'] == null)
             unset($_SESSION['csrf_nonce'][$action]);
         return true;
     }

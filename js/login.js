@@ -1,7 +1,7 @@
 // client-side validation
 
 // this function checks the input of the submitted form
-const email_pattern = /^[\w._%+-]+[a-zA-Z\d]+\@{1}[\w.-]+\.[a-z]{2,8}$/;
+const email_pattern = /^[\w._%+-]+[a-zA-Z\d]+\@{1}[\w.-]+\.[a-zA-Z]{2,8}$/;
 const password_pattern = /^.{6,20}$/;
 function check_input(passed) {
     let valid = true;
