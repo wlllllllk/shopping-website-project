@@ -1,3 +1,11 @@
+String.prototype.escapeHTML = function () {
+    return this.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+String.prototype.escapeQuotes = function () {
+    return this.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
+
 // set up the "Clear ALL" button
 document.querySelector("#clear").addEventListener("click", () => {
     // if (window.confirm("Are you sure you want to clear ALL cart items? This action cannot be undone.")) {
@@ -67,8 +75,6 @@ function updateCart(mode, pid, source) {
         // then fetch the item one-by-one based on the records in local storage
         for (let i = 0; i < localStorage.length; i++) {
             let pid = localStorage.key(i);
-            let quantity = Number(localStorage.getItem(localStorage.key(i)));
-            totalQuantity += quantity;
 
             let name = "Not Available";
             let price = 0;
@@ -90,38 +96,49 @@ function updateCart(mode, pid, source) {
                         price = JSON.parse(this.responseText).PRICE;
                         image = JSON.parse(this.responseText).THUMBNAIL;
 
-                        // fill the content
-                        const content = template.content.cloneNode(true);
-                        content.querySelector("li").id = `P${pid}`;
-                        content.querySelector("a").href = `product.php?pid=${pid}`;
-                        content.querySelector("img").src = image;
-                        content.querySelector(".name").innerHTML = name;
-                        content.querySelector("input").value = quantity;
-                        content.querySelector("input").setAttribute("data-pid", pid)
-                        content.querySelector("input").addEventListener("change", (e) => { validateQuantity(e); });
-                        content.querySelector(".price").innerHTML = price;
-                        content.querySelector(".delete").setAttribute("data-pid", pid);
-                        content.querySelector(".delete").addEventListener("click", () => { removeProduct(pid) });
-
-                        // append to current HTML
-                        currentCart.appendChild(content);
-
-                        // update the total price
-                        totalPrice += (price * quantity);
-
-                        // show the updated total price
-                        priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
-
-                        // show the updated total quantity
-                        quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`;
-
-                        // display cart empty message depending on total quantity
-                        if (totalQuantity > 0)
-                            document.querySelector("#nothing").style.display = "none";
-                        else {
-                            document.querySelector("#nothing").innerHTML = "There is nothing in the cart :(";
-                            document.querySelector("#nothing").style.display = "block";
+                        // if product is removed from database
+                        if (name == undefined) {
+                            localStorage.removeItem(pid);
                         }
+                        else {
+                            let quantity = Number(localStorage.getItem(localStorage.key(i)));
+                            totalQuantity += quantity;
+
+                            // fill the content
+                            const content = template.content.cloneNode(true);
+                            content.querySelector("li").id = `P${pid.escapeQuotes()}`;
+                            content.querySelector("a").href = `product.php?pid=${encodeURIComponent(pid)}`;
+                            content.querySelector("img").src = image.escapeQuotes();
+                            content.querySelector(".name").innerHTML = name.escapeHTML();
+                            content.querySelector("input").value = quantity;
+                            content.querySelector("input").setAttribute("data-pid", pid.escapeQuotes())
+                            content.querySelector("input").addEventListener("change", (e) => { validateQuantity(e); });
+                            content.querySelector(".price").innerHTML = price.escapeHTML();
+                            content.querySelector(".delete").setAttribute("data-pid", pid.escapeQuotes());
+                            content.querySelector(".delete").addEventListener("click", () => { removeProduct(pid); });
+
+                            // append to current HTML
+                            currentCart.appendChild(content);
+
+
+                            // update the total price
+                            totalPrice += (price * quantity);
+
+                            // show the updated total price
+                            priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
+
+                            // show the updated total quantity
+                            quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`;
+
+                            // display cart empty message depending on total quantity
+                            if (totalQuantity > 0)
+                                document.querySelector("#nothing").style.display = "none";
+                            else {
+                                document.querySelector("#nothing").innerHTML = "There is nothing in the cart :(";
+                                document.querySelector("#nothing").style.display = "block";
+                            }
+                        }
+
                     }
 
                     // the request is failed for some reason
@@ -133,7 +150,7 @@ function updateCart(mode, pid, source) {
             };
 
             // use GET method
-            request.open("GET", "cart-process.php?pid=" + pid, true);
+            request.open("GET", "cart-process.php?pid=" + encodeURIComponent(pid), true);
 
             // send the request
             request.send();
@@ -184,16 +201,16 @@ function updateCart(mode, pid, source) {
 
                         // fill the content
                         const content = template.content.cloneNode(true);
-                        content.querySelector("li").id = `P${pid}`;
-                        content.querySelector("a").href = `product.php?pid=${pid}`;
-                        content.querySelector("img").src = image;
-                        content.querySelector(".name").innerHTML = name;
+                        content.querySelector("li").id = `P${pid.escapeQuotes()}`;
+                        content.querySelector("a").href = `product.php?pid=${encodeURIComponent(pid)}`;
+                        content.querySelector("img").src = image.escapeQuotes();
+                        content.querySelector(".name").innerHTML = name.escapeHTML();
                         content.querySelector("input").value = quantity;
-                        content.querySelector("input").setAttribute("data-pid", pid)
-                        content.querySelector("input").addEventListener("change", (e) => { validateQuantity(e); })
-                        content.querySelector(".price").innerHTML = price;
-                        content.querySelector(".delete").setAttribute("data-pid", pid);
-                        content.querySelector(".delete").addEventListener("click", () => { removeProduct(pid) });
+                        content.querySelector("input").setAttribute("data-pid", pid.escapeQuotes())
+                        content.querySelector("input").addEventListener("change", (e) => { validateQuantity(e); });
+                        content.querySelector(".price").innerHTML = price.escapeHTML();
+                        content.querySelector(".delete").setAttribute("data-pid", pid.escapeQuotes());
+                        content.querySelector(".delete").addEventListener("click", () => { removeProduct(pid); });
 
                         // append to current HTML
                         currentCart.appendChild(content);

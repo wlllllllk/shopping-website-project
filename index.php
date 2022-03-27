@@ -6,7 +6,7 @@
     $customer_name = "Welcome, ";
     if (!empty($_SESSION['auth'])) {
         $name = substr($_SESSION['auth']['email'], 0, strrpos($_SESSION['auth']['email'],"@"));
-        $customer_name .= $name;
+        $customer_name .= htmlspecialchars($name);
     } 
     else {
         $customer_name .= "Guest";
@@ -15,7 +15,7 @@
     $categories = ierg4210_cat_fetchAll();
     $li_cat = '<li class="selected"><a href="./index.php"><span>All</span></a></li>';
     foreach ($categories as $value_cat) {
-        $li_cat .= '<li><a href="category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
+        $li_cat .= '<li><a href="category.php?catid='.urlencode($value_cat["CATID"]).'"><span>'.htmlspecialchars($value_cat["NAME"]).'</span></a></li>';
     }
 ?>
 
@@ -35,7 +35,6 @@
 </head>
 
 <body>
-    <!-- <div id="loading"></div> -->
     <header>
         <nav>
             <a href="./index.php" id="logo"><span>IERG4210<br>Store</span></a>
@@ -130,10 +129,9 @@
     <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-    <!-- <script src="../js/common.js"></script> -->
-    <script src="../js/cart.js"></script>
-    <script src="../js/page.js"></script>
-    <script src="../js/product-fetch.js"></script>
+    <script type="text/javascript" src="../js/cart.js"></script>
+    <script type="text/javascript" src="../js/page.js"></script>
+    <script type="text/javascript" src="../js/product-fetch.js"></script>
 </body>
 
 </html>

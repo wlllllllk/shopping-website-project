@@ -5,7 +5,7 @@ $pid = $_GET['pid'];
 
 $sanitized_pid = filter_var($pid, FILTER_SANITIZE_NUMBER_INT);
 
-if (!preg_match('/^\d*$/', $sanitized_pid) || !filter_var($sanitized_pid, FILTER_VALIDATE_INT))
+if (!preg_match('/^\d*$/', $sanitized_pid))
     throw new Exception("invalid-pid");
 $sanitized_pid = (int) $sanitized_pid;
 

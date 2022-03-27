@@ -55,17 +55,16 @@ function ierg4210_DB_user() {
 // register a new account
 function ierg4210_register() {
     $email = strtolower($_POST["EMAIL"]);
+    $password = $_POST["PASSWORD"];
     $sanitized_email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
     if (!preg_match('/^[\w._%+-]+[a-zA-Z\d]+\@{1}[\w.-]+\.[a-z]{2,8}$/', $sanitized_email) || !filter_var($sanitized_email, FILTER_VALIDATE_EMAIL))
         throw new Exception("invalid-email");
-    if (!preg_match('/^.{6,20}$/', $_POST["PASSWORD"]))
+    if (!preg_match('/^.+$/', $password))
         throw new Exception("invalid-password");
 
     $db_user = ierg4210_DB_user();
 
-    $password = $_POST["PASSWORD"];
-    
     $sql = "SELECT * FROM USERS WHERE EMAIL=?;";
     
     $q = $db_user->prepare($sql);
@@ -116,18 +115,15 @@ function ierg4210_register() {
 // login to existing account
 function ierg4210_login() {
     $email = strtolower($_POST["EMAIL"]);
+    $password = $_POST["PASSWORD"];
     $sanitized_email = filter_var($email, FILTER_SANITIZE_EMAIL);
 
     if (!preg_match('/^[\w._%+-]+[a-zA-Z\d]+\@{1}[\w.-]+\.[a-z]{2,8}$/', $sanitized_email) || !filter_var($sanitized_email, FILTER_VALIDATE_EMAIL))
         throw new Exception("invalid-email");
-    if (!preg_match('/^.{6,20}$/', $_POST["PASSWORD"]))
+    if (!preg_match('/^.+$/', $password))
         throw new Exception("invalid-password");
 
-    //$sanitized_password = htmlspecialchars($_POST["PASSWORD"]);
-
     $db_user = ierg4210_DB_user();
-
-    $password = $_POST["PASSWORD"];
     
     // try to fetch the account from database using user-entered email
     $sql = "SELECT * FROM USERS WHERE EMAIL=?;";
@@ -212,9 +208,9 @@ function ierg4210_logout() {
 
 // change password
 function ierg4210_change() {
-    if (!preg_match('/^.{6,20}$/', $_POST["CURRENT-PASSWORD"]))
+    if (!preg_match('/^.+$/', $_POST["CURRENT-PASSWORD"]))
         throw new Exception("invalid-current-password");
-    if (!preg_match('/^.{6,20}$/', $_POST["NEW-PASSWORD"]))
+    if (!preg_match('/^.+$/', $_POST["NEW-PASSWORD"]))
         throw new Exception("invalid-new-password");
 
     $db_user = ierg4210_DB_user();

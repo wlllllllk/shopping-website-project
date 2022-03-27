@@ -7,10 +7,10 @@ $record_per_page = $_GET['num'];
 $sanitized_page = filter_var($page, FILTER_SANITIZE_NUMBER_INT);
 $sanitized_record_per_page = filter_var($record_per_page, FILTER_SANITIZE_NUMBER_INT);
 
-if (!preg_match('/^\d*$/', $sanitized_page) || !filter_var($sanitized_page, FILTER_VALIDATE_INT))
+if (!preg_match('/^\d*$/', $sanitized_page))
     throw new Exception("invalid-page-num");
 $sanitized_page = (int) $sanitized_page;
-if (!preg_match('/^\d*$/', $sanitized_record_per_page) || !filter_var($sanitized_record_per_page, FILTER_VALIDATE_INT))
+if (!preg_match('/^\d*$/', $sanitized_record_per_page))
     throw new Exception("invalid-record-num");
 $sanitized_record_per_page = (int) $sanitized_record_per_page;
 

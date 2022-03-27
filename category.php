@@ -6,7 +6,7 @@
     $customer_name = "Welcome, ";
     if (!empty($_SESSION['auth'])) {
         $name = substr($_SESSION['auth']['email'], 0, strrpos($_SESSION['auth']['email'],"@"));
-        $customer_name .= $name;
+        $customer_name .= htmlspecialchars($name);
     } 
     else {
         $customer_name .= "Guest";
@@ -18,10 +18,10 @@
     $current_cat = '';
     foreach ($categories as $value_cat) {
         if ($value_cat["CATID"] == $catid) {
-            $li_cat .= '<li class="selected"><a href="category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
-            $current_cat = $value_cat["NAME"];
+            $li_cat .= '<li class="selected"><a href="category.php?catid='.urlencode($value_cat["CATID"]).'"><span>'.htmlspecialchars($value_cat["NAME"]).'</span></a></li>';
+            $current_cat = htmlspecialchars($value_cat["NAME"]);
         } else {
-            $li_cat .= '<li><a href="./category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
+            $li_cat .= '<li><a href="./category.php?catid='.urlencode($value_cat["CATID"]).'"><span>'.htmlspecialchars($value_cat["NAME"]).'</span></a></li>';
         }
     }
 
@@ -29,18 +29,18 @@
     $div_prod = '';
     foreach ($products as $value_prod) {
         $div_prod .= '<div class="product">
-                        <a href="./product.php?pid='.$value_prod["PID"].'">
-                            <div class="photo"><img src="'.$value_prod["THUMBNAIL"].'" alt="" /></div>
+                        <a href="./product.php?pid='.urlencode($value_prod["PID"]).'">
+                            <div class="photo"><img src="'.htmlspecialchars($value_prod["THUMBNAIL"]).'" alt="" /></div>
                         </a>
                         <div class="text">
-                            <a href="./product.php?pid='.$value_prod["PID"].'">
-                                <div class="name">'.$value_prod["NAME"].'</div>
+                            <a href="./product.php?pid='.urlencode($value_prod["PID"]).'">
+                                <div class="name">'.htmlspecialchars($value_prod["NAME"]).'</div>
                             </a>
-                            <div class="price">'.$value_prod["PRICE"].'</div>
+                            <div class="price">'.htmlspecialchars($value_prod["PRICE"]).'</div>
                         </div>
                         <form action="" onsubmit="return addToCart(this)">
                             <button type="submit">Add to Cart</button>
-                            <input type="text" name="PID" value="'.$value_prod["PID"].'" readonly hidden>
+                            <input type="text" name="PID" value="'.htmlspecialchars($value_prod["PID"]).'" readonly hidden>
                         </form>
                     </div>';
     }
@@ -62,7 +62,6 @@
 </head>
 
 <body>
-    <!-- <div id="loading"></div> -->
     <header>
         <nav>
             <a href="./index.php" id="logo"><span>IERG4210<br>Store</span></a>
@@ -139,9 +138,8 @@
 
     <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-    <!-- <script src="../js/common.js"></script> -->
-    <script src="../js/cart.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../js/cart.js"></script>
 </body>
 
 </html>

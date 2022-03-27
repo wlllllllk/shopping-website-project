@@ -6,7 +6,7 @@
     $customer_name = "Welcome, ";
     if (!empty($_SESSION['auth'])) {
         $name = substr($_SESSION['auth']['email'], 0, strrpos($_SESSION['auth']['email'],"@"));
-        $customer_name .= $name;
+        $customer_name .= htmlspecialchars($name);
     } 
     else {
         $customer_name .= "Guest";
@@ -21,10 +21,10 @@
 
     foreach ($categories as $value_cat) {
         if ($value_cat["CATID"] == $current_prod["CATID"]) {
-            $li_cat .= '<li class="selected"><a href="./category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
-            $current_cat = $value_cat["NAME"];
+            $li_cat .= '<li class="selected"><a href="./category.php?catid='.urlencode($value_cat["CATID"]).'"><span>'.htmlspecialchars($value_cat["NAME"]).'</span></a></li>';
+            $current_cat = htmlspecialchars($value_cat["NAME"]);
         } else {
-            $li_cat .= '<li><a href="./category.php?catid='.$value_cat["CATID"].'"><span>'.$value_cat["NAME"].'</span></a></li>';
+            $li_cat .= '<li><a href="./category.php?catid='.urlencode($value_cat["CATID"]).'"><span>'.htmlspecialchars($value_cat["NAME"]).'</span></a></li>';
         }
     }
 ?>
@@ -45,7 +45,6 @@
 </head>
 
 <body>
-    <!-- <div id="loading"></div> -->
     <header>
         <nav>
             <a href="./index.php" id="logo"><span>IERG4210<br>Store</span></a>
@@ -110,25 +109,25 @@
         <div class="location">
             <a href="index.php">Home</a>
             &nbsp;>&nbsp;
-            <?php echo '<a href="./category.php?catid='.$current_prod["CATID"].'">'.$current_cat.'</a>' ?>
+            <?php echo '<a href="./category.php?catid='.urlencode($current_prod["CATID"]).'">'.htmlspecialchars($current_cat).'</a>' ?>
             &nbsp;>&nbsp;
-            <a href="#"><?php echo $current_prod["NAME"]; ?></a>
+            <a href="#"><?php echo htmlspecialchars($current_prod["NAME"]); ?></a>
         </div>
         <section class="product-details">
             <div class="left">
-                <div class="photo"><img src="<?php echo $current_prod["IMAGE"]; ?>" alt=""></div>
-                <div class="inventory">Inventory: Only <?php echo $current_prod["INVENTORY"]; ?> left!</div>
+                <div class="photo"><img src="<?php echo htmlspecialchars($current_prod["IMAGE"]); ?>" alt=""></div>
+                <div class="inventory">Inventory: Only <?php echo htmlspecialchars($current_prod["INVENTORY"]); ?> left!</div>
                 <form action="" onsubmit="return addToCart(this)">
                         <button type="submit">Add to Cart</button>
-                        <input type="text" name="PID" value=<?php echo $current_prod["PID"]; ?> readonly hidden>
+                        <input type="text" name="PID" value=<?php echo htmlspecialchars($current_prod["PID"]); ?> readonly hidden>
                 </form>
             </div>
             <div class="text">
-                <div class="name"><?php echo $current_prod["NAME"]; ?></div>
-                <div class="price">$<?php echo $current_prod["PRICE"]; ?></div>
+                <div class="name"><?php echo htmlspecialchars($current_prod["NAME"]); ?></div>
+                <div class="price">$<?php echo htmlspecialchars($current_prod["PRICE"]); ?></div>
                 <div class="description">
                     <p>
-                        <?php echo nl2br($current_prod["DESCRIPTION"]); ?>
+                        <?php echo nl2br(htmlspecialchars($current_prod["DESCRIPTION"])); ?>
                     </p>
                 </div>
             </div>
@@ -137,9 +136,8 @@
 
     <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
-    <!-- <script src="../js/common.js"></script> -->
-    <script src="../js/cart.js"></script>
+    <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="../js/cart.js"></script>
 
 </body>
 

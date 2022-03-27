@@ -19,18 +19,18 @@
     $divs_prod = '';
 
     foreach ($categories as $value_cat) {
-        $options_cat .= '<option value="'.$value_cat["CATID"].'"> '.$value_cat["NAME"].' </option>';
+        $options_cat .= '<option value="'.htmlspecialchars($value_cat["CATID"]).'"> '.htmlspecialchars($value_cat["NAME"]).' </option>';
     }
 
     foreach ($products as $value_prod) {
-        $options_prod .= '<option value="'.$value_prod["PID"].'"> (PID: '.$value_prod["PID"].') '.$value_prod["NAME"].' </option>';
+        $options_prod .= '<option value="'.htmlspecialchars($value_prod["PID"]).'"> (PID: '.htmlspecialchars($value_prod["PID"]).') '.htmlspecialchars($value_prod["NAME"]).' </option>';
         $divs_prod .= '<div class="product">
                             <div class="product-image">
-                                <img src="'.$value_prod["THUMBNAIL"].'" alt="">
+                                <img src="'.htmlspecialchars($value_prod["THUMBNAIL"]).'" alt="">
                             </div>
-                            <div class="product-name">'.$value_prod["NAME"].'</div>
-                            <div class="product-id">PID: '.$value_prod["PID"].'</div>
-                            <div class="product-id">CATID: '.$value_prod["CATID"].'</div>
+                            <div class="product-name">'.htmlspecialchars($value_prod["NAME"]).'</div>
+                            <div class="product-id">PID: '.htmlspecialchars($value_prod["PID"]).'</div>
+                            <div class="product-id">CATID: '.htmlspecialchars($value_prod["CATID"]).'</div>
                         </div>';
     }
 ?>
@@ -49,7 +49,6 @@
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
 <body>
-    <!-- <div id="loading"></div> -->
     <header>
         <nav>
             <a href="./index.php" id="logo"><span>IERG4210<br>Store</span></a>
@@ -207,7 +206,7 @@
                         <select name="CATID" id="current-category-delete" required="true">
                             <?php echo $options_cat; ?>
                         </select>
-                        <label>*All products under this category will be deleted as well*</label>
+                        <label class="warning">*All products under this category will be deleted as well*</label>
                         <div class="actions">
                             <input type="reset" value="Reset">
                             <input type="submit" value="Submit">
@@ -219,7 +218,6 @@
     </div>
     <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>
 
-    <!-- <script src="../js/common.js"></script> -->
-    <script src="./js/admin.js"></script>
+    <script type="text/javascript" src="./js/admin.js"></script>
 </body>
 </html>

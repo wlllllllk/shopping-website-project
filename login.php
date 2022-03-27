@@ -21,9 +21,9 @@
                                     <legend>Change Password</legend>
                                     <form method="POST" action="auth-process.php?action='.($action = "change").'" onsubmit="return check_input(this);">
                                         <label for="current-password">Current Password</label>
-                                        <input type="password" name="CURRENT-PASSWORD" id="current-password" placeholder="Enter your current password here" required="true">
+                                        <input type="password" name="CURRENT-PASSWORD" id="current-password" pattern="^.+$" placeholder="Enter your current password here" required="true">
                                         <label for="new-password">New Password</label>
-                                        <input type="password" name="NEW-PASSWORD" id="new-password" placeholder="Enter your new password here" required="true">
+                                        <input type="password" name="NEW-PASSWORD" id="new-password" pattern="^.+$" placeholder="Enter your new password here" required="true">
                                         <div class="actions">
                                             <input type="reset" value="Reset">
                                             <input type="submit" value="Submit">
@@ -42,9 +42,9 @@
                             <legend>Login</legend>
                             <form method="POST" action="auth-process.php?action='.($action = "login").'" onsubmit="return check_input(this);">
                                 <label for="login-email">Email</label>
-                                <input type="email" name="EMAIL" id="login-email" placeholder="Enter your email here" required="true">
+                                <input type="email" name="EMAIL" id="login-email" pattern="^[\w._%+-]+[a-zA-Z\d]+@{1}[\w.-]+\.[a-z]{2,8}$" placeholder="Enter your email here" required="true">
                                 <label for="login-password">Password</label>
-                                <input type="password" name="PASSWORD" id="login-password" placeholder="Enter your password here" required="true">
+                                <input type="password" name="PASSWORD" id="login-password" pattern="^.+$" placeholder="Enter your password here" required="true">
                                 <div class="actions">
                                     <input type="reset" value="Reset">
                                     <input type="submit" value="Login">
@@ -57,9 +57,9 @@
                             <legend>Register</legend>
                                 <form method="POST" action="auth-process.php?action='.($action = "register").'" onsubmit="return check_input(this);">
                                     <label for="register-email">Email</label>
-                                    <input type="email" name="EMAIL" id="register-email" placeholder="Enter your email here" required="true">
+                                    <input type="email" name="EMAIL" id="register-email" pattern="^[\w._%+-]+[a-zA-Z\d]+@{1}[\w.-]+\.[a-z]{2,8}$" placeholder="Enter your email here" required="true">
                                     <label for="register-password">Password</label>
-                                    <input type="password" name="PASSWORD" id="register-password" placeholder="Enter your password here" required="true">
+                                    <input type="password" name="PASSWORD" id="register-password" pattern="^.+$" placeholder="Enter your password here" required="true">
                                     <div class="actions">
                                         <input type="reset" value="Reset">
                                         <input type="submit" value="Register">
@@ -144,7 +144,8 @@
         <?php echo $logout_button; ?>
     </div>
     <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>
-    <script src="../js/login.js"></script>
+
+    <script type="text/javascript" src="../js/login.js"></script>
 </body>
 
 </html>

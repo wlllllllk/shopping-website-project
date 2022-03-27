@@ -47,18 +47,20 @@ function ierg4210_prod_insert() {
     $sanitized_inventory = filter_var($inventory, FILTER_SANITIZE_NUMBER_INT);
 
     // input validation
-    if (!preg_match('/^\d*$/', $sanitized_catid) || !filter_var($sanitized_catid, FILTER_VALIDATE_INT))
+    if (!preg_match('/^\d*$/', $sanitized_catid))
         throw new Exception("invalid-catid");
     $sanitized_catid = (int) $sanitized_catid;
     if (!preg_match('/^[\w\- ]+$/', $sanitized_name))
         throw new Exception("invalid-name");
-    if (!preg_match('/^\d+\.?\d*$/', $sanitized_price) || !filter_var($sanitized_price, FILTER_VALIDATE_FLOAT))
+    if (!preg_match('/^\d+\.?\d*$/', $sanitized_price))
         throw new Exception("invalid-price");
+    $sanitized_price = (float) $sanitized_price;
     if (!preg_match('/^[\w\r\n\-\.\,\'\"\(\)\?\&\%\!\:\/\*\+\; ]+$/', $sanitized_desc))    
         throw new Exception("invalid-description"); 
-    if (!preg_match('/^[\d]+$/', $sanitized_inventory) || !filter_var($sanitized_inventory, FILTER_VALIDATE_INT))
+    if (!preg_match('/^[\d]+$/', $sanitized_inventory))
         throw new Exception("invalid-inventory");
-        
+    $sanitized_inventory = (int) $sanitized_inventory;
+
     // DB manipulation
     global $db;
     $db = ierg4210_DB();
@@ -217,7 +219,7 @@ function ierg4210_cat_insert() {
     $q->execute();
 
     // redirect back to original page; you may comment it during debug
-    header('Location: admin.php#category-add-form');
+    header('Location: admin.php');
     exit();
 }
 
@@ -228,7 +230,7 @@ function ierg4210_cat_update() {
     $sanitized_catid = filter_var($catid, FILTER_SANITIZE_NUMBER_INT);
     $sanitized_new_category = filter_var($new_category, FILTER_SANITIZE_STRING, FILTER_FLAG_ENCODE_AMP);
 
-    if (!preg_match('/^\d*$/', $sanitized_catid) || !filter_var($sanitized_catid, FILTER_VALIDATE_INT))
+    if (!preg_match('/^\d*$/', $sanitized_catid))
         throw new Exception("invalid-catid");
     $sanitized_catid = (int) $sanitized_catid;
     if (!preg_match('/^[\w\- ]+$/', $sanitized_new_category))
@@ -245,7 +247,7 @@ function ierg4210_cat_update() {
     $q->execute();
 
     // redirect back to original page; you may comment it during debug
-    header('Location: admin.php#category-update-form');
+    header('Location: admin.php');
     exit();
 }
 
@@ -254,7 +256,7 @@ function ierg4210_cat_delete() {
 
     $sanitized_catid = filter_var($catid, FILTER_SANITIZE_NUMBER_INT);
 
-    if (!preg_match('/^\d*$/', $sanitized_catid) || !filter_var($sanitized_catid, FILTER_VALIDATE_INT))
+    if (!preg_match('/^\d*$/', $sanitized_catid))
         throw new Exception("invalid-catid");
     $sanitized_catid = (int) $sanitized_catid;
 
@@ -273,7 +275,7 @@ function ierg4210_cat_delete() {
     $q->execute();
 
     // redirect back to original page; you may comment it during debug
-    header('Location: admin.php#category-delete-form');
+    header('Location: admin.php');
     exit();
 }
 
@@ -281,7 +283,7 @@ function ierg4210_cat_delete() {
 function ierg4210_prod_delete_by_catid($CATID) {
     $sanitized_catid = filter_var($CATID, FILTER_SANITIZE_NUMBER_INT);
 
-    if (!preg_match('/^\d*$/', $sanitized_catid) || !filter_var($sanitized_catid, FILTER_VALIDATE_INT))
+    if (!preg_match('/^\d*$/', $sanitized_catid))
         throw new Exception("invalid-catid");
     $sanitized_catid = (int) $sanitized_catid;
 
@@ -303,31 +305,10 @@ function ierg4210_prod_fetchAll() {
         return $q->fetchAll();
 }
 
-// function ierg4210_prod_fetch_by_page() {
-//     if (!preg_match('/^\d*$/', $_POST["PAGE"]))
-//         throw new Exception("invalid-catid");
-//     $_POST["PAGE"] = (int) $_POST["PAGE"];
-
-//     $page = $_POST["PAGE"];
-
-//     $record_per_page = 10;
-    
-//     $start_pos = ($page - 1) * $record_per_page;
-
-//     global $db;
-//     $db = ierg4210_DB();
-//     $q = $db->prepare("SELECT * FROM PRODUCTS LIMIT ?, ?;");
-//     $q->bindParam(1, $start_pos);
-//     $q->bindParam(2, $record_per_page);
-
-//     if ($q->execute())
-//         return $q->fetchAll();
-// }
-
 function ierg4210_prod_fetch_by_catid($CATID) {
     $sanitized_catid = filter_var($CATID, FILTER_SANITIZE_NUMBER_INT);
 
-    if (!preg_match('/^\d*$/', $sanitized_catid) || !filter_var($sanitized_catid, FILTER_VALIDATE_INT))
+    if (!preg_match('/^\d*$/', $sanitized_catid))
         throw new Exception("invalid-catid");
     $sanitized_catid = (int) $sanitized_catid;
 
@@ -347,7 +328,7 @@ function ierg4210_prod_fetch_by_catid($CATID) {
 function ierg4210_prod_fetchOne($PID) {
     $sanitized_pid = filter_var($PID, FILTER_SANITIZE_NUMBER_INT);
 
-    if (!preg_match('/^\d*$/', $sanitized_pid) || !filter_var($sanitized_pid, FILTER_VALIDATE_INT))
+    if (!preg_match('/^\d*$/', $sanitized_pid))
         throw new Exception("invalid-catid");
     $sanitized_pid = (int) $sanitized_pid;
 
@@ -381,20 +362,23 @@ function ierg4210_prod_update() {
     $sanitized_inventory = filter_var($inventory, FILTER_SANITIZE_NUMBER_INT);
 
     // input validation
-    if (!preg_match('/^\d*$/', $sanitized_pid) || !filter_var($sanitized_pid, FILTER_VALIDATE_INT))
+    if (!preg_match('/^\d*$/', $sanitized_pid))
         throw new Exception("invalid-catid");
     $sanitized_pid = (int) $sanitized_pid;
-    if (!preg_match('/^\d*$/', $sanitized_catid) || !filter_var($sanitized_catid, FILTER_VALIDATE_INT))
+    if (!preg_match('/^\d*$/', $sanitized_catid))
         throw new Exception("invalid-catid");
     $sanitized_catid = (int) $sanitized_catid;
     if (!preg_match('/^[\w\- ]+$/', $sanitized_name))
         throw new Exception("invalid-name");
-    if (!preg_match('/^\d+\.?\d*$/', $sanitized_price) || !filter_var($sanitized_price, FILTER_VALIDATE_FLOAT))
+    if (!preg_match('/^\d+\.?\d*$/', $sanitized_price))
         throw new Exception("invalid-price");
+    $sanitized_price = (float) $sanitized_price;
     if (!preg_match('/^[\w\r\n\-\.\,\'\"\(\)\?\&\%\!\:\/\*\+\; ]+$/', $sanitized_desc))    
         throw new Exception("invalid-description"); 
-    if (!preg_match('/^[\d]+$/', $sanitized_inventory) || !filter_var($sanitized_inventory, FILTER_VALIDATE_INT))
+    if (!preg_match('/^[\d]+$/', $sanitized_inventory))
         throw new Exception("invalid-inventory");
+    $sanitized_inventory = (int) $sanitized_inventory;
+
 
     global $db;
     $db = ierg4210_DB();
@@ -553,6 +537,6 @@ function ierg4210_prod_delete() {
     $q->execute();
 
     // redirect back to original page; you may comment it during debug
-    header('Location: admin.php#product-delete-form');
+    header('Location: admin.php');
     exit();
 }

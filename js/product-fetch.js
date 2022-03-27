@@ -1,4 +1,11 @@
 // This is used to populate the products in main page
+String.prototype.escapeHTML = function () {
+    return this.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;');
+}
+
+String.prototype.escapeQuotes = function () {
+    return this.replace(/"/g, '&quot;').replace(/'/g, '&#39;');
+}
 
 // the template
 const productTemplate = document.querySelector("#product-template");
@@ -35,12 +42,12 @@ function fetchPage(page) {
 
                     // fill the content
                     const product = productTemplate.content.cloneNode(true);
-                    product.querySelector("a").href = `product.php?pid=${pid}`;
-                    product.querySelector("img").src = image;
-                    product.querySelector(".text a").href = `product.php?pid=${pid}`;
-                    product.querySelector(".name").innerHTML = name;
-                    product.querySelector(".price").innerHTML = price;
-                    product.querySelector("input").value = pid;
+                    product.querySelector("a").href = `product.php?pid=${encodeURIComponent(pid)}`;
+                    product.querySelector("img").src = image.escapeQuotes();
+                    product.querySelector(".text a").href = `product.php?pid=${encodeURIComponent(pid)}`;
+                    product.querySelector(".name").innerHTML = name.escapeHTML();
+                    product.querySelector(".price").innerHTML = price.escapeHTML();
+                    product.querySelector("input").value = pid.escapeQuotes();
 
                     // append to current HTML
                     currentProductList.appendChild(product);
@@ -66,3 +73,4 @@ function fetchPage(page) {
         }
     });
 }
+
