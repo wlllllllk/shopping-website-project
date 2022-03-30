@@ -147,11 +147,8 @@ header nav .actions .shopping-list .container {
   top: 4.5rem;
   left: 55%;
   right: 5%;
-  height: -webkit-fit-content;
-  height: -moz-fit-content;
-  height: fit-content;
-  max-height: 50vh;
-  overflow-y: auto;
+  height: 50vh;
+  overflow-y: hidden;
   background-color: var(--clr-bg);
   color: var(--clr-text);
   border-radius: var(--value-default-border-radius);
@@ -173,6 +170,13 @@ header nav .actions .shopping-list .container::-webkit-scrollbar {
 
 header nav .actions .shopping-list .container .contents {
   position: relative;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
   height: 100%;
   width: 100%;
 }
@@ -202,13 +206,19 @@ header nav .actions .shopping-list .container .contents .top h4 {
 }
 
 header nav .actions .shopping-list .container .contents #nothing {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  -webkit-transform: translate(-50%, -50%);
+          transform: translate(-50%, -50%);
   text-align: center;
   padding: 1.5rem 0 2rem 0;
 }
 
 header nav .actions .shopping-list .container .contents ul {
   list-style: none;
-  margin: 0 1rem 0 1rem;
+  margin: 0 1rem 3.5rem 1rem;
+  overflow-y: auto;
 }
 
 header nav .actions .shopping-list .container .contents ul li {
@@ -314,11 +324,11 @@ header nav .actions .shopping-list .container .contents ul .details .delete {
 }
 
 header nav .actions .shopping-list .container .contents .bottom {
-  position: -webkit-sticky;
-  position: sticky;
+  position: absolute;
   bottom: 0;
   padding: 0 1rem;
   height: 3.5rem;
+  width: 100%;
   background-color: var(--clr-main-light);
   color: white;
   display: -webkit-box;

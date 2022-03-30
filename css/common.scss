@@ -124,9 +124,10 @@ header {
           top: 4.5rem;
           left: 55%;
           right: 5%;
-          height: fit-content;
-          max-height: 50vh;
-          overflow-y: auto;
+          height: 50vh;
+          // height: fit-content;
+          // max-height: 50vh;
+          overflow-y: hidden;
           background-color: var(--clr-bg);
           color: var(--clr-text);
           border-radius: var(--value-default-border-radius);
@@ -144,6 +145,8 @@ header {
 
           .contents {
             position: relative;
+            display: flex;
+            flex-direction: column;
             height: 100%;
             width: 100%;
 
@@ -165,13 +168,18 @@ header {
             }
 
             #nothing {
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
               text-align: center;
               padding: 1.5rem 0 2rem 0;
             }
 
             ul {
               list-style: none;
-              margin: 0 1rem 0 1rem;
+              margin: 0 1rem 3.5rem 1rem;
+              overflow-y: auto;
 
               li {
                 margin-bottom: 1rem;
@@ -271,10 +279,12 @@ header {
             }
 
             .bottom {
-              position: sticky;
+              position: absolute;
+              // top: 50vh;
               bottom: 0;
               padding: 0 1rem;
               height: 3.5rem;
+              width: 100%;
 
               background-color: var(--clr-main-light);
               color: white;
