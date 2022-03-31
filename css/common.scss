@@ -134,15 +134,6 @@ header {
           box-shadow: 0 0 100px 5px rgba(0, 0, 0, 0.5);
           animation: slide-up 0.5s forwards, fade 0.3s forwards;
 
-          /* Hide scrollbar for Chrome, Safari and Opera */
-          &::-webkit-scrollbar {
-            display: none;
-          }
-
-          /* Hide scrollbar for IE, Edge and Firefox */
-          -ms-overflow-style: none; /* IE and Edge */
-          scrollbar-width: none; /* Firefox */
-
           .contents {
             position: relative;
             display: flex;
@@ -570,5 +561,33 @@ footer {
   }
   to {
     transform: translate(-50%, -50%) rotate(360deg);
+  }
+}
+
+@media screen and (max-width: 1100px) {
+  nav .searchBar {
+    width: 45% !important;
+  }
+}
+
+@media screen and (max-width: 900px) {
+  nav .searchBar {
+    width: 35% !important;
+  }
+}
+
+@media screen and (max-width: 700px) {
+  nav {
+    .searchBar {
+      display: none;
+    }
+
+    .actions {
+      gap: 0 !important;
+    }
+
+    .container {
+      left: 5% !important;
+    }
   }
 }

@@ -65,7 +65,7 @@
     <header>
         <nav>
             <a href="./index.php" id="logo"><span>IERG4210<br>Store</span></a>
-            <div class="searchBar"><input type="text" placeholder="Type to search..."></div>
+            <div class="searchBar"><input type="search" placeholder="Just a decoration..."></div>
             <div class="welcome"><?php echo $customer_name; ?></div>
             <div class="actions">
                 <div class="shopping-list">
