@@ -12,8 +12,10 @@
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../css/common.css">
     <link rel="stylesheet" href="../css/main.css">
-    <script defer src="../js/cart.js"></script>
-    <script src="../js/common.js"></script>
+    <!-- <script defer src="../js/cart.js"></script> -->
+    <script defer src="../js/common.js"></script>
+    <script defer type="text/javascript" src="../js/payment.js"></script>
+
     <!-- <script defer src="../js/page.js"></script> -->
 
     <script defer src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
@@ -21,6 +23,7 @@
 
 <body>
     <div id="loading"></div>
+
     <header>
         <nav>
             <a href="index.html" id="logo"><span>IERG4210<br>Store</span></a>
@@ -31,157 +34,161 @@
                     <button data-quantity="123">Shopping List</button>
                     <div class="container">
                         <div class="contents">
-                            <div class="top">                            
-                                <h3>Shopping List</h3>
-                                <h4 id="clear">Clear ALL</h4>
-                            </div>
-                            <h4 id="nothing">There is nothing here :(</h4>
-                            <ul>
-                                <li>
-                                    <div class="details">
-                                        <a href="product.html">
-                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
-                                        </a>
-                                        <div class="text">
-                                            <span class="name">Product 11</span>
-                                            <div>
-                                                <input type="number" value="1" onchange="validateQuantity(this)">
-                                                <span class="price">123.4</span>
+                            <form id="cart" action="" onsubmit="console.log('Hi')" onclick="console.log('123')">
+
+                                <div class="top">                            
+                                    <h3>Shopping List</h3>
+                                    <h4 id="clear">Clear ALL</h4>
+                                </div>
+                                <h4 id="nothing">There is nothing here :(</h4>
+                                <ul>
+                                    <li>
+                                        <div class="details">
+                                            <a href="product.html">
+                                                <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
+                                            </a>
+                                            <div class="text">
+                                                <span class="name">Product 11</span>
+                                                <div>
+                                                    <input type="number" value="1" onchange="validateQuantity(this)">
+                                                    <span class="price">123.4</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="details">
-                                        <a href="product.html">
-                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
-                                        </a>
-                                        <div class="text">
-                                            <span class="name">Product 1</span>
-                                            <div>
-                                                <input type="number" value="1">
-                                                <span class="price">$123.4</span>
+                                    </li>
+                                    <li>
+                                        <div class="details">
+                                            <a href="product.html">
+                                                <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
+                                            </a>
+                                            <div class="text">
+                                                <span class="name">Product 1</span>
+                                                <div>
+                                                    <input type="number" value="1">
+                                                    <span class="price">$123.4</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="details">
-                                        <a href="product.html">
-                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
-                                        </a>
-                                        <div class="text">
-                                            <span class="name">Product 1</span>
-                                            <div>
-                                                <input type="number" value="1">
-                                                <span class="price">$123.4</span>
+                                    </li>
+                                    <li>
+                                        <div class="details">
+                                            <a href="product.html">
+                                                <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
+                                            </a>
+                                            <div class="text">
+                                                <span class="name">Product 1</span>
+                                                <div>
+                                                    <input type="number" value="1">
+                                                    <span class="price">$123.4</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="details">
-                                        <a href="product.html">
-                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
-                                        </a>
-                                        <div class="text">
-                                            <span class="name">Product 1</span>
-                                            <div>
-                                                <input type="number" value="1">
-                                                <span class="price">$123.4</span>
+                                    </li>
+                                    <li>
+                                        <div class="details">
+                                            <a href="product.html">
+                                                <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
+                                            </a>
+                                            <div class="text">
+                                                <span class="name">Product 1</span>
+                                                <div>
+                                                    <input type="number" value="1">
+                                                    <span class="price">$123.4</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="details">
-                                        <a href="product.html">
-                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
-                                        </a>
-                                        <div class="text">
-                                            <span class="name">Product 1</span>
-                                            <div>
-                                                <input type="number" value="1">
-                                                <span class="price">$123.4</span>
+                                    </li>
+                                    <li>
+                                        <div class="details">
+                                            <a href="product.html">
+                                                <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
+                                            </a>
+                                            <div class="text">
+                                                <span class="name">Product 1</span>
+                                                <div>
+                                                    <input type="number" value="1">
+                                                    <span class="price">$123.4</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="details">
-                                        <a href="product.html">
-                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
-                                        </a>
-                                        <div class="text">
-                                            <span class="name">Product 1</span>
-                                            <div>
-                                                <input type="number" value="1">
-                                                <span class="price">$123.4</span>
+                                    </li>
+                                    <li>
+                                        <div class="details">
+                                            <a href="product.html">
+                                                <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
+                                            </a>
+                                            <div class="text">
+                                                <span class="name">Product 1</span>
+                                                <div>
+                                                    <input type="number" value="1">
+                                                    <span class="price">$123.4</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="details">
-                                        <a href="product.html">
-                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
-                                        </a>
-                                        <div class="text">
-                                            <span class="name">Product 1</span>
-                                            <div>
-                                                <input type="number" value="1">
-                                                <span class="price">$123.4</span>
+                                    </li>
+                                    <li>
+                                        <div class="details">
+                                            <a href="product.html">
+                                                <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
+                                            </a>
+                                            <div class="text">
+                                                <span class="name">Product 1</span>
+                                                <div>
+                                                    <input type="number" value="1">
+                                                    <span class="price">$123.4</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="details">
-                                        <a href="product.html">
-                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
-                                        </a>
-                                        <div class="text">
-                                            <span class="name">Product 1</span>
-                                            <div>
-                                                <input type="number" value="1">
-                                                <span class="price">$123.4</span>
+                                    </li>
+                                    <li>
+                                        <div class="details">
+                                            <a href="product.html">
+                                                <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
+                                            </a>
+                                            <div class="text">
+                                                <span class="name">Product 1</span>
+                                                <div>
+                                                    <input type="number" value="1">
+                                                    <span class="price">$123.4</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="details">
-                                        <a href="product.html">
-                                            <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
-                                        </a>
-                                        <div class="text">
-                                            <span class="name">Product 1</span>
-                                            <div>
-                                                <input type="number" value="1">
-                                                <span class="price">$123.4</span>
+                                    </li>
+                                    <li>
+                                        <div class="details">
+                                            <a href="product.html">
+                                                <div class="photo"><img src="../images/product.jpg" alt="umbrella"></div>
+                                            </a>
+                                            <div class="text">
+                                                <span class="name">Product 1</span>
+                                                <div>
+                                                    <input type="number" value="1">
+                                                    <span class="price">$123.4</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="details">
-                                        <a href="product.html">
-                                            <div class="photo"></div>
-                                        </a>
-                                        <div class="text">
-                                            <span class="name">Product 1</span>
-                                            <div>
-                                                <input type="number" value="1">
-                                                <span class="price">$123.4</span>
+                                    </li>
+                                    <li>
+                                        <div class="details">
+                                            <a href="product.html">
+                                                <div class="photo"></div>
+                                            </a>
+                                            <div class="text">
+                                                <span class="name">Product 1</span>
+                                                <div>
+                                                    <input type="number" value="1">
+                                                    <span class="price">$123.4</span>
+                                                </div>
                                             </div>
                                         </div>
-                                    </div>
-                                </li>
-                            </ul>
-                            <div class="bottom">
-                                <span class="price">Total: $678.9</span>
-                                <button>Checkout</button>
-                            </div>
+                                    </li>
+                                </ul>
+                                <div class="bottom">
+                                    <span class="price">Total: $678.9</span>
+                                    <!-- <button>Checkout</button> -->
+                                    <div id="paypal-button-container"></div>                                    
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -572,6 +579,9 @@
     </div>
 
     <footer><span>IERG4210 Assignment (Spring 2022) | Created by 1155147592</span></footer>
+
+    <script src="https://www.paypal.com/sdk/js?client-id=AZGNpMt6WA_89LMw5ULbX6xwtcQiVgh__Tw8q_XOeGqLRHZ_Ijtf90qNeQNGQSud9ZAk9W1h4fOeEKBl&currency=USD"></script>
+
 </body>
 
 </html>

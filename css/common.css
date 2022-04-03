@@ -171,6 +171,10 @@ header nav .actions .shopping-list .container .contents {
   width: 100%;
 }
 
+header nav .actions .shopping-list .container .contents form {
+  overflow-y: auto;
+}
+
 header nav .actions .shopping-list .container .contents .top {
   position: -webkit-sticky;
   position: sticky;
@@ -199,6 +203,7 @@ header nav .actions .shopping-list .container .contents #nothing {
   position: absolute;
   top: 50%;
   left: 50%;
+  width: calc(100% - 2rem);
   -webkit-transform: translate(-50%, -50%);
           transform: translate(-50%, -50%);
   text-align: center;
@@ -207,8 +212,7 @@ header nav .actions .shopping-list .container .contents #nothing {
 
 header nav .actions .shopping-list .container .contents ul {
   list-style: none;
-  margin: 0 1rem 3.5rem 1rem;
-  overflow-y: auto;
+  margin: 0 1rem 4.5rem 1rem;
 }
 
 header nav .actions .shopping-list .container .contents ul li {
@@ -344,6 +348,18 @@ header nav .actions .shopping-list:hover .container {
 
 header nav .actions .shopping-list:hover > button {
   background-color: rgba(245, 245, 245, 0.25);
+}
+
+header nav #paypal-button-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
 }
 
 header nav button {

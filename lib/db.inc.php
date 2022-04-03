@@ -329,7 +329,7 @@ function ierg4210_prod_fetchOne($PID) {
     $sanitized_pid = filter_var($PID, FILTER_SANITIZE_NUMBER_INT);
 
     if (!preg_match('/^\d*$/', $sanitized_pid))
-        throw new Exception("invalid-catid");
+        throw new Exception("invalid-pid");
     $sanitized_pid = (int) $sanitized_pid;
 
     global $db;

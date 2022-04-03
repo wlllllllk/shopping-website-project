@@ -149,11 +149,13 @@ function updateCart(mode, pid, source) {
                 }
             };
 
-            // use GET method
-            request.open("GET", "cart-process.php?pid=" + encodeURIComponent(pid), true);
+            if (!isNaN(pid)) {
+                // use GET method
+                request.open("GET", "cart-process.php?pid=" + encodeURIComponent(pid), true);
 
-            // send the request
-            request.send();
+                // send the request
+                request.send();
+            }
         }
     }
 

@@ -45,34 +45,37 @@
                     <button>Shopping List &#40;0&#41;</button>
                     <div class="container">
                         <div class="contents">
-                            <div class="top">                            
-                                <h3>Shopping List</h3>
-                                <h4 id="clear">Clear ALL</h4>
-                            </div>
-                            <h4 id="nothing">There is nothing here :&#40;</h4>
-                            <ul>
-                                <template id="cart-item-template">
-                                    <li>
-                                        <div class="details">
-                                            <a href="">
-                                                <div class="photo"><img src="" alt=""></div>
-                                            </a>
-                                            <div class="text">
-                                                <span class="name"></span>
-                                                <div>
-                                                    <input class="quantity" type="number" value="">
-                                                    <span class="price"></span>
+                            <form id="cart" action="">
+                                <div class="top">                            
+                                    <h3>Shopping List</h3>
+                                    <h4 id="clear">Clear ALL</h4>
+                                </div>
+                                <h4 id="nothing">There is nothing here :&#40;</h4>
+                                <ul>
+                                    <template id="cart-item-template">
+                                        <li>
+                                            <div class="details">
+                                                <a href="">
+                                                    <div class="photo"><img src="" alt=""></div>
+                                                </a>
+                                                <div class="text">
+                                                    <span class="name"></span>
+                                                    <div>
+                                                        <input class="quantity" type="number" value="">
+                                                        <span class="price"></span>
+                                                    </div>
                                                 </div>
+                                                <div class="delete" data-pid="">&#10799;</div>
                                             </div>
-                                            <div class="delete" data-pid="">&#10799;</div>
-                                        </div>
-                                    </li> 
-                                </template>
-                            </ul>
-                            <div class="bottom">
-                                <span class="price">Total: $0</span>
-                                <button>Checkout</button>
-                            </div>
+                                        </li> 
+                                    </template>
+                                </ul>
+                                <div class="bottom">
+                                    <span class="price">Total: $0</span>
+                                    <!-- <button>Checkout</button> -->
+                                    <div id="paypal-button-container"></div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
@@ -129,6 +132,8 @@
     <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AZGNpMt6WA_89LMw5ULbX6xwtcQiVgh__Tw8q_XOeGqLRHZ_Ijtf90qNeQNGQSud9ZAk9W1h4fOeEKBl&currency=USD"></script>
+    <script type="text/javascript" src="../js/payment.js"></script>
     <script type="text/javascript" src="../js/cart.js"></script>
     <script type="text/javascript" src="../js/page.js"></script>
     <script type="text/javascript" src="../js/product-fetch.js"></script>
