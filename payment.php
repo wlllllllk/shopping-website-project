@@ -56,4 +56,4 @@ $q->execute();
 $lastId = $db->lastInsertId();
 
 $result = '{"invoice": "'.$lastId.'", "custom": "'.$hashed_digest.'"}';
-echo $result;
+// echo $result;

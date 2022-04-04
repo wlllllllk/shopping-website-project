@@ -31,7 +31,7 @@ paypal.Buttons({
                     // console.log(products[i].quantity * products[i].price);
                     // totalPrice += (products[i].quantity * products[i].price);
                     console.log("HI");
-                    console.log(JSON.parse(this.responseText));
+                    // console.log(JSON.parse(this.responseText));
                 }
             }
         };

@@ -1,0 +1,117 @@
+<?php
+    require __DIR__.'/lib/db.inc.php';
+    if (session_id() == "")
+        session_start();
+    
+    $customer_name = "Welcome, ";
+    if (!empty($_SESSION['auth'])) {
+        $name = substr($_SESSION['auth']['email'], 0, strrpos($_SESSION['auth']['email'],"@"));
+        $customer_name .= htmlspecialchars($name);
+    } 
+    else {
+        $customer_name .= "Guest";
+    }
+
+    $image = './icon/question.svg';
+    $heading = 'Something Went Wrong';
+    $message = 'Please contact our customer support.';
+    if (isset($_REQUEST["status"])) {
+        $status = $_REQUEST["status"];
+        if ($status == 1) {
+            $image = './icon/yes.svg';
+            $heading = 'Order Placed Successfully';
+            $message = 'We\'ll keep you updated!';
+        }
+        else if ($status == 2) {
+            $image = './icon/no.svg';
+            $heading = 'Payment Failed';
+            $message = 'Please try again or contact us for help.';
+        }
+    }
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IERG4210 Success</title>
+    <link rel="shortcut icon" type="image/svg" href="./icon/favicon.svg">
+    <link rel="stylesheet" href="./css/common.css">
+    <link rel="stylesheet" href="../css/result.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <header>
+        <nav>
+            <a href="./index.php" id="logo"><span>IERG4210<br>Store</span></a>
+            <div class="searchBar"><input type="search" placeholder="Just a decoration..."></div>
+            <div class="welcome"><?php echo $customer_name; ?></div>
+            <div class="actions">
+                <div class="shopping-list">
+                    <button>Shopping List &#40;0&#41;</button>
+                    <div class="container">
+                        <div class="contents">
+                            <form id="cart" action="">
+                                <div class="top">                            
+                                    <h3>Shopping List</h3>
+                                    <h4 id="clear">Clear ALL</h4>
+                                </div>
+                                <h4 id="nothing">There is nothing here :&#40;</h4>
+                                <ul>
+                                    <template id="cart-item-template">
+                                        <li>
+                                            <div class="details">
+                                                <a href="">
+                                                    <div class="photo"><img src="" alt=""></div>
+                                                </a>
+                                                <div class="text">
+                                                    <span class="name"></span>
+                                                    <div>
+                                                        <input class="quantity" type="number" value="">
+                                                        <span class="price"></span>
+                                                    </div>
+                                                </div>
+                                                <div class="delete" data-pid="">&#10799;</div>
+                                            </div>
+                                        </li> 
+                                    </template>
+                                </ul>
+                                <div class="bottom">
+                                    <span class="price">Total: $0</span>
+                                    <!-- <button>Checkout</button> -->
+                                    <div id="paypal-button-container"></div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="account">
+                    <a href="./login.php">
+                        <button>Account</button>
+                    </a>
+                </div>
+            </div>
+        </nav>
+    </header>
+
+    <div class="main">
+        <img src="<?php echo htmlspecialchars($image); ?>" alt="">
+        <h1><?php echo htmlspecialchars($heading); ?></h1>
+        <h2><?php echo htmlspecialchars($message); ?></h2>
+        <a href="./index.php"><button>Continue Shopping</button></a>
+    </div>
+
+    <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>
+
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AZGNpMt6WA_89LMw5ULbX6xwtcQiVgh__Tw8q_XOeGqLRHZ_Ijtf90qNeQNGQSud9ZAk9W1h4fOeEKBl&currency=USD"></script>
+    <script type="text/javascript" src="../js/payment.js"></script>
+    <script type="text/javascript" src="../js/cart.js"></script>
+</body>
+
+</html>

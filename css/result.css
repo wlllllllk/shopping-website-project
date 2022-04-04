@@ -1,0 +1,49 @@
+.main {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.main img {
+  margin-top: 5rem;
+  height: 25vh;
+}
+
+.main h1 {
+  color: var(--clr-text);
+  font-size: 5rem;
+}
+
+.main h2 {
+  color: var(--clr-text);
+  font-size: 3rem;
+}
+
+.main button {
+  margin-top: 5rem;
+  background-color: var(--clr-main-light);
+  border: none;
+  border-radius: var(--value-default-border-radius);
+  color: white;
+  padding: 1rem 2rem;
+  font-size: 2.5rem;
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.main button:hover {
+  -webkit-filter: brightness(0.8);
+          filter: brightness(0.8);
+}
+/*# sourceMappingURL=result.css.map */
