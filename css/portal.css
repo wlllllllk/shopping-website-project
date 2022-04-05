@@ -1,0 +1,163 @@
+header nav h1 {
+  color: white;
+}
+
+.main {
+  margin-top: 2rem;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  gap: 5rem;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.main .orders h1 {
+  color: var(--clr-text);
+  font-size: 3rem;
+}
+
+.main .orders table {
+  width: 100%;
+  color: var(--clr-text);
+  font-size: 2rem;
+}
+
+.main .orders table th {
+  text-align: left;
+}
+
+.main .orders table a {
+  color: var(--clr-text);
+}
+
+.main .orders table a:visited {
+  color: var(--clr-main-light);
+}
+
+.second {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.second .buttons {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1.5rem;
+}
+
+.second .buttons .logout,
+.second .buttons button {
+  padding: 0.3rem 6rem;
+  margin: 5rem 0 1rem 0;
+  font-size: 3rem;
+  background-color: var(--clr-green);
+  color: white;
+  border: none;
+  border-radius: var(--value-default-border-radius);
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+.second .buttons .logout:hover,
+.second .buttons button:hover {
+  -webkit-filter: brightness(0.8);
+          filter: brightness(0.8);
+}
+
+.second .buttons .logout {
+  background-color: var(--clr-red);
+}
+
+fieldset {
+  display: block;
+  border: none;
+  width: 30%;
+  color: var(--clr-text);
+}
+
+fieldset legend {
+  font-size: 2.5rem;
+  font-weight: 600;
+  margin-left: 1rem;
+}
+
+fieldset form {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  margin: 0 1rem;
+}
+
+fieldset form label {
+  margin-top: 1rem;
+  font-size: 2rem;
+  font-weight: 400;
+}
+
+fieldset form label:first-of-type {
+  margin-top: 0;
+}
+
+fieldset form input {
+  line-height: 1;
+  padding: 0 1rem;
+  font-size: 1.75rem;
+  font-weight: 300;
+  outline: none;
+  border-radius: var(--value-default-border-radius);
+  border: 1px solid var(--clr-main-light);
+  background-color: var(--clr-bg);
+  color: var(--clr-text);
+}
+
+fieldset form .actions {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 1rem;
+  height: 3rem;
+  margin: 1.5rem 0;
+}
+
+fieldset form .actions input {
+  height: 100%;
+  width: 100%;
+  color: var(--clr-text);
+  cursor: pointer;
+  -webkit-transition: 0.2s;
+  transition: 0.2s;
+}
+
+fieldset form .actions input:hover {
+  -webkit-filter: brightness(0.8);
+          filter: brightness(0.8);
+}
+
+fieldset form input[type="submit"] {
+  color: white;
+  background-color: var(--clr-main-light);
+}
+/*# sourceMappingURL=portal.css.map */

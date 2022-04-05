@@ -71,7 +71,7 @@
                                     </template>
                                 </ul>
                                 <div class="bottom">
-                                    <span class="price">Total: $0</span>
+                                    <span id="total" class="price">Total: $0</span>
                                     <!-- <button>Checkout</button> -->
                                     <div id="paypal-button-container"></div>
                                 </div>
