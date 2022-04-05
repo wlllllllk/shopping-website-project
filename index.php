@@ -3,10 +3,12 @@
     if (session_id() == "")
         session_start();
     
+    $portal_link = './login.php';
     $customer_name = "Welcome, ";
     if (!empty($_SESSION['auth'])) {
         $name = substr($_SESSION['auth']['email'], 0, strrpos($_SESSION['auth']['email'],"@"));
         $customer_name .= htmlspecialchars($name);
+        $portal_link = './portal.php';
     } 
     else {
         $customer_name .= "Guest";
@@ -80,8 +82,8 @@
                     </div>
                 </div>
                 <div class="account">
-                    <a href="./login.php">
-                        <button>Account</button>
+                    <a href="<?php echo $portal_link; ?>">
+                        <button>Member Portal</button>
                     </a>
                 </div>
             </div>

@@ -1,11 +1,7 @@
+let lastId;
 
-paypal.Buttons({
-    // Sets up the transaction when a payment button is clicked
-    createOrder: (data, actions) => {
-
-        const totalPrice = document.querySelector("#total").innerHTML.slice(8);
-        console.log(totalPrice);
-
+function fetchOrder() {
+    return new Promise(resolve => {
         let products = [];
         for (let i = 0; i < localStorage.length; i++) {
             if (!isNaN(localStorage.key(i))) {
@@ -13,10 +9,11 @@ paypal.Buttons({
             }
         }
 
-        console.log(products);
+        if (products.length == 0) {
+            alert("There is no products in the shopping list!");
+            return false;
+        }
 
-        // let totalPrice = 0;
-        // for (let i = 0; i < products.length; i++) {
         let request = new XMLHttpRequest();
 
         // what to do after sending the request
@@ -27,46 +24,8 @@ paypal.Buttons({
 
                 // if the request is success
                 if (this.status == 200) {
-                    // products[i].price = Number(JSON.parse(this.responseText).PRICE);
-                    // console.log(products[i].quantity * products[i].price);
-                    // totalPrice += (products[i].quantity * products[i].price);
-                    console.log("HI");
-                    console.log(this.responseText);
-                    console.log(JSON.stringify(this.responseText));
-                    console.log(JSON.parse(this.responseText));
-                    // console.log(JSON.parse(this.responseText));
                     let response = JSON.parse(this.responseText);
-
-                    return actions.order.create({
-                        purchase_units: [{
-                            amount: {
-                                currency_code: 'USD',
-                                // value: totalPrice,
-                                value: '10',
-                                breakdown: {
-                                    item_total: {
-                                        currency_code: 'USD',
-                                        value: '10'
-                                    }
-                                }
-                            },
-                            items: [{
-                                name: 'Item 1',
-                                unit_amount: {
-                                    currency_code: 'USD',
-                                    value: '5'
-                                },
-                                quantity: '1'
-                            }, {
-                                name: 'Item 2',
-                                unit_amount: {
-                                    currency_code: 'USD',
-                                    value: '5'
-                                },
-                                quantity: '1'
-                            }]
-                        }]
-                    });
+                    return resolve(response);
                 }
             }
         };
@@ -76,61 +35,67 @@ paypal.Buttons({
 
         // send the request
         request.send();
+    });
+}
 
-        return actions.order.create({
-            purchase_units: [{
-                amount: {
-                    currency_code: 'USD',
-                    // value: totalPrice,
-                    value: '78',
-                    breakdown: {
-                        item_total: {
-                            currency_code: 'USD',
-                            value: '78'
-                        }
-                    }
-                },
-                items: products.map(item => {
-                    return {
-                        name: `Item ${item.pid}`,
-                        unit_amount: {
-                            currency_code: 'USD',
-                            value: '1'
-                        },
-                        quantity: item.quantity
-                    }
-                })
 
-                // items: [{
-                //     name: 'Item 1',
-                //     unit_amount: {
-                //         currency_code: 'USD',
-                //         value: '5'
-                //     },
-                //     quantity: '1'
-                // }, {
-                //     name: 'Item 2',
-                //     unit_amount: {
-                //         currency_code: 'USD',
-                //         value: '5'
-                //     },
-                //     quantity: '1'
-                // }]
-            }]
-        });
+function updateOrder(orderId) {
+    return new Promise(resolve => {
+        let request = new XMLHttpRequest();
+
+        // what to do after sending the request
+        request.onreadystatechange = function () {
+
+            // if the request is done
+            if (this.readyState == 4) {
+
+                // if the request is success
+                if (this.status == 200) {
+                    let response = this.responseText;
+                    return resolve(response);
+                }
+            }
+        };
+
+        // use GET method
+        let content = `update=${lastId}&new=${orderId}`;
+        request.open("GET", "payment.php?" + encodeURIComponent(content), true);
+
+        // send the request
+        request.send();
+    });
+}
+
+paypal.Buttons({
+
+    // Sets up the transaction when a payment button is clicked
+    createOrder: async (data, actions) => {
+        let order_details = await fetchOrder();
+        lastId = order_details[1]['id'];
+        console.log(order_details);
+        console.log(lastId);
+
+        return actions.order.create(order_details[0]);
     },
 
     // Finalize the transaction after payer approval
-    onApprove: (data, actions) => {
+    // TODO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+    onApprove: async (data, actions) => {
         return actions.order.capture().then(function (orderData) {
             // Successful capture! For dev/demo purposes:
             console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
             const transaction = orderData.purchase_units[0].payments.captures[0];
-            alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
-            // When ready to go live, remove the alert and show a success message within this page. For example:
-            // const element = document.getElementById('paypal-button-container');
-            // element.innerHTML = '<h3>Thank you for your payment!</h3>';
-            // Or go to another URL:  actions.redirect('thank_you.html');
+            // alert(`Transaction ${transaction.status}: ${transaction.id}\n\nSee console for all available details`);
+
+            console.log(orderData.id);
+
+            let update_result = await updateOrder(orderData.id);
+            console.log(update_result);
+
+            if (update_result == "success")
+                actions.redirect('https://secure.s67.ierg4210.ie.cuhk.edu.hk/result.php?status=1');
+            else
+                actions.redirect('https://secure.s67.ierg4210.ie.cuhk.edu.hk/result.php?status=2');
         });
     },
 

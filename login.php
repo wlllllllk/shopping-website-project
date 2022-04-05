@@ -17,25 +17,26 @@
     $logout_button = '';
 
     if (!empty($_SESSION['auth'])) {
-        $change_password_form = '<fieldset id="password-change-form">
-                                    <legend>Change Password</legend>
-                                    <form method="POST" action="auth-process.php?action='.($action = "change").'" onsubmit="return check_input(this);">
-                                        <label for="current-password">Current Password</label>
-                                        <input type="password" name="CURRENT-PASSWORD" id="current-password" pattern="^.+$" placeholder="Enter your current password here" required="true">
-                                        <label for="new-password">New Password</label>
-                                        <input type="password" name="NEW-PASSWORD" id="new-password" pattern="^.+$" placeholder="Enter your new password here" required="true">
-                                        <div class="actions">
-                                            <input type="reset" value="Reset">
-                                            <input type="submit" value="Submit">
-                                        </div>
-                                        <input type="hidden" name="nonce" value="'.csrf_getNouce($action).'">
-                                    </form>
-                                </fieldset>';
+        header("Location: ./portal.php");
+        // $change_password_form = '<fieldset id="password-change-form">
+        //                             <legend>Change Password</legend>
+        //                             <form method="POST" action="auth-process.php?action='.($action = "change").'" onsubmit="return check_input(this);">
+        //                                 <label for="current-password">Current Password</label>
+        //                                 <input type="password" name="CURRENT-PASSWORD" id="current-password" pattern="^.+$" placeholder="Enter your current password here" required="true">
+        //                                 <label for="new-password">New Password</label>
+        //                                 <input type="password" name="NEW-PASSWORD" id="new-password" pattern="^.+$" placeholder="Enter your new password here" required="true">
+        //                                 <div class="actions">
+        //                                     <input type="reset" value="Reset">
+        //                                     <input type="submit" value="Submit">
+        //                                 </div>
+        //                                 <input type="hidden" name="nonce" value="'.csrf_getNouce($action).'">
+        //                             </form>
+        //                         </fieldset>';
 
-        $logout_button = '<form method="POST" action="auth-process.php?action='.($action = "logout").'">
-                                <input class="logout" type="submit" value="Logout">
-                                <input type="hidden" name="nonce" value="'.csrf_getNouce($action).'">
-                            </form>';
+        // $logout_button = '<form method="POST" action="auth-process.php?action='.($action = "logout").'">
+        //                         <input class="logout" type="submit" value="Logout">
+        //                         <input type="hidden" name="nonce" value="'.csrf_getNouce($action).'">
+        //                     </form>';
                 
     } else {
         $login_form = '<fieldset id="login-form">

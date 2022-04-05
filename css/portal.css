@@ -88,7 +88,7 @@ header nav h1 {
 }
 
 fieldset {
-  display: block;
+  display: none;
   border: none;
   width: 30%;
   color: var(--clr-text);
