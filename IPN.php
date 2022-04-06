@@ -1,15 +1,15 @@
 <?php
+include_once('lib/db.inc.php');
+
+global $db;
+$db = ierg4210_DB();
 
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     header("Location: index.php");
     exit();
 }
 
-// get the message
-// foreach ($_POST as $parm => $var) {
-//     $var = urlencode(stripslashes($var));
-//     $resp .= "&$parm=$var";
-// }
+// the IPN message from PayPal
 $message = $_POST;
 
 // reply to PayPal
@@ -19,222 +19,123 @@ curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
 curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
 curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
 curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, "cmd=_notify-validate&123" . http_build_query($_POST));
+curl_setopt($ch, CURLOPT_POSTFIELDS, "cmd=_notify-validate&" . http_build_query($_POST));
 $response = curl_exec($ch);
 curl_close($ch);
 
-include_once('lib/db.inc.php');
+$ok = false;
 
-global $db;
-$db = ierg4210_DB();
+// if PayPal returns VERIFIED
+if ($response == 'VERIFIED') {
+    // process the received data to generate the digest later
+    $item_number = array();
+    $quantity = array();
+    $mc_gross = array();
+    foreach ($message as $key => $value) {
+        // pid
+        if (strpos($key, 'item_number') !== false) {
+            $item_number[$key] = preg_replace('/PID/', "", $value);
+        }
 
+        // quantity
+        else if (strpos($key, 'quantity') !== false) {
+            $quantity[$key] = $value;
+        }
 
+        // price
+        else if (strpos($key, 'mc_gross_') !== false) {
+            $mc_gross[$key] = $value;
+        }
+    }
 
-$oid = 1;
-$sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
-$q = $db->prepare($sql);
-$q->bindParam(1, $message['txn_id']);
-$q->bindParam(2, $oid);
-$q->execute();
+    ksort($item_number, SORT_NATURAL);
+    ksort($quantity, SORT_NATURAL);
+    ksort($mc_gross, SORT_NATURAL);
 
+    $item_number = array_values($item_number);
+    $quantity = array_values($quantity);
+    $mc_gross = array_values($mc_gross);
 
-$oid = 2;
-$sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
-$q = $db->prepare($sql);
-$q->bindParam(1, $response);
-$q->bindParam(2, $oid);
+    $for_hash = '';
+    for ($i = 0; $i < $message['num_cart_items']; $i++) {
+        $for_hash .= $item_number[$i].';'.$quantity[$i].';'.$mc_gross[$i].';';
+    }
 
-$q->execute();
+    // first check if the payment status == Completed
+    if ($message['payment_status'] == 'Completed') {
 
+        // then check if the txn_id has not been previously processed
+        // by looking for the txn_id record from database
+        $sql = "SELECT * FROM ORDERS WHERE TRANSACTION_ID=?;";
+        
+        $q = $db->prepare($sql);
+        $q->bindParam(1, $message['txn_id']);
+        
+        $result = '';
+        if ($q->execute()) {
+            $result = $q->fetch();
+        
+            // if the result is empty => txd_id has not been previously processed
+            // also check if txn_type is cart
+            if ($result == '' && $message['txn_type'] == 'cart') {
+        
+                // fetch the salt of this order from database
+                $sql = "SELECT * FROM ORDERS WHERE OID=?;";
+        
+                $q = $db->prepare($sql);
+                $q->bindParam(1, $message['invoice']);
+        
+                $result = '';
+                if ($q->execute()) {
+                    $result = $q->fetch();
+        
+                    // re-generate the digest
+                    $digest = $message['mc_currency'].';'.$message['receiver_email'].';'.$result['SALT'].';'.$for_hash.$message['mc_gross'];
+                    $hashed_digest = hash_hmac('sha256', $digest, $result['SALT']);
+        
+                    // the re-generated digest matched the original digest
+                    // the IPN is legit
+                    if ($hashed_digest == $result['DIGEST']) {
+                        $ok = true;
 
-
-// //
-// // STEP 1 - be polite and acknowledge PayPal's notification
-// //
-
-// header('HTTP/1.1 200 OK');
-
-// $status = "STEP 1";
-// $oid = 1;
-
-// $sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
-
-// $q = $db->prepare($sql);
-// $q->bindParam(1, $status);
-// $q->bindParam(2, $oid);
-
-// $q->execute();
-
-// //
-// // STEP 2 - create the response we need to send back to PayPal for them to confirm that it's legit
-// //
-
-// $resp = 'cmd=_notify-validate';
-// foreach ($_POST as $parm => $var) {
-//     $var = urlencode(stripslashes($var));
-//     $resp .= "&$parm=$var";
-// }
-
-// $status = "STEP 2";
-// $oid = 1;
-
-// $sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
-
-// $q = $db->prepare($sql);
-// $q->bindParam(1, $resp);
-// $q->bindParam(2, $oid);
-
-// $q->execute();
-
-// // STEP 3 - Extract the data PayPal IPN has sent us, into local variables 
-
-// $item_name        = $_POST['item_name'];
-// $item_number      = $_POST['item_number'];
-// $payment_status   = $_POST['payment_status'];
-// $payment_amount   = $_POST['mc_gross'];
-// $payment_currency = $_POST['mc_currency'];
-// $txn_id           = $_POST['txn_id'];
-// $receiver_email   = $_POST['receiver_email'];
-// $payer_email      = $_POST['payer_email'];
-// $record_id	 	  = $_POST['custom'];
-
-
-// // $status = "STEP 3";
-// // $oid = 1;
-
-// // $sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
-
-// // $q = $db->prepare($sql);
-// // $q->bindParam(1, $status);
-// // $q->bindParam(2, $oid);
-
-// // $q->execute();
-
-
-// // Right.. we've pre-pended "cmd=_notify-validate" to the same data that PayPal sent us (I've just shown some of the data PayPal gives us. A complete list
-// // is on their developer site.  Now we need to send it back to PayPal via HTTP.  To do that, we create a file with the right HTTP headers followed by 
-// // the data block we just created and then send the whole bally lot back to PayPal using fsockopen
-
-
-// // STEP 4 - Get the HTTP header into a variable and send back the data we received so that PayPal can confirm it's genuine
-
-// $httphead = "POST /cgi-bin/webscr HTTP/1.0\r\n";
-// $httphead .= "Content-Type: application/x-www-form-urlencoded\r\n";
-// $httphead .= "Content-Length: " . strlen($resp) . "\r\n";
-// $httphead .= "User-Agent: PHP-IPN-VerificationScript\r\n\r\n";
-
-
-// // $status = "STEP 4";
-// // $oid = 1;
-
-// // $sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
-
-// // $q = $db->prepare($sql);
-// // $q->bindParam(1, $status);
-// // $q->bindParam(2, $oid);
-
-// // $q->execute();
-
-
-// // Now create a ="file handle" for writing to a URL to paypal.com on Port 443 (the IPN port)
-
-// $errno ='';
-// $errstr='';
-
-// $fh = fsockopen('ssl://ipnpb.sandbox.paypal.com', 443, $errno, $errstr, 30);
-
-// // STEP 5 - Nearly done.  Now send the data back to PayPal so it can tell us if the IPN notification was genuine
-
-// if (!$fh) {
-//     // header('Location: login.php?error=3');
-//     // exit();
-//     $status = "STEP 5.1";
-//     $oid = 1;
-
-//     $sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
-
-//     $q = $db->prepare($sql);
-//     $q->bindParam(1, $status);
-//     $q->bindParam(2, $oid);
-
-//     $q->execute();
-
-// // Uh oh. This means that we have not been able to get thru to the PayPal server.  It's an HTTP failure
-// //
-// // You need to handle this here according to your preferred business logic.  An email, a log message, a trip to the pub..
-// } 
-
-// // Connection opened, so spit back the response and get PayPal's view whether it was an authentic notification		   
-
-// else {
-
-//     $status = $fh;
-//     $oid = 1;
-
-//     $sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
-
-//     $q = $db->prepare($sql);
-//     $q->bindParam(1, $status);
-//     $q->bindParam(2, $oid);
-
-//     $q->execute();
-
-//     fwrite($fh, $httphead.$resp);
-
-//     while (!feof($fh)) {
-//         $readresp = fgets($fh);
-
-//         $status = $readresp;
-//         $oid = 2;
-    
-//         $sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
-    
-//         $q = $db->prepare($sql);
-//         $q->bindParam(1, $status);
-//         $q->bindParam(2, $oid);
-    
-//         $q->execute();
-
-//         if (strcmp($readresp, "VERIFIED") == 0) {
-//             $status = "VERIFIED";
-//             $oid = 1;
-
-//             $sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
-
-//             $q = $db->prepare($sql);
-//             $q->bindParam(1, $status);
-//             $q->bindParam(2, $oid);
+                        $sql = "UPDATE ORDERS SET STATUS=?, TRANSACTION_ID=?, TRANSACTION_TYPE=?, PAYMENT_TYPE=? WHERE OID=?;";
+                        $q = $db->prepare($sql);
+                        $q->bindParam(1, $response);
+                        $q->bindParam(2, $message['txn_id']);
+                        $q->bindParam(3, $message['txn_type']);
+                        $q->bindParam(4, $message['payment_type']);
+                        $q->bindParam(5, $message['invoice']);
             
-//             $q->execute();
+                        $q->execute();
+                    }
+                } 
+            }
+        }
+    }
+} 
 
-//             header('Location: login.php?error=1');
-//             exit();
-//         }
+// something went wrong
+else {
+    $sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
+    $q = $db->prepare($sql);
+    $q->bindParam(1, $response);
+    $q->bindParam(2, $message['invoice']);
 
-//         else if (strcmp($readresp, "INVALID") == 0) {
-//             $status = "INVALID";
-//             $oid = 2;
+    $q->execute();
 
-//             $sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
+    $ok = true;
+}
 
-//             $q = $db->prepare($sql);
-//             $q->bindParam(1, $status);
-//             $q->bindParam(2, $oid);
-            
-//             $q->execute();
+// something unexpected happened
+if (!$ok) {
+    $response = 'FAILED';
+    $sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
+    $q = $db->prepare($sql);
+    $q->bindParam(1, $response);
+    $q->bindParam(2, $message['invoice']);
 
-//         //  			Man alive!  A hacking attempt?
-//             header('Location: login.php?error=2');
-//             exit();
-//         }
-//     }
-//     fclose($fh);
-// }
-// //
-// //
-// // STEP 6 - Pour yourself a cold one.
-// //
-// //
+    $q->execute();
+}
 
 ?>
 

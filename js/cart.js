@@ -93,7 +93,7 @@ function updateCart(mode, pid, source) {
 
                         // get the name, price, and thumbnail
                         name = JSON.parse(this.responseText).NAME;
-                        price = JSON.parse(this.responseText).PRICE;
+                        price = Number(JSON.parse(this.responseText).PRICE);
                         image = JSON.parse(this.responseText).THUMBNAIL;
 
                         // if product is removed from database
@@ -113,7 +113,7 @@ function updateCart(mode, pid, source) {
                             content.querySelector("input").value = quantity;
                             content.querySelector("input").setAttribute("data-pid", pid.escapeQuotes())
                             content.querySelector("input").addEventListener("change", (e) => { validateQuantity(e); });
-                            content.querySelector(".price").innerHTML = price.escapeHTML();
+                            content.querySelector(".price").innerHTML = price.toFixed(2).escapeHTML();
                             content.querySelector(".delete").setAttribute("data-pid", pid.escapeQuotes());
                             content.querySelector(".delete").addEventListener("click", () => { removeProduct(pid); });
 
@@ -125,7 +125,7 @@ function updateCart(mode, pid, source) {
                             totalPrice += (price * quantity);
 
                             // show the updated total price
-                            priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
+                            priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(2)}`;
 
                             // show the updated total quantity
                             quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`;
@@ -198,7 +198,7 @@ function updateCart(mode, pid, source) {
 
                         // get the name, price, and thumbnail
                         name = JSON.parse(this.responseText).NAME;
-                        price = JSON.parse(this.responseText).PRICE;
+                        price = Number(JSON.parse(this.responseText).PRICE);
                         image = JSON.parse(this.responseText).THUMBNAIL;
 
                         // fill the content
@@ -210,7 +210,7 @@ function updateCart(mode, pid, source) {
                         content.querySelector("input").value = quantity;
                         content.querySelector("input").setAttribute("data-pid", pid.escapeQuotes())
                         content.querySelector("input").addEventListener("change", (e) => { validateQuantity(e); });
-                        content.querySelector(".price").innerHTML = price.escapeHTML();
+                        content.querySelector(".price").innerHTML = price.toFixed(2).escapeHTML();
                         content.querySelector(".delete").setAttribute("data-pid", pid.escapeQuotes());
                         content.querySelector(".delete").addEventListener("click", () => { removeProduct(pid); });
 
@@ -224,7 +224,7 @@ function updateCart(mode, pid, source) {
                         totalQuantity += quantity;
 
                         // show the updated total price
-                        priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
+                        priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(2)}`;
 
                         // show the updated total quantity
                         quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`;
@@ -272,7 +272,7 @@ function updateCart(mode, pid, source) {
             });
 
             // show the updated total price
-            priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
+            priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(2)}`;
 
             // show the updated total quantity
             quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`;
@@ -308,7 +308,7 @@ function updateCart(mode, pid, source) {
         });
 
         // show the updated total price
-        priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(1)}`;
+        priceDisplay.innerHTML = `Total: $${totalPrice.toFixed(2)}`;
 
         // show the updated total quantity
         quantityDisplay.innerHTML = `Shopping List (${totalQuantity})`;

@@ -1,6 +1,9 @@
 <?php
 include_once('lib/db.inc.php');
 
+// set the default timezone to use.
+date_default_timezone_set('Asia/Hong_Kong');
+
 if (session_id() == "")
     session_start();
 
@@ -22,18 +25,23 @@ if (isset($_GET['data'])) {
     $individual_prices = array();
     $total_price = 0;
 
+    $for_hash = '';
+
     $items = array();
     $item = array();
     foreach ($products as $product) {
         if ($product['quantity'] > 0) {
             $current_product = ierg4210_prod_fetchOne($product['pid']);
+
+            $for_hash .= $product['pid'].';'.$product['quantity'].';'.number_format($current_product['PRICE'], 2, '.', '').';';
+
             array_push($individual_prices, $current_product['PRICE']);
 
             $total_price += ($current_product['PRICE'] * $product['quantity']);
-            //$content .= $product['pid'].';'.$product['quantity'].';'.$current_product['PRICE'].';';
 
             $item['name'] = $current_product['NAME'];
-            $item['unit_amount'] = array('currency_code'=>'USD', 'value'=>$current_product['PRICE']);
+            $item['sku'] = 'PID'.$product['pid'];
+            $item['unit_amount'] = array('currency_code'=>'USD', 'value'=>number_format($current_product['PRICE'], 2, '.', ''));
             $item['quantity'] = $product['quantity'];
             array_push($items, $item);
         }
@@ -42,20 +50,10 @@ if (isset($_GET['data'])) {
         }
     }
 
-    $amount = array();
-    $amount['currency_code'] = 'USD';
-    $amount['value'] = $total_price;
-    $amount['breakdown'] = array('item_total'=>array('currency_code'=>'USD', 'value'=>$total_price));
-
-    $temp = array('amount'=>$amount, 'items'=>$items);
-
-    $purchase_units = array();
-    array_push($purchase_units, $temp);
-
-    $response = array('purchase_units'=>$purchase_units);
+    $total_price = number_format($total_price, 2, '.', '');
 
     // generate and hash the digest
-    $digest = $currency.';'.$merchant_email.';'.$salt.';'.json_encode($products).';'.json_encode($individual_prices).';'.$total_price;
+    $digest = $currency.';'.$merchant_email.';'.$salt.';'.$for_hash.$total_price;
     $hashed_digest = hash_hmac('sha256', $digest, $salt);
 
     // store the order into database
@@ -85,30 +83,20 @@ if (isset($_GET['data'])) {
 
     $lastId = $db->lastInsertId();
 
+    $amount = array();
+    $amount['currency_code'] = 'USD';
+    $amount['value'] = $total_price;
+    $amount['breakdown'] = array('item_total'=>array('currency_code'=>'USD', 'value'=>$total_price));
+
+    $temp = array('amount'=>$amount, 'items'=>$items, 'invoice_id'=>$lastId, 'custom_id'=>$hashed_digest);
+
+    $purchase_units = array();
+    array_push($purchase_units, $temp);
+
+    $response = array('purchase_units'=>$purchase_units);
+
     $final_response = array();
     array_push($final_response, $response, array('id'=>$lastId));
 
     echo json_encode($final_response);
-    // $result = '{"invoice": "'.$lastId.'", "custom": "'.$hashed_digest.'"}';
-    // // echo $result;
-}
-
-if (isset($_GET['update'])) {
-    $order = $_GET['update'];
-    $new = $_GET['new'];
-
-    // store the order into database
-    global $db;
-    $db = ierg4210_DB();
-
-    $sql="UPDATE ORDERS SET ORDER_ID=? WHERE OID=?;";
-
-    $q = $db->prepare($sql);
-    $q->bindParam(1, $order);
-    $q->bindParam(2, $new);
-
-    if ($q->execute())
-        echo "success";
-    else
-        echo "failed";
 }
