@@ -55,7 +55,8 @@ header nav h1 {
     scroll-snap-type: x mandatory;
     scroll-behavior: auto;
 
-    fieldset {
+    fieldset,
+    #order-list {
       scroll-snap-align: start;
       min-width: 100%;
       margin: 0 2rem;

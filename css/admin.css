@@ -70,7 +70,8 @@ header nav h1 {
   scroll-behavior: auto;
 }
 
-.main .right fieldset {
+.main .right fieldset,
+.main .right #order-list {
   scroll-snap-align: start;
   min-width: 100%;
   margin: 0 2rem;
@@ -78,13 +79,15 @@ header nav h1 {
   border-radius: var(--value-default-border-radius);
 }
 
-.main .right fieldset legend {
+.main .right fieldset legend,
+.main .right #order-list legend {
   font-size: 2.5rem;
   font-weight: 600;
   margin-left: 1rem;
 }
 
-.main .right fieldset .form-content {
+.main .right fieldset .form-content,
+.main .right #order-list .form-content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -92,7 +95,8 @@ header nav h1 {
   margin: 0 1rem;
 }
 
-.main .right fieldset .form-content .product-list {
+.main .right fieldset .form-content .product-list,
+.main .right #order-list .form-content .product-list {
   width: 10%;
   height: 80vh;
   overflow-x: hidden;
@@ -101,7 +105,8 @@ header nav h1 {
       flex-shrink: 0;
 }
 
-.main .right fieldset .form-content .product-list h4 {
+.main .right fieldset .form-content .product-list h4,
+.main .right #order-list .form-content .product-list h4 {
   position: -webkit-sticky;
   position: sticky;
   top: 0;
@@ -110,16 +115,19 @@ header nav h1 {
   font-weight: 400;
 }
 
-.main .right fieldset .form-content .product-list .product {
+.main .right fieldset .form-content .product-list .product,
+.main .right #order-list .form-content .product-list .product {
   margin-bottom: 1rem;
 }
 
-.main .right fieldset .form-content .product-list .product .product-image {
+.main .right fieldset .form-content .product-list .product .product-image,
+.main .right #order-list .form-content .product-list .product .product-image {
   width: 100%;
   aspect-ratio: 1;
 }
 
-.main .right fieldset .form-content .product-list .product .product-image img {
+.main .right fieldset .form-content .product-list .product .product-image img,
+.main .right #order-list .form-content .product-list .product .product-image img {
   height: 100%;
   width: 100%;
   -o-object-fit: cover;
@@ -127,27 +135,31 @@ header nav h1 {
   border-radius: var(--value-default-border-radius);
 }
 
-.main .right fieldset .form-content .product-list .product .product-name {
+.main .right fieldset .form-content .product-list .product .product-name,
+.main .right #order-list .form-content .product-list .product .product-name {
   margin-top: 0.1rem;
   font-size: 1.65rem;
   font-weight: 400;
   color: var(--clr-text);
 }
 
-.main .right fieldset .form-content .product-list .product .product-id {
+.main .right fieldset .form-content .product-list .product .product-id,
+.main .right #order-list .form-content .product-list .product .product-id {
   font-size: 1.5rem;
   line-height: 0.8;
   color: var(--clr-text);
 }
 
-.main .right fieldset .form-content form.form-with-product-list {
+.main .right fieldset .form-content form.form-with-product-list,
+.main .right #order-list .form-content form.form-with-product-list {
   width: 100%;
   -ms-flex-negative: 1;
       flex-shrink: 1;
   margin: 0;
 }
 
-.main .right fieldset form {
+.main .right fieldset form,
+.main .right #order-list form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -158,32 +170,38 @@ header nav h1 {
   margin: 0 1rem;
 }
 
-.main .right fieldset form label {
+.main .right fieldset form label,
+.main .right #order-list form label {
   margin-top: 1rem;
   font-size: 2rem;
   font-weight: 400;
 }
 
-.main .right fieldset form label:first-of-type {
+.main .right fieldset form label:first-of-type,
+.main .right #order-list form label:first-of-type {
   margin-top: 0;
 }
 
-.main .right fieldset form .warning {
+.main .right fieldset form .warning,
+.main .right #order-list form .warning {
   color: var(--clr-red);
 }
 
-.main .right fieldset form select {
+.main .right fieldset form select,
+.main .right #order-list form select {
   font-size: 1.5rem;
   font-weight: 300;
   padding: 0 0.5rem;
 }
 
-.main .right fieldset form select option {
+.main .right fieldset form select option,
+.main .right #order-list form select option {
   font-size: 1rem;
   font-weight: 300;
 }
 
-.main .right fieldset form input {
+.main .right fieldset form input,
+.main .right #order-list form input {
   line-height: 1;
   padding: 0 1rem;
   font-size: 1.75rem;
@@ -195,7 +213,8 @@ header nav h1 {
   color: var(--clr-text);
 }
 
-.main .right fieldset form textarea {
+.main .right fieldset form textarea,
+.main .right #order-list form textarea {
   line-height: 1;
   font-size: 1.75rem;
   font-weight: 300;
@@ -210,7 +229,8 @@ header nav h1 {
   transition: 0.1s;
 }
 
-.main .right fieldset form .image-upload-field {
+.main .right fieldset form .image-upload-field,
+.main .right #order-list form .image-upload-field {
   position: relative;
   border-radius: 12px;
   border: 2px dashed var(--clr-main-light);
@@ -221,7 +241,8 @@ header nav h1 {
   z-index: 1;
 }
 
-.main .right fieldset form .image-upload-field input {
+.main .right fieldset form .image-upload-field input,
+.main .right #order-list form .image-upload-field input {
   position: relative;
   height: 100%;
   width: 100%;
@@ -230,7 +251,8 @@ header nav h1 {
   z-index: 3;
 }
 
-.main .right fieldset form .image-upload-field .image-preview {
+.main .right fieldset form .image-upload-field .image-preview,
+.main .right #order-list form .image-upload-field .image-preview {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -248,7 +270,8 @@ header nav h1 {
   z-index: 2;
 }
 
-.main .right fieldset form .image-upload-field .image-preview img {
+.main .right fieldset form .image-upload-field .image-preview img,
+.main .right #order-list form .image-upload-field .image-preview img {
   height: 100%;
   aspect-ratio: 1;
   -o-object-fit: contain;
@@ -257,18 +280,21 @@ header nav h1 {
       flex-shrink: 0;
 }
 
-.main .right fieldset form .image-upload-field .image-preview div {
+.main .right fieldset form .image-upload-field .image-preview div,
+.main .right #order-list form .image-upload-field .image-preview div {
   padding: 0 2rem;
   text-align: center;
   font-size: 2rem;
   color: var(--clr-main-light);
 }
 
-.main .right fieldset form .image-upload-field:hover {
+.main .right fieldset form .image-upload-field:hover,
+.main .right #order-list form .image-upload-field:hover {
   background-color: rgba(159, 129, 177, 0.3);
 }
 
-.main .right fieldset form .image-upload-field::after {
+.main .right fieldset form .image-upload-field::after,
+.main .right #order-list form .image-upload-field::after {
   content: "Click to choose or drag an image here to upload";
   position: absolute;
   top: 50%;
@@ -283,23 +309,28 @@ header nav h1 {
   z-index: 0;
 }
 
-.main .right fieldset form .drag-over {
+.main .right fieldset form .drag-over,
+.main .right #order-list form .drag-over {
   background-color: rgba(159, 129, 177, 0.3);
 }
 
-.main .right fieldset form .drag-over::after {
+.main .right fieldset form .drag-over::after,
+.main .right #order-list form .drag-over::after {
   content: "Drop the image here";
 }
 
-.main .right fieldset form .drop:hover {
+.main .right fieldset form .drop:hover,
+.main .right #order-list form .drop:hover {
   background-color: var(--clr-bg) !important;
 }
 
-.main .right fieldset form .drop::after {
+.main .right fieldset form .drop::after,
+.main .right #order-list form .drop::after {
   content: "";
 }
 
-.main .right fieldset form .actions {
+.main .right fieldset form .actions,
+.main .right #order-list form .actions {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -308,7 +339,8 @@ header nav h1 {
   margin: 1.5rem 0;
 }
 
-.main .right fieldset form .actions input {
+.main .right fieldset form .actions input,
+.main .right #order-list form .actions input {
   height: 100%;
   -webkit-box-flex: 1;
       -ms-flex-positive: 1;
@@ -319,12 +351,14 @@ header nav h1 {
   transition: 0.2s;
 }
 
-.main .right fieldset form .actions input:hover {
+.main .right fieldset form .actions input:hover,
+.main .right #order-list form .actions input:hover {
   -webkit-filter: brightness(0.8);
           filter: brightness(0.8);
 }
 
-.main .right fieldset form input[type="submit"] {
+.main .right fieldset form input[type="submit"],
+.main .right #order-list form input[type="submit"] {
   color: white;
   background-color: var(--clr-main-light);
 }

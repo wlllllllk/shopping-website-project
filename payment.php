@@ -18,7 +18,7 @@ if (isset($_GET['data'])) {
         $customer_email = 'guest';
     }
 
-    $date = date("d-m-Y h:i:s");
+    $date = date("d-m-Y H:i:s");
     $currency = 'USD';
     $merchant_email = 'sb-ujfkm15543764@business.example.com';
     $salt = random_bytes(16);
@@ -32,8 +32,8 @@ if (isset($_GET['data'])) {
     foreach ($products as $product) {
         if ($product['quantity'] > 0) {
             $current_product = ierg4210_prod_fetchOne($product['pid']);
-
-            $for_hash .= $product['pid'].';'.$product['quantity'].';'.number_format($current_product['PRICE'], 2, '.', '').';';
+            $price = $product['quantity'] * $current_product['PRICE'];
+            $for_hash .= $product['pid'].';'.$product['quantity'].';'.number_format($price, 2, '.', '').';';
 
             array_push($individual_prices, $current_product['PRICE']);
 
@@ -60,7 +60,7 @@ if (isset($_GET['data'])) {
     global $db;
     $db = ierg4210_DB();
 
-    $sql="INSERT INTO ORDERS (DIGEST, TOTAL_PRICE, CURRENCY, MERCHANT_EMAIL, SALT, PRODUCT_LIST, INDIVIDUAL_PRICES, STATUS, USERNAME, DATE) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
+    $sql="INSERT INTO ORDERS (DIGEST, TOTAL_PRICE, CURRENCY, MERCHANT_EMAIL, SALT, PRODUCT_LIST, INDIVIDUAL_PRICES, STATUS, USERNAME, CREATED, UPDATED) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
 
     $status = 'CREATED';
 
@@ -78,6 +78,7 @@ if (isset($_GET['data'])) {
     $q->bindParam(8, $status);
     $q->bindParam(9, $customer_email);
     $q->bindParam(10, $date);
+    $q->bindParam(11, $date);
 
     $q->execute();
 
@@ -96,7 +97,25 @@ if (isset($_GET['data'])) {
     $response = array('purchase_units'=>$purchase_units);
 
     $final_response = array();
-    array_push($final_response, $response, array('id'=>$lastId));
+    array_push($final_response, $response, array('id'=>$lastId, 'ref'=>$hashed_digest));
 
     echo json_encode($final_response);
+}
+
+if (isset($_GET['status']) && isset($_GET['order'])) {
+    $date = date("d-m-Y H:i:s");
+
+    global $db;
+    $db = ierg4210_DB();
+
+    $sql = "UPDATE ORDERS SET STATUS=?, UPDATED=? WHERE OID=?;";
+    $q = $db->prepare($sql);
+    $q->bindParam(1, $_GET['status']);
+    $q->bindParam(2, $date);
+    $q->bindParam(3, $_GET['order']);
+
+    if ($q->execute())
+        echo json_encode($_GET['status']);
+    else
+        echo json_encode('UPDATE FAILED');
 }

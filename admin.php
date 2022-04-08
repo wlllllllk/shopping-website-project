@@ -13,10 +13,12 @@
     require __DIR__.'/lib/db.inc.php';
     $categories = ierg4210_cat_fetchAll();
     $products = ierg4210_prod_fetchAll();
+    $orders = ierg4210_order_fetchAll();
 
     $options_cat = '<option selected disabled></option>';
     $options_prod = '<option selected disabled></option>';
     $divs_prod = '';
+    $tables_order = '';
 
     foreach ($categories as $value_cat) {
         $options_cat .= '<option value="'.htmlspecialchars($value_cat["CATID"]).'"> '.htmlspecialchars($value_cat["NAME"]).' </option>';
@@ -32,6 +34,54 @@
                             <div class="product-id">PID: '.htmlspecialchars($value_prod["PID"]).'</div>
                             <div class="product-id">CATID: '.htmlspecialchars($value_prod["CATID"]).'</div>
                         </div>';
+    }
+
+    foreach ($orders as $order) {
+        $product_list = json_decode($order['PRODUCT_LIST']);
+        $price_list = json_decode($order['INDIVIDUAL_PRICES']);
+
+        $sub = '';
+        $i = 0;
+        for ($i = 0; $i < count($product_list); $i++) {
+            $product = ierg4210_prod_fetchOne($product_list[$i]->pid);
+            $sub .=     '<tr class="contents">
+                            <td>'.$product_list[$i]->pid.'</td>
+                            <td>'.$product['NAME'].'</td>
+                            <td>$'.$price_list[$i].'</td>
+                            <td>'.$product_list[$i]->quantity.'</td>
+                        </tr>';
+        }
+
+        $tables_order .=    '<tr class="title">
+                                <td>'.$order['OID'].'</td>
+                                <td>'.$order['STATUS'].'</td>
+                                <td>'.$order['IPN'].'</td>
+                                <td>'.$order['TRANSACTION_ID'].'</td>
+                                <td>$'.$order['TOTAL_PRICE'].'</td>
+                                <td>'.$order['USERNAME'].'</td>
+                                <td>'.$order['CREATED'].'</td>
+                                <td>'.$order['UPDATED'].'</td>
+                            </tr>
+                            <tr class="title">
+                                <td colspan="8">Ref: '.$order['DIGEST'].'</td>
+                            </tr>
+                            <tr class="details">
+                                <td colspan="8">
+                                    <table>
+                                        <tr>
+                                            <td>Product ID</td>
+                                            <td>Name</td>
+                                            <td>Price</td>
+                                            <td>Quantity</td>
+                                        </tr>
+                                        '.$sub.'
+                                    </table>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td colspan="8"><br></td>
+                            </tr>
+                            ';
     }
 ?>
 
@@ -55,8 +105,8 @@
             <h1>Admin Panel</h1>
             <div class="actions">
                 <div class="account">
-                    <a href="./login.php">
-                        <button>Account</button>
+                    <a href="./portal.php">
+                        <button>Member Portal</button>
                     </a>                
                 </div>
             </div>
@@ -73,6 +123,8 @@
                 <li><a href="#category-add-form">Add Category</a></li>
                 <li><a href="#category-update-form">Update Category</a></li>
                 <li><a href="#category-delete-form">Delete Category</a></li>
+                <li class="title">Order Management</li>
+                <li><a href="#order-list">View Orders</a></li>
             </ul>
         </section>
         <section class="right">
@@ -214,6 +266,25 @@
                         <input type="hidden" name="nonce" value="<?php echo csrf_getNouce($action); ?>">
                     </form>
                 </fieldset>
+
+                <div id="order-list">
+                    <div class="orders">
+                        <h1>Order Histories</h1>
+                        <table>
+                            <tr>
+                                <th>Order ID</th>
+                                <th>Status</th>
+                                <th>IPN</th>
+                                <th>Transaction ID</th>
+                                <th>Amount</th>
+                                <th>Customer</th>
+                                <th>Created</th>
+                                <th>Last Updated</th>
+                            </tr>
+                            <?php echo $tables_order; ?>                
+                        </table>
+                    </div>
+                </div>
         </section>
     </div>
     <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>

@@ -3,12 +3,10 @@
     if (session_id() == "")
         session_start();
     
-    $portal_link = './login.php';
     $customer_name = "Welcome, ";
     if (!empty($_SESSION['auth'])) {
         $name = substr($_SESSION['auth']['email'], 0, strrpos($_SESSION['auth']['email'],"@"));
         $customer_name .= htmlspecialchars($name);
-        $portal_link = './portal.php';
     } 
     else {
         $customer_name .= "Guest";
@@ -54,7 +52,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IERG4210 Home</title>
+    <title>IERG4210 Category</title>
     <link rel="shortcut icon" type="image/svg" href="./icon/favicon.svg">
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="./css/main.css">
@@ -100,13 +98,13 @@
                             </ul>
                             <div class="bottom">
                                 <span class="price">Total: $0</span>
-                                <button>Checkout</button>
+                                <div id="paypal-button-container"></div>
                             </div>
                         </div>
                     </div>
                 </div>
                 <div class="account">
-                    <a href="<?php echo $portal_link; ?>">
+                    <a href="./portal.php">
                         <button>Member Portal</button>
                     </a>
                 </div>
@@ -141,6 +139,8 @@
     <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>
 
     <script type="text/javascript" src="https://code.jquery.com/jquery-3.6.0.min.js" crossorigin="anonymous"></script>
+    <script src="https://www.paypal.com/sdk/js?client-id=AZGNpMt6WA_89LMw5ULbX6xwtcQiVgh__Tw8q_XOeGqLRHZ_Ijtf90qNeQNGQSud9ZAk9W1h4fOeEKBl&currency=USD"></script>
+    <script type="text/javascript" src="../js/payment.js"></script>
     <script type="text/javascript" src="../js/cart.js"></script>
 </body>
 

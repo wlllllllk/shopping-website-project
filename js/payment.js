@@ -1,4 +1,4 @@
-let lastID;
+let lastID, ref;
 
 function fetchOrder() {
     return new Promise(resolve => {
@@ -39,19 +39,45 @@ function fetchOrder() {
     });
 }
 
+function updateOrder(status, order) {
+    return new Promise(resolve => {
+        let request = new XMLHttpRequest();
+
+        // what to do after sending the request
+        request.onreadystatechange = function () {
+
+            // if the request is done
+            if (this.readyState == 4) {
+
+                // if the request is success
+                if (this.status == 200) {
+                    // console.log(this.responseText);
+                    let response = JSON.parse(this.responseText);
+                    return resolve(response);
+                }
+            }
+        };
+
+        // use GET method
+        request.open("GET", "payment.php?status=" + encodeURIComponent(status) + "&order=" + encodeURIComponent(order), true);
+
+        // send the request
+        request.send();
+    });
+}
+
 paypal.Buttons({
     // Sets up the transaction when a payment button is clicked
     createOrder: async (data, actions) => {
         let order_details = await fetchOrder();
         lastID = order_details[1]['id'];
-        // console.log(order_details);
-        // console.log(lastID);
+        ref = order_details[1]['ref'];
 
         return actions.order.create(order_details[0]);
     },
 
     // Finalize the transaction after payer approval
-    onApprove: async (data, actions) => {
+    onApprove: (data, actions) => {
         return actions.order.capture().then(function (orderData) {
             // clear local storage
             localStorage.clear();
@@ -65,10 +91,24 @@ paypal.Buttons({
             document.querySelector("#nothing").style.display = "block";
 
             if (orderData.status == "COMPLETED")
-                actions.redirect('https://secure.s67.ierg4210.ie.cuhk.edu.hk/result.php?status=1');
+                actions.redirect('https://secure.s67.ierg4210.ie.cuhk.edu.hk/result.php?status=1&ref=' + encodeURIComponent(ref));
             else
-                actions.redirect('https://secure.s67.ierg4210.ie.cuhk.edu.hk/result.php?status=2');
+                actions.redirect('https://secure.s67.ierg4210.ie.cuhk.edu.hk/result.php?status=2&ref=' + encodeURIComponent(ref));
         });
+    },
+
+    onCancel: async function (data) {
+        let response = await updateOrder("CANCELLED", lastID);
+        console.log(response);
+
+        window.location.href = "https://secure.s67.ierg4210.ie.cuhk.edu.hk/result.php?status=3&ref=" + encodeURIComponent(ref);
+    },
+
+    onError: async function (err) {
+        let response = await updateOrder("ERROR", lastID);
+        console.log(response);
+
+        window.location.href = "https://secure.s67.ierg4210.ie.cuhk.edu.hk/result.php?status=2&ref=" + encodeURIComponent(ref);
     },
 
     style: {

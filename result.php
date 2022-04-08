@@ -15,6 +15,7 @@
     $image = './icon/question.svg';
     $heading = 'Something Went Wrong';
     $message = 'Please contact our customer support.';
+    $ref = 'NA';
     if (isset($_REQUEST["status"])) {
         $status = $_REQUEST["status"];
         if ($status == 1) {
@@ -27,6 +28,15 @@
             $heading = 'Payment Failed';
             $message = 'Please try again or contact us for help.';
         }
+        else if ($status == 3) {
+            $image = './icon/no.svg';
+            $heading = 'Order Cancelled';
+            $message = 'You can place the order again at anytime :)';
+        }
+
+        if (isset($_REQUEST["ref"])) {
+            $ref = $_REQUEST["ref"];
+        }
     }
 ?>
 
@@ -36,7 +46,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>IERG4210 Success</title>
+    <title>IERG4210 Result</title>
     <link rel="shortcut icon" type="image/svg" href="./icon/favicon.svg">
     <link rel="stylesheet" href="./css/common.css">
     <link rel="stylesheet" href="../css/result.css">
@@ -56,43 +66,40 @@
                     <button>Shopping List &#40;0&#41;</button>
                     <div class="container">
                         <div class="contents">
-                            <form id="cart" action="">
-                                <div class="top">                            
-                                    <h3>Shopping List</h3>
-                                    <h4 id="clear">Clear ALL</h4>
-                                </div>
-                                <h4 id="nothing">There is nothing here :&#40;</h4>
-                                <ul>
-                                    <template id="cart-item-template">
-                                        <li>
-                                            <div class="details">
-                                                <a href="">
-                                                    <div class="photo"><img src="" alt=""></div>
-                                                </a>
-                                                <div class="text">
-                                                    <span class="name"></span>
-                                                    <div>
-                                                        <input class="quantity" type="number" value="">
-                                                        <span class="price"></span>
-                                                    </div>
+                            <div class="top">                            
+                                <h3>Shopping List</h3>
+                                <h4 id="clear">Clear ALL</h4>
+                            </div>
+                            <h4 id="nothing">There is nothing here :&#40;</h4>
+                            <ul>
+                                <template id="cart-item-template">
+                                    <li>
+                                        <div class="details">
+                                            <a href="">
+                                                <div class="photo"><img src="" alt=""></div>
+                                            </a>
+                                            <div class="text">
+                                                <span class="name"></span>
+                                                <div>
+                                                    <input class="quantity" type="number" value="">
+                                                    <span class="price"></span>
                                                 </div>
-                                                <div class="delete" data-pid="">&#10799;</div>
                                             </div>
-                                        </li> 
-                                    </template>
-                                </ul>
-                                <div class="bottom">
-                                    <span class="price">Total: $0</span>
-                                    <!-- <button>Checkout</button> -->
-                                    <div id="paypal-button-container"></div>
-                                </div>
-                            </form>
+                                            <div class="delete" data-pid="">&#10799;</div>
+                                        </div>
+                                    </li> 
+                                </template>
+                            </ul>
+                            <div class="bottom">
+                                <span class="price">Total: $0</span>
+                                <div id="paypal-button-container"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="account">
-                    <a href="./login.php">
-                        <button>Account</button>
+                    <a href="./portal.php">
+                        <button>Member Portal</button>
                     </a>
                 </div>
             </div>
@@ -103,6 +110,8 @@
         <img src="<?php echo htmlspecialchars($image); ?>" alt="">
         <h1><?php echo htmlspecialchars($heading); ?></h1>
         <h2><?php echo htmlspecialchars($message); ?></h2>
+        <h3>Ref: <?php echo htmlspecialchars($ref); ?></h3>
+        <h3>Please save it securely, you can use this to trace your order inside Member Portal</h3>
         <a href="./index.php"><button>Continue Shopping</button></a>
     </div>
 

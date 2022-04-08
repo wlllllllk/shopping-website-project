@@ -363,7 +363,7 @@ function ierg4210_prod_update() {
 
     // input validation
     if (!preg_match('/^\d*$/', $sanitized_pid))
-        throw new Exception("invalid-catid");
+        throw new Exception("invalid-pid");
     $sanitized_pid = (int) $sanitized_pid;
     if (!preg_match('/^\d*$/', $sanitized_catid))
         throw new Exception("invalid-catid");
@@ -524,7 +524,7 @@ function ierg4210_prod_delete() {
     $sanitized_pid = filter_var($pid, FILTER_SANITIZE_NUMBER_INT);
 
     if (!preg_match('/^\d*$/', $sanitized_pid) || !filter_var($sanitized_pid, FILTER_VALIDATE_INT))
-        throw new Exception("invalid-catid");
+        throw new Exception("invalid-pid");
     $sanitized_pid = (int) $sanitized_pid;
 
     global $db;
@@ -539,4 +539,55 @@ function ierg4210_prod_delete() {
     // redirect back to original page; you may comment it during debug
     header('Location: admin.php');
     exit();
+}
+
+function ierg4210_order_fetchAll() {
+    // DB manipulation
+    global $db;
+    $db = ierg4210_DB();
+    $q = $db->prepare("SELECT * FROM ORDERS ORDER BY OID DESC LIMIT 100;");
+    if ($q->execute())
+        return $q->fetchAll();
+}
+
+function ierg4210_order_fetch_by_email($EMAIL) {
+    // if ($EMAIL != 'guest') {
+        $sanitized_email = filter_var($EMAIL, FILTER_SANITIZE_EMAIL);
+
+        if (!preg_match('/^[\w._%+-]+[a-zA-Z\d]+\@{1}[\w.-]+\.[a-z]{2,8}$/', $sanitized_email) || !filter_var($sanitized_email, FILTER_VALIDATE_EMAIL))
+            throw new Exception("invalid-email");    
+    // } else {
+    //     $sanitized_email = 'guest';
+    // }
+
+    global $db;
+    $db = ierg4210_DB();
+
+    $sql = "SELECT * FROM ORDERS WHERE USERNAME=? ORDER BY OID DESC LIMIT 5;";
+
+    $q = $db->prepare($sql);
+    $q->bindParam(1, $sanitized_email);
+    $q->execute();
+
+    if ($q->execute())
+        return $q->fetchAll();
+}
+
+function ierg4210_order_fetch_by_oid($REF) {
+    $sanitized_ref = filter_var($REF, FILTER_SANITIZE_STRING);
+    if (!preg_match('/^[\w]+$/', $sanitized_ref))
+        // throw new Exception("invalid-ref");
+        return '';
+
+    global $db;
+    $db = ierg4210_DB();
+
+    $sql = "SELECT * FROM ORDERS WHERE DIGEST=?;";
+
+    $q = $db->prepare($sql);
+    $q->bindParam(1, $sanitized_ref);
+    $q->execute();
+
+    if ($q->execute())
+        return $q->fetchAll();
 }

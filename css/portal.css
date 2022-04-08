@@ -11,10 +11,6 @@ header nav h1 {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  gap: 5rem;
-  -webkit-box-pack: justify;
-      -ms-flex-pack: justify;
-          justify-content: space-between;
 }
 
 .main .orders h1 {
@@ -26,6 +22,7 @@ header nav h1 {
   width: 100%;
   color: var(--clr-text);
   font-size: 2rem;
+  margin-top: 1rem;
 }
 
 .main .orders table th {
@@ -41,34 +38,34 @@ header nav h1 {
 }
 
 .second {
+  margin: 3rem 0;
+}
+
+.second > div {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  -webkit-box-orient: vertical;
-  -webkit-box-direction: normal;
-      -ms-flex-direction: column;
-          flex-direction: column;
-  -webkit-box-pack: center;
-      -ms-flex-pack: center;
-          justify-content: center;
-  -webkit-box-align: center;
-      -ms-flex-align: center;
-          align-items: center;
+  gap: 3rem;
 }
 
-.second .buttons {
-  display: -webkit-box;
-  display: -ms-flexbox;
-  display: flex;
-  gap: 1.5rem;
+.second > div > form {
+  margin: auto 0 0 auto;
+  height: -webkit-fit-content;
+  height: -moz-fit-content;
+  height: fit-content;
 }
 
-.second .buttons .logout,
-.second .buttons button {
-  padding: 0.3rem 6rem;
-  margin: 5rem 0 1rem 0;
+.second h1 {
+  color: var(--clr-text);
   font-size: 3rem;
-  background-color: var(--clr-green);
+}
+
+.second .logout,
+.second .login {
+  padding: 0.3rem 6rem;
+  margin-top: auto;
+  font-size: 3rem;
+  background-color: var(--clr-red);
   color: white;
   border: none;
   border-radius: var(--value-default-border-radius);
@@ -77,18 +74,17 @@ header nav h1 {
   transition: 0.2s;
 }
 
-.second .buttons .logout:hover,
-.second .buttons button:hover {
+.second .logout:hover,
+.second .login:hover {
   -webkit-filter: brightness(0.8);
           filter: brightness(0.8);
 }
 
-.second .buttons .logout {
-  background-color: var(--clr-red);
+.second .login {
+  background-color: var(--clr-green);
 }
 
 fieldset {
-  display: none;
   border: none;
   width: 30%;
   color: var(--clr-text);
@@ -97,7 +93,6 @@ fieldset {
 fieldset legend {
   font-size: 2.5rem;
   font-weight: 600;
-  margin-left: 1rem;
 }
 
 fieldset form {
@@ -108,7 +103,6 @@ fieldset form {
   -webkit-box-direction: normal;
       -ms-flex-direction: column;
           flex-direction: column;
-  margin: 0 1rem;
 }
 
 fieldset form label {
@@ -139,7 +133,7 @@ fieldset form .actions {
   display: flex;
   gap: 1rem;
   height: 3rem;
-  margin: 1.5rem 0;
+  margin: 1.5rem 0 0 0;
 }
 
 fieldset form .actions input {

@@ -17,6 +17,8 @@
   --clr-main-dark: #3a2a46;
   --clr-red: rgb(197, 65, 65);
   --clr-green: rgb(67, 150, 67);
+  --clr-table-title: hsla(0, 0%, 0%, 0.1);
+  --clr-table-details: hsla(0, 0%, 0%, 0.05);
   --value-default-border-radius: 6px;
   --value-default-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   --value-default-linear-gradient: linear-gradient(
@@ -36,6 +38,8 @@
     --clr-main-lighter: #ffe9ff;
     --clr-main-contrast: #61baad;
     --clr-main-dark: #3a2a46;
+    --clr-table-title: hsla(0, 0%, 100%, 0.1);
+    --clr-table-details: hsla(0, 0%, 100%, 0.05);
     --value-default-border-radius: 6px;
     --value-default-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     --value-default-linear-gradient: linear-gradient(
@@ -171,10 +175,6 @@ header nav .actions .shopping-list .container .contents {
   width: 100%;
 }
 
-header nav .actions .shopping-list .container .contents form {
-  overflow-y: auto;
-}
-
 header nav .actions .shopping-list .container .contents .top {
   position: -webkit-sticky;
   position: sticky;
@@ -212,7 +212,8 @@ header nav .actions .shopping-list .container .contents #nothing {
 
 header nav .actions .shopping-list .container .contents ul {
   list-style: none;
-  margin: 0 1rem 4.5rem 1rem;
+  margin: 0 1rem 3.5rem 1rem;
+  overflow-y: auto;
 }
 
 header nav .actions .shopping-list .container .contents ul li {
@@ -547,6 +548,60 @@ header .categories .selector a:hover {
   background-color: var(--clr-bg);
   font-size: 3rem;
   color: var(--clr-text);
+}
+
+.orders h1 {
+  color: var(--clr-text);
+  font-size: 3rem;
+}
+
+.orders table {
+  width: 100%;
+  color: var(--clr-text);
+  font-size: 2rem;
+}
+
+.orders table th {
+  text-align: left;
+}
+
+.orders table a {
+  color: var(--clr-text);
+}
+
+.orders table a:visited {
+  color: var(--clr-main-light);
+}
+
+.orders table hr {
+  margin: 1rem 0;
+}
+
+.orders table .title {
+  background-color: var(--clr-table-title);
+}
+
+.orders table .title td {
+  padding: 0.5rem;
+}
+
+.orders table .details {
+  background-color: var(--clr-table-details);
+  margin-bottom: 1rem;
+}
+
+.orders table .details > td {
+  padding: 0.5rem;
+}
+
+.orders table .details .contents {
+  font-size: 1.75rem;
+}
+
+.orders table .details .contents td:nth-child(1),
+.orders table .details .contents td:nth-child(2),
+.orders table .details .contents td:nth-child(3) {
+  width: 15%;
 }
 
 footer {

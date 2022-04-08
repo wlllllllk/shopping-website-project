@@ -16,6 +16,8 @@
   --clr-main-dark: #3a2a46;
   --clr-red: rgb(197, 65, 65);
   --clr-green: rgb(67, 150, 67);
+  --clr-table-title: hsla(0, 0%, 0%, 0.1);
+  --clr-table-details: hsla(0, 0%, 0%, 0.05);
   --value-default-border-radius: 6px;
   --value-default-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
   --value-default-linear-gradient: linear-gradient(
@@ -35,6 +37,8 @@
     --clr-main-lighter: #ffe9ff;
     --clr-main-contrast: #61baad;
     --clr-main-dark: #3a2a46;
+    --clr-table-title: hsla(0, 0%, 100%, 0.1);
+    --clr-table-details: hsla(0, 0%, 100%, 0.05);
     --value-default-border-radius: 6px;
     --value-default-box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
     --value-default-linear-gradient: linear-gradient(
@@ -125,8 +129,6 @@ header {
           left: 55%;
           right: 5%;
           height: 50vh;
-          // height: fit-content;
-          // max-height: 50vh;
           overflow-y: hidden;
           background-color: var(--clr-bg);
           color: var(--clr-text);
@@ -140,10 +142,6 @@ header {
             flex-direction: column;
             height: 100%;
             width: 100%;
-
-            form {
-              overflow-y: auto;
-            }
 
             .top {
               position: sticky;
@@ -174,8 +172,8 @@ header {
 
             ul {
               list-style: none;
-              margin: 0 1rem 4.5rem 1rem;
-              // overflow-y: scroll;
+              margin: 0 1rem 3.5rem 1rem;
+              overflow-y: auto;
 
               li {
                 margin-bottom: 1rem;
@@ -471,6 +469,62 @@ header {
       background-color: var(--clr-bg);
       font-size: 3rem;
       color: var(--clr-text);
+    }
+  }
+}
+
+.orders {
+  h1 {
+    color: var(--clr-text);
+    font-size: 3rem;
+  }
+
+  table {
+    width: 100%;
+    color: var(--clr-text);
+    font-size: 2rem;
+
+    th {
+      text-align: left;
+    }
+
+    a {
+      color: var(--clr-text);
+
+      &:visited {
+        color: var(--clr-main-light);
+      }
+    }
+
+    hr {
+      margin: 1rem 0;
+    }
+
+    .title {
+      background-color: var(--clr-table-title);
+
+      td {
+        padding: 0.5rem;
+      }
+    }
+
+    .details {
+      background-color: var(--clr-table-details);
+      margin-bottom: 1rem;
+
+      & > td {
+        padding: 0.5rem;
+      }
+
+      .contents {
+        font-size: 1.75rem;
+
+        td:nth-child(1),
+        td:nth-child(2),
+        td:nth-child(3) {
+          width: 15%;
+        }
+      }
     }
   }
 }

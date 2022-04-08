@@ -29,8 +29,20 @@
         </nav>
     </header>
     <div class="main">
+
         <div class="orders">
             <h1>Recent Orders</h1>
+            <fieldset>
+                <legend>Search for An Order</legend>
+                <form onsubmit="return searchOrder(this)">
+                    <label for="name-add-product">Order Ref</label>
+                    <input type="text" name="ORDER" id="order" pattern="^[\w]+$" required="true">
+                    <div class="actions">
+                        <input type="reset" value="Reset">
+                        <input type="submit" value="Submit">
+                    </div>      
+                </form>
+            </fieldset>   
             <table>
                 <tr>
                     <th>Order ID</th>
@@ -46,7 +58,7 @@
                     <td>$789.5</td>
                     <td><a href="#1">Details</a></td>
                 </tr>
-                
+
                 <tr>
                     <td>123</td>
                     <td>Completed</td>
@@ -66,33 +78,33 @@
         </div>
 
         <div class="second">
-            <fieldset id="password-change-form">
-                <legend>Change Password</legend>
-                <form method="POST" action="auth-process.php?action='.($action = " change").'"
-                    onsubmit="return check_input(this);">
-                    <label for="current-password">Current Password</label>
-                    <input type="password" name="CURRENT-PASSWORD" id="current-password" pattern="^.+$"
-                        placeholder="Enter your current password here" required="true">
-                    <label for="new-password">New Password</label>
-                    <input type="password" name="NEW-PASSWORD" id="new-password" pattern="^.+$"
-                        placeholder="Enter your new password here" required="true">
-                    <div class="actions">
-                        <input type="reset" value="Reset">
-                        <input type="submit" value="Submit">
-                    </div>
-                    <input type="hidden" name="nonce" value="'.csrf_getNouce($action).'">
-                </form>
-            </fieldset>
-
-            <div class="buttons">
+            <h1>Account Actions</h1>
+            <div>
+                <!-- <fieldset id="password-change-form">
+                    <legend>Change Password</legend>
+                    <form method="POST" action="auth-process.php?action='.($action = " change").'"
+                        onsubmit="return check_input(this);">
+                        <label for="current-password">Current Password</label>
+                        <input type="password" name="CURRENT-PASSWORD" id="current-password" pattern="^.+$"
+                            placeholder="Enter your current password here" required="true">
+                        <label for="new-password">New Password</label>
+                        <input type="password" name="NEW-PASSWORD" id="new-password" pattern="^.+$"
+                            placeholder="Enter your new password here" required="true">
+                        <div class="actions">
+                            <input type="reset" value="Reset">
+                            <input type="submit" value="Submit">
+                        </div>
+                        <input type="hidden" name="nonce" value="'.csrf_getNouce($action).'">
+                    </form>
+                </fieldset>
+    
                 <form method="POST" action="auth-process.php?action='.($action = " logout").'">
                     <input class="logout" type="submit" value="Logout">
                     <input type="hidden" name="nonce" value="'.csrf_getNouce($action).'">
-                </form>
+                </form> -->
+                <a href="./login.php"><button class="login">Login / Register</button></a>
 
-                <button id="password-change-button">Change Password</button>
             </div>
-
         </div>
     </div>
     <footer><span>IERG4210 Assignment &#40;Spring 2022&#41; | Created by 1155147592</span></footer>

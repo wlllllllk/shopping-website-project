@@ -3,12 +3,12 @@
     if (session_id() == "")
         session_start();
     
-    $portal_link = './login.php';
+    // $portal_link = './login.php';
     $customer_name = "Welcome, ";
     if (!empty($_SESSION['auth'])) {
         $name = substr($_SESSION['auth']['email'], 0, strrpos($_SESSION['auth']['email'],"@"));
         $customer_name .= htmlspecialchars($name);
-        $portal_link = './portal.php';
+        // $portal_link = './portal.php';
     } 
     else {
         $customer_name .= "Guest";
@@ -47,42 +47,39 @@
                     <button>Shopping List &#40;0&#41;</button>
                     <div class="container">
                         <div class="contents">
-                            <form id="cart" action="">
-                                <div class="top">                            
-                                    <h3>Shopping List</h3>
-                                    <h4 id="clear">Clear ALL</h4>
-                                </div>
-                                <h4 id="nothing">There is nothing here :&#40;</h4>
-                                <ul>
-                                    <template id="cart-item-template">
-                                        <li>
-                                            <div class="details">
-                                                <a href="">
-                                                    <div class="photo"><img src="" alt=""></div>
-                                                </a>
-                                                <div class="text">
-                                                    <span class="name"></span>
-                                                    <div>
-                                                        <input class="quantity" type="number" value="">
-                                                        <span class="price"></span>
-                                                    </div>
+                            <div class="top">                            
+                                <h3>Shopping List</h3>
+                                <h4 id="clear">Clear ALL</h4>
+                            </div>
+                            <h4 id="nothing">There is nothing here :&#40;</h4>
+                            <ul>
+                                <template id="cart-item-template">
+                                    <li>
+                                        <div class="details">
+                                            <a href="">
+                                                <div class="photo"><img src="" alt=""></div>
+                                            </a>
+                                            <div class="text">
+                                                <span class="name"></span>
+                                                <div>
+                                                    <input class="quantity" type="number" value="">
+                                                    <span class="price"></span>
                                                 </div>
-                                                <div class="delete" data-pid="">&#10799;</div>
                                             </div>
-                                        </li> 
-                                    </template>
-                                </ul>
-                                <div class="bottom">
-                                    <span id="total" class="price">Total: $0</span>
-                                    <!-- <button>Checkout</button> -->
-                                    <div id="paypal-button-container"></div>
-                                </div>
-                            </form>
+                                            <div class="delete" data-pid="">&#10799;</div>
+                                        </div>
+                                    </li> 
+                                </template>
+                            </ul>
+                            <div class="bottom">
+                                <span id="total" class="price">Total: $0</span>
+                                <div id="paypal-button-container"></div>
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div class="account">
-                    <a href="<?php echo $portal_link; ?>">
+                    <a href="./portal.php">
                         <button>Member Portal</button>
                     </a>
                 </div>

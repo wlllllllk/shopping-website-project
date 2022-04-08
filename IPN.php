@@ -1,13 +1,15 @@
 <?php
 include_once('lib/db.inc.php');
 
-global $db;
-$db = ierg4210_DB();
-
 if ($_SERVER['REQUEST_METHOD'] != 'POST') {
     header("Location: index.php");
     exit();
 }
+
+global $db;
+$db = ierg4210_DB();
+
+date_default_timezone_set('Asia/Hong_Kong');
 
 // the IPN message from PayPal
 $message = $_POST;
@@ -24,9 +26,11 @@ $response = curl_exec($ch);
 curl_close($ch);
 
 $ok = false;
+$error = 0;
 
 // if PayPal returns VERIFIED
 if ($response == 'VERIFIED') {
+
     // process the received data to generate the digest later
     $item_number = array();
     $quantity = array();
@@ -76,50 +80,73 @@ if ($response == 'VERIFIED') {
             $result = $q->fetch();
         
             // if the result is empty => txd_id has not been previously processed
-            // also check if txn_type is cart
-            if ($result == '' && $message['txn_type'] == 'cart') {
-        
-                // fetch the salt of this order from database
-                $sql = "SELECT * FROM ORDERS WHERE OID=?;";
-        
-                $q = $db->prepare($sql);
-                $q->bindParam(1, $message['invoice']);
-        
-                $result = '';
-                if ($q->execute()) {
-                    $result = $q->fetch();
-        
-                    // re-generate the digest
-                    $digest = $message['mc_currency'].';'.$message['receiver_email'].';'.$result['SALT'].';'.$for_hash.$message['mc_gross'];
-                    $hashed_digest = hash_hmac('sha256', $digest, $result['SALT']);
-        
-                    // the re-generated digest matched the original digest
-                    // the IPN is legit
-                    if ($hashed_digest == $result['DIGEST']) {
-                        $ok = true;
+            if ($result == '') {
+                
+                // check if txn_type is cart
+                if ($message['txn_type'] == 'cart') {
+                    // fetch the salt of this order from database
+                    $sql = "SELECT * FROM ORDERS WHERE OID=?;";
+                            
+                    $q = $db->prepare($sql);
+                    $q->bindParam(1, $message['invoice']);
 
-                        $sql = "UPDATE ORDERS SET STATUS=?, TRANSACTION_ID=?, TRANSACTION_TYPE=?, PAYMENT_TYPE=? WHERE OID=?;";
-                        $q = $db->prepare($sql);
-                        $q->bindParam(1, $response);
-                        $q->bindParam(2, $message['txn_id']);
-                        $q->bindParam(3, $message['txn_type']);
-                        $q->bindParam(4, $message['payment_type']);
-                        $q->bindParam(5, $message['invoice']);
-            
-                        $q->execute();
-                    }
-                } 
+                    $result = '';
+                    if ($q->execute()) {
+                        $result = $q->fetch();
+
+                        // re-generate the digest
+                        $digest = $message['mc_currency'].';'.$message['receiver_email'].';'.$result['SALT'].';'.$for_hash.$message['mc_gross'];
+                        $hashed_digest = hash_hmac('sha256', $digest, $result['SALT']);
+
+                        // the re-generated digest matched the original digest
+                        // the IPN is legit
+                        if ($hashed_digest == $result['DIGEST']) {
+                            $ok = true;
+                            $status = 'COMPLETED';
+                            $date = date("d-m-Y H:i:s");
+
+                            $sql = "UPDATE ORDERS SET STATUS=?, TRANSACTION_ID=?, TRANSACTION_TYPE=?, PAYMENT_TYPE=?, IPN=?, UPDATED=? WHERE OID=?;";
+                            $q = $db->prepare($sql);
+                            $q->bindParam(1, $status);
+                            $q->bindParam(2, $message['txn_id']);
+                            $q->bindParam(3, $message['txn_type']);
+                            $q->bindParam(4, $message['payment_type']);
+                            $q->bindParam(5, $response);
+                            $q->bindParam(6, $date);
+                            $q->bindParam(7, $message['invoice']);
+
+                            $q->execute();
+                        }
+                        else {
+                            $error = 3;
+                        }
+                    } 
+                }
+                else {
+                    $error = 2;
+                }
             }
         }
+    }
+    else {
+        $error = 1;
     }
 } 
 
 // something went wrong
 else {
-    $sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
+    $status = 'PAYMENT FAILED';
+    $date = date("d-m-Y H:i:s");
+
+    $sql = "UPDATE ORDERS SET STATUS=?, TRANSACTION_ID=?, TRANSACTION_TYPE=?, PAYMENT_TYPE=?, IPN=?, UPDATED=? WHERE OID=?;";
     $q = $db->prepare($sql);
-    $q->bindParam(1, $response);
-    $q->bindParam(2, $message['invoice']);
+    $q->bindParam(1, $status);
+    $q->bindParam(2, $message['txn_id']);
+    $q->bindParam(3, $message['txn_type']);
+    $q->bindParam(4, $message['payment_type']);
+    $q->bindParam(5, $response);
+    $q->bindParam(6, $date);
+    $q->bindParam(7, $message['invoice']);
 
     $q->execute();
 
@@ -128,11 +155,26 @@ else {
 
 // something unexpected happened
 if (!$ok) {
-    $response = 'FAILED';
-    $sql = "UPDATE ORDERS SET STATUS=? WHERE OID=?;";
+    if ($error == 1)
+        $error_message = 'PAYMENT STATUS ERROR';
+    else if ($error == 2)
+        $error_message = 'TXN_TYPE ERROR';
+    else if ($error == 3)
+        $error_message = 'CONTENT ERROR';
+    else 
+        $error_message = 'UNEXPECTED ERROR';
+
+    $date = date("d-m-Y H:i:s");
+
+    $sql = "UPDATE ORDERS SET STATUS=?, TRANSACTION_ID=?, TRANSACTION_TYPE=?, PAYMENT_TYPE=?, IPN=?, UPDATED=? WHERE OID=?;";
     $q = $db->prepare($sql);
-    $q->bindParam(1, $response);
-    $q->bindParam(2, $message['invoice']);
+    $q->bindParam(1, $error_message);
+    $q->bindParam(2, $message['txn_id']);
+    $q->bindParam(3, $message['txn_type']);
+    $q->bindParam(4, $message['payment_type']);
+    $q->bindParam(5, $response);
+    $q->bindParam(6, $date);
+    $q->bindParam(7, $message['invoice']);
 
     $q->execute();
 }
