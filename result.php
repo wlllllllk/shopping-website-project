@@ -16,6 +16,7 @@
     $heading = 'Something Went Wrong';
     $message = 'Please contact our customer support.';
     $ref = 'NA';
+    $reminder = 'Please save it securely, you can use this to trace your order inside Member Portal';
     if (isset($_REQUEST["status"])) {
         $status = $_REQUEST["status"];
         if ($status == 1) {
@@ -32,6 +33,12 @@
             $image = './icon/no.svg';
             $heading = 'Order Cancelled';
             $message = 'You can place the order again at anytime :)';
+        }
+        else if ($status == 4) {
+            $image = './icon/no.svg';
+            $heading = 'There is nothing in your cart :(';
+            $message = 'Try add something and come back again.';
+            $reminder = '';
         }
 
         if (isset($_REQUEST["ref"])) {
@@ -111,7 +118,7 @@
         <h1><?php echo htmlspecialchars($heading); ?></h1>
         <h2><?php echo htmlspecialchars($message); ?></h2>
         <h3>Ref: <?php echo htmlspecialchars($ref); ?></h3>
-        <h3>Please save it securely, you can use this to trace your order inside Member Portal</h3>
+        <h3><?php echo htmlspecialchars($reminder); ?></h3>
         <a href="./index.php"><button>Continue Shopping</button></a>
     </div>
 

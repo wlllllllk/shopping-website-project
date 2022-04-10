@@ -16,12 +16,12 @@ $message = $_POST;
 
 // reply to PayPal
 $ch = curl_init();
-curl_setopt($ch, CURLOPT_URL, 'https://ipnpb.sandbox.paypal.com/cgi-bin/webscr');
-curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0);
-curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0);
-curl_setopt($ch, CURLOPT_POST, 1);
-curl_setopt($ch, CURLOPT_POSTFIELDS, "cmd=_notify-validate&" . http_build_query($_POST));
+curl_setopt($ch, CURLOPT_URL, 'https://ipnpb.sandbox.paypal.com/cgi-bin/webscr'); // the URL
+curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1); // return as a string
+curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, 0); // don't check the host name
+curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, 0); // don't verify the peer's certificate
+curl_setopt($ch, CURLOPT_POST, 1); // do a regular HTTP post
+curl_setopt($ch, CURLOPT_POSTFIELDS, "cmd=_notify-validate&" . http_build_query($_POST)); // data to POST
 $response = curl_exec($ch);
 curl_close($ch);
 
@@ -156,9 +156,9 @@ else {
 // something unexpected happened
 if (!$ok) {
     if ($error == 1)
-        $error_message = 'PAYMENT STATUS ERROR';
+        $error_message = 'PAYMENT STATUS ERROR: '.$message['payment_status'];
     else if ($error == 2)
-        $error_message = 'TXN_TYPE ERROR';
+        $error_message = 'TXN_TYPE ERROR: '.$message['txn_type'];
     else if ($error == 3)
         $error_message = 'CONTENT ERROR';
     else 

@@ -187,7 +187,8 @@
 
     // guest user
     else {
-        $heading = "Search for An Order";
+        if (!isset($_REQUEST['ref']))
+            $heading = "Search for An Order";
         $bottom_button = '<a href="./login.php"><button class="login">Login</button></a>';
     }
 

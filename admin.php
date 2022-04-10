@@ -4,7 +4,7 @@
 
     include_once('./auth.php');
     if (!auth()) {
-        header('Location: login.php?error=4');
+        header('Location: index.php');
         exit();
     }
 

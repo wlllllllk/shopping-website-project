@@ -1,8 +1,37 @@
-# IERG4210 Assignment Phase 4
+# IERG4210 Assignment Phase 5
 
 This is the Assignment of IERG4210 Web Programming and Security (2022 Spring)
 
-## Features (focused on those that users can interact and feel directly)
+## Features
+
+### Phase 5
+- **PayPal Integration**
+  - Added a PayPal button inside the shopping list
+    1. The list of *PID* and *Quantity* is retrieved from the local storage
+    2. The data are formatted into an array and encoded, then being sent to the server
+    3. Server fetches the price of respective product and add up the total price.
+    4. Server calculates the digest that is composed of *currency*, *merchant's email address*, *a random salt*, *PID and Quantity of each product*, *price of each product*, *total price*.
+    5. Server builds the *purchase_unit[]* array according to PayPal's standard.
+    6. Server sends back the *purchase_unit[]* array.
+    7. Client submit the server-generated *purchase_unit[]* array to PayPal to create the order.
+    8. User is redirected to PayPal's payment process.
+    9. User approve the payment.
+    10. User will be redirected to respective result page.
+  
+  - Instant Payment Notification (IPN)
+    - Received IPN message will be checked and verified to ensure the integrity of the order.
+    - An order will be marked as **Completed** only if it has been verified.
+
+- **Order Review**
+  - Member Portal
+    - All customer can search for an order using the *Ref*, which is shown on the result page.
+    - Registered Customers
+      - They can view their most recent 5 orders inside the **Member Portal**.
+    - Admin
+      - They can view all orders inside **Admin Panel**, under *Order Management > View Orders*.
+
+\**The change password function has been moved under **Member Portal***
+\****Account** button in Phase 4 has been renamed as **Member Portal***
 
 ### Phase 4
  
@@ -67,12 +96,16 @@ This is the Assignment of IERG4210 Web Programming and Security (2022 Spring)
 - cart-process.php (for fetching products in shopping list)
 - category.php (the category page, displays products under the selected category)
 - index.php (the main page of the website)
+- IPN.php (for processing the received IPN message)
 - login.php (the account page)
 - nonce.php (for generating and verifying the nonce to be used by the forms)
 - page.php (for getting the total number of products, useful for the pagination feature in the main page)
+- payment.php (for generating the data needed by an PayPal order)
+- portal.php (the member portal page)
 - product.php (the product page)
 - product-fetch.php (for fetching a specific number of products, useful for the pagination feature in the main page)
-- cart.db (the database for products)
+- result.php (the page where customer will be redirected to after finishing the payment)
+- cart.db (the database for products and orders)
 - user.db (the database for users)
 - README.md (this file)
 
@@ -110,4 +143,4 @@ _Everything else are auto-generated_
 
 ---
 
-_Last Updated: 27-03-2022_
+_Last Updated: 11-04-2022_

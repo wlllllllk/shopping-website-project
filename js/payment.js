@@ -1,19 +1,12 @@
-let lastID, ref;
+let lastID, ref, error;
+const paypalButton = document.querySelector("#paypal-button-container");
+paypalButton.addEventListener("click", () => {
+    console.log("HI");
+    return false;
+});
 
-function fetchOrder() {
+function fetchOrder(products) {
     return new Promise(resolve => {
-        let products = [];
-        for (let i = 0; i < localStorage.length; i++) {
-            if (!isNaN(localStorage.key(i))) {
-                products.push({ "pid": localStorage.key(i), "quantity": localStorage.getItem(localStorage.key(i)) });
-            }
-        }
-
-        if (products.length == 0) {
-            alert("There is no products in the shopping list!");
-            return false;
-        }
-
         let request = new XMLHttpRequest();
 
         // what to do after sending the request
@@ -69,11 +62,28 @@ function updateOrder(status, order) {
 paypal.Buttons({
     // Sets up the transaction when a payment button is clicked
     createOrder: async (data, actions) => {
-        let order_details = await fetchOrder();
-        lastID = order_details[1]['id'];
-        ref = order_details[1]['ref'];
+        let products = [];
+        for (let i = 0; i < localStorage.length; i++) {
+            if (!isNaN(localStorage.key(i))) {
+                products.push({ "pid": localStorage.key(i), "quantity": localStorage.getItem(localStorage.key(i)) });
+            }
+        }
 
-        return actions.order.create(order_details[0]);
+        if (products.length == 0) {
+            var daddy = window.self;
+            daddy.opener = window.self;
+            daddy.close();
+            // alert("There is no products in the shopping list!");
+            error = 1;
+            return false;
+        }
+        else {
+            let order_details = await fetchOrder(products);
+            lastID = order_details[1]['id'];
+            ref = order_details[1]['ref'];
+
+            return actions.order.create(order_details[0]);
+        }
     },
 
     // Finalize the transaction after payer approval
@@ -105,10 +115,16 @@ paypal.Buttons({
     },
 
     onError: async function (err) {
-        let response = await updateOrder("ERROR", lastID);
-        console.log(response);
+        if (error == 1) {
+            window.location.href = "https://secure.s67.ierg4210.ie.cuhk.edu.hk/result.php?status=4";
+        }
+        else {
+            let response = await updateOrder("ERROR", lastID);
+            console.log(response);
 
-        window.location.href = "https://secure.s67.ierg4210.ie.cuhk.edu.hk/result.php?status=2&ref=" + encodeURIComponent(ref);
+            window.location.href = "https://secure.s67.ierg4210.ie.cuhk.edu.hk/result.php?status=2&ref=" + encodeURIComponent(ref);
+        }
+
     },
 
     style: {
