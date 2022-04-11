@@ -5,7 +5,7 @@
   align-items: center;
 
   img {
-    margin-top: 5rem;
+    margin-top: 5vh;
     height: 25vh;
   }
 
@@ -30,7 +30,7 @@
   }
 
   button {
-    margin-top: 4rem;
+    margin: 4rem 0 2rem 0;
     background-color: var(--clr-main-light);
     border: none;
     border-radius: var(--value-default-border-radius);

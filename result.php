@@ -12,11 +12,16 @@
         $customer_name .= "Guest";
     }
 
+    if (!isset($_REQUEST["status"]) && !isset($_REQUEST["ref"])) {
+        header('Location: index.php');
+        exit();
+    }
+
     $image = './icon/question.svg';
     $heading = 'Something Went Wrong';
     $message = 'Please contact our customer support.';
     $ref = 'NA';
-    $reminder = 'Please save it securely, you can use this to trace your order inside Member Portal';
+    $reminder = '';
     if (isset($_REQUEST["status"])) {
         $status = $_REQUEST["status"];
         if ($status == 1) {
@@ -43,6 +48,7 @@
 
         if (isset($_REQUEST["ref"])) {
             $ref = $_REQUEST["ref"];
+            $reminder = 'Please save it securely, you can use this to trace your order inside Member Portal';
         }
     }
 ?>
@@ -56,7 +62,7 @@
     <title>IERG4210 Result</title>
     <link rel="shortcut icon" type="image/svg" href="./icon/favicon.svg">
     <link rel="stylesheet" href="./css/common.css">
-    <link rel="stylesheet" href="../css/result.css">
+    <link rel="stylesheet" href="./css/result.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Dongle:wght@300;400;700&display=swap" rel="stylesheet">
