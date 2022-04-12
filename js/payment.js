@@ -109,7 +109,7 @@ paypal.Buttons({
 
     onCancel: async function (data) {
         let response = await updateOrder("CANCELLED", lastID);
-        console.log(response);
+        // console.log(response);
 
         window.location.href = "https://secure.s67.ierg4210.ie.cuhk.edu.hk/result.php?status=3&ref=" + encodeURIComponent(ref);
     },
@@ -120,7 +120,7 @@ paypal.Buttons({
         }
         else {
             let response = await updateOrder("ERROR", lastID);
-            console.log(response);
+            // console.log(response);
 
             window.location.href = "https://secure.s67.ierg4210.ie.cuhk.edu.hk/result.php?status=2&ref=" + encodeURIComponent(ref);
         }
