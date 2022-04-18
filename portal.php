@@ -24,10 +24,18 @@
     $table = '';
     $table_content = '';
 
+    $customer_email = '';
+    if (!empty($_SESSION['auth'])) {
+        $customer_email = $_SESSION['auth']['email'];
+    } 
+    else {
+        $customer_email = "guest";
+    }
+
     // search for an specific order
     if (isset($_REQUEST['ref'])) {
-        $orders = ierg4210_order_fetch_by_oid($_REQUEST['ref']);
-        if (empty($orders)) {
+        $orders = ierg4210_order_fetch_by_ref($_REQUEST['ref']);
+        if (empty($orders) || $orders[0]['USERNAME'] != $customer_email) {
             $heading = 'Order doesn\'t exist';
         } 
         else {

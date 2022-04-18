@@ -573,7 +573,7 @@ function ierg4210_order_fetch_by_email($EMAIL) {
         return $q->fetchAll();
 }
 
-function ierg4210_order_fetch_by_oid($REF) {
+function ierg4210_order_fetch_by_ref($REF) {
     $sanitized_ref = filter_var($REF, FILTER_SANITIZE_STRING);
     if (!preg_match('/^[\w]+$/', $sanitized_ref))
         // throw new Exception("invalid-ref");
